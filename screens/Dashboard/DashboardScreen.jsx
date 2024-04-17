@@ -1,9 +1,29 @@
-import { StyleSheet, View, Text, Pressable } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, Text, Pressable, FlatList } from 'react-native'
+import {React,useEffect,useState} from 'react'
 import { useRouter } from 'expo-router';
-import {get} from '../../firebase/apis/users';
+import {get_users} from '../../firebase/apis/users';
+
+const getUsers = async () => {
+    try {
+
+      const users = await get_users();
+      usersSet(users);
+      console.log("users from :" , users);
+      return users;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
 
 const DashboardScreen = () => {
+
+[users,usersSet]=useState([]);
+
+useEffect(() => {
+getUsers();
+},[]);
+
+
   const router = useRouter();
   return (
     <View style={styles.ScreenContainer}>
@@ -13,6 +33,14 @@ const DashboardScreen = () => {
           Go Back
         </Text>
       </Pressable>
+       <FlatList
+        data={users}
+        renderItem={({ item }) => (
+	    <Text>{item.id}</Text>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+
     </View>
   )
 }

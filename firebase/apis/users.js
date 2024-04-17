@@ -26,11 +26,11 @@ async function get_docs() {
 
 async function get_users () { 
     let Users = await get_docs() ; 
-    let usersArray = []
+    let usersArray = [];
     Users.forEach((user) =>
 		  {
-	Users.push({... user.data(), id: user.id})
-    })
+	usersArray.push({... user.data(), id: user.id})
+    });
     return usersArray;
 }
 
