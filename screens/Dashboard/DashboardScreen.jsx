@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { useRouter } from 'expo-router';
+import {get} from '../../firebase/apis/users';
 
 const DashboardScreen = () => {
   const router = useRouter();
