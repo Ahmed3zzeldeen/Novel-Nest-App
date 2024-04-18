@@ -1,13 +1,15 @@
-import { StyleSheet, View, Text, Pressable, FlatList } from 'react-native'
+import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button} from 'react-native'
 import {React,useEffect,useState} from 'react'
 import { useRouter } from 'expo-router';
-import {get_users , find_user_by_id, find_user_by_email} from '../../firebase/apis/users';
+import {get_users , find_user_by_id, find_user_by_email , del_user} from '../../firebase/apis/users';
 
 
 const DashboardScreen = () => {
 
 const [users,usersSet]=useState([]);
 const [searchedUser, setSearchedUser]=useState();
+const [deluser, setDelUser]=useState();
+  const [inputText, setInputText] = useState('');
 
 const getUsers = async () => {
     try {
@@ -21,6 +23,15 @@ const getUsers = async () => {
     }
 };
 
+const delUserById = async () => {
+    try {
+
+      const response = await del_user(deluser);
+      console.log("deleted user" , response);
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
 
 const getUserByEmail = async (email) => {
     try {
@@ -44,11 +55,16 @@ const getUserById = async (uid) => {
       console.error("couldn't get users", e);
     }
 };
+
+
 useEffect(() => {
 getUsers();
 getUserById('MNc5hqq9AFBpKysS7D41');
 },[]);
 
+useEffect(() => {
+setDelUser(inputText);
+},[inputText]);
 
   const router = useRouter();
   return (
@@ -69,6 +85,14 @@ getUserById('MNc5hqq9AFBpKysS7D41');
       />
       {(searchedUser)? <Text>found a user: {searchedUser.id}</Text> : <Text>not a user{searchedUser}</Text>}
 
+      <View >
+        <Button title="delete user" onPress={delUserById} />
+        <TextInput
+          placeholder="delete user"
+          onChangeText={text => setInputText(text)}
+          value={inputText}
+        />
+      </View>
     </View>
   )
 }
