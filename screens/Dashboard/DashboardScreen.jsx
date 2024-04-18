@@ -27,6 +27,7 @@ const delUserById = async () => {
     try {
 
       const response = await del_user(deluser);
+      await getUsers();
       console.log("deleted user" , response);
     } catch (e) {
       console.error("couldn't get users", e);

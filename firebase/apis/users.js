@@ -17,6 +17,7 @@ import {
 const colRef = collection(db, 'users');
 
 // get the documents 
+// tested ✓
 async function get_docs() {
 
   const snapshot = await getDocs(colRef);
@@ -24,6 +25,7 @@ async function get_docs() {
 };
 
 
+// tested ✓
 async function get_users () { 
     let Users = await get_docs() ; 
     let usersArray = [];
@@ -54,6 +56,7 @@ async function add_user(uid ,user_name,first_name,last_name,email, role){
 };
 
 // on any change in the users 
+// tested ✓
 onSnapshot (colRef , (snapshot) => {
 
     let users =[];
@@ -64,6 +67,7 @@ onSnapshot (colRef , (snapshot) => {
 })
 
 // deleting a user by id
+// tested ✓
 async function del_user(uid){
     const docRef = doc(db , 'users',uid )
     const res =  await deleteDoc(docRef) ; 
@@ -78,6 +82,7 @@ async function update_user(uid , user){
 };
 
 
+// tested ✓
 async function find_user_by_id(uid){
     const docRef = doc(db ,'users',uid )
     const user  =await getDoc (docRef);
@@ -86,6 +91,8 @@ async function find_user_by_id(uid){
 	return ( {... user.data() , id: user.id});
     }
 };
+
+// tested ✓
 async function find_user_by_email(email){
     const users = await get_users();
     console.log("from search :" , users);
