@@ -76,5 +76,24 @@ async function update_user(uid , user){
     await updateDoc(docRef , user)
     console.log("user fetched " , user);
 };
-export {get_docs , get_users , add_user ,update_user, del_user};
+
+
+async function find_user_by_id(uid){
+    const docRef = doc(db ,'uid',uid )
+    const user  =await getDoc (docRef);
+    console.log("user fetched " , user.data());
+    return user;
+};
+async function find_user_by_email(email){
+    const users = await get_users();
+    console.log("from search :" , users);
+    const user=  users.filter((item) => {
+	return item.email === email;
+    	
+    });
+    console.log("searched " , user);
+    return user;
+};
+
+export {get_docs , get_users , add_user ,update_user, del_user ,find_user_by_email,find_user_by_id };
 
