@@ -79,20 +79,24 @@ async function update_user(uid , user){
 
 
 async function find_user_by_id(uid){
-    const docRef = doc(db ,'uid',uid )
+    const docRef = doc(db ,'users',uid )
     const user  =await getDoc (docRef);
-    console.log("user fetched " , user.data());
-    return user;
+    console.log("user fetched " , user);
+    if (user){
+	return ( {... user.data() , id: user.id});
+    }
 };
 async function find_user_by_email(email){
     const users = await get_users();
     console.log("from search :" , users);
-    const user=  users.filter((item) => {
+    const user =  users.filter((item) => {
 	return item.email === email;
     	
     });
     console.log("searched " , user);
-    return user;
+    if (user){
+	return user[0];
+    }
 };
 
 export {get_docs , get_users , add_user ,update_user, del_user ,find_user_by_email,find_user_by_id };

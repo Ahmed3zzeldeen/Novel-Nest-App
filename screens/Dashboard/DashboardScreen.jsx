@@ -33,9 +33,20 @@ const getUserByEmail = async (email) => {
       console.error("couldn't get users", e);
     }
 };
+const getUserById = async (uid) => {
+    try {
+
+      const user = await find_user_by_id(uid);
+      setSearchedUser(user);
+      console.log("searched in Dashboard:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
 useEffect(() => {
 getUsers();
-getUserByEmail("email@email");
+getUserById('MNc5hqq9AFBpKysS7D41');
 },[]);
 
 
@@ -56,7 +67,7 @@ getUserByEmail("email@email");
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-      {(searchedUser)? <Text>found a user: {searchedUser[0].id}</Text> : <Text>not a user{searchedUser}</Text>}
+      {(searchedUser)? <Text>found a user: {searchedUser.id}</Text> : <Text>not a user{searchedUser}</Text>}
 
     </View>
   )
