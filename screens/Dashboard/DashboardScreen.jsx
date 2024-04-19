@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button} from 'react-native'
 import {React,useEffect,useState} from 'react'
 import { useRouter } from 'expo-router';
-import {get_users , find_user_by_id, find_user_by_email , del_user} from '../../firebase/apis/users';
+import {get_users , find_user_by_id, find_user_by_email , del_useri , find_user_by_user_name} from '../../firebase/apis/users';
 
 
 const DashboardScreen = () => {
@@ -9,7 +9,7 @@ const DashboardScreen = () => {
 const [users,usersSet]=useState([]);
 const [searchedUser, setSearchedUser]=useState();
 const [deluser, setDelUser]=useState();
-  const [inputText, setInputText] = useState('');
+const [inputText, setInputText] = useState('');
 
 const getUsers = async () => {
     try {
@@ -45,6 +45,20 @@ const getUserByEmail = async (email) => {
       console.error("couldn't get users", e);
     }
 };
+
+
+const getUserByUserName = async (userName) => {
+    try {
+
+      const user = await find_user_by_user_name(userName);
+      setSearchedUser(user);
+      console.log("searched in Dashboard:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
 const getUserById = async (uid) => {
     try {
 
@@ -59,8 +73,7 @@ const getUserById = async (uid) => {
 
 
 useEffect(() => {
-getUsers();
-getUserById('MNc5hqq9AFBpKysS7D41');
+getUserByUserName('philo');
 },[]);
 
 useEffect(() => {

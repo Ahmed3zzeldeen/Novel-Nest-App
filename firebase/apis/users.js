@@ -106,5 +106,18 @@ async function find_user_by_email(email){
     }
 };
 
-export {get_docs , get_users , add_user ,update_user, del_user ,find_user_by_email,find_user_by_id };
+async function find_user_by_user_name(user_name){
+    const users = await get_users();
+    console.log("from search :" , users);
+    const user =  users.filter((item) => {
+	return item.user_name === user_name;
+    	
+    });
+    console.log("searched " , user);
+    if (user){
+	return user[0];
+    }
+};
+
+export {get_docs , get_users , add_user ,update_user, del_user ,find_user_by_email,find_user_by_id ,find_user_by_user_name};
 
