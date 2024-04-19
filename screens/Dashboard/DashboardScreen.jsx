@@ -1,7 +1,9 @@
-import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button} from 'react-native'
+import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button,Image} from 'react-native'
 import {React,useEffect,useState} from 'react'
 import { useRouter } from 'expo-router';
 import {get_users , find_user_by_id, find_user_by_email , del_useri , find_user_by_user_name} from '../../firebase/apis/users';
+import l from '../../assets/images/icon.png';
+import ROUTES from  '../../constants/routes';
 
 
 const DashboardScreen = () => {
@@ -71,42 +73,54 @@ const getUserById = async (uid) => {
     }
 };
 
+const buttons  = [
+	{pressed : false,id : 1,text : "ADMIN \nProfile" ,image:l},
+	{pressed : false,id : 2,text : "Manage \nUSERS" ,image:l},
+	{pressed : false,id : 3,text : "Manage \nBOOKS" ,image:l},
+	{pressed : false,id : 4,text : "Manage \nORDERS" ,image:l},
+]
+const handlePress =  (id) => {
+    switch (id) {
+    	case 1:
+    		router.push(ROUTES.DASHBOARD.PROFILE);
+    		break;
+
+    	default:
+    		break;
+    }
+};
 
 useEffect(() => {
-getUserByUserName('philo');
 },[]);
 
 useEffect(() => {
 setDelUser(inputText);
 },[inputText]);
 
-  const router = useRouter();
+const router = useRouter();
+
+const Item = ({text , img  , id , pressed}) =>{
+  return (
+      <View  >
+	  <Pressable style ={styles.Button} onPress = {()=>{handlePress(id)}}>
+		<Image source={img}
+		style = {{width:90,height:90, marginRight: 20}}
+		/>
+		<Text style = {styles.Text}>{text}</Text>
+	      </Pressable>
+      </View>
+  );
+}
+
   return (
     <View style={styles.ScreenContainer}>
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>Dashboard Home Page</Text>
-      <Pressable onPress={() => router.back()}>
-        <Text style={styles.Text}>
-          Go Back
-        </Text>
-      </Pressable>
-      <Text>users show </Text>
        <FlatList
-        data={users}
+        data={buttons}
         renderItem={({ item }) => (
-	    <Text>user : {item.id}</Text>
+	     <Item id = {item.id} img = {item.image} text = {item.text}pressed = {item.pressed}></Item>
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
       />
-      {(searchedUser)? <Text>found a user: {searchedUser.id}</Text> : <Text>not a user{searchedUser}</Text>}
-
-      <View >
-        <Button title="delete user" onPress={delUserById} />
-        <TextInput
-          placeholder="delete user"
-          onChangeText={text => setInputText(text)}
-          value={inputText}
-        />
-      </View>
     </View>
   )
 }
@@ -116,12 +130,28 @@ export default DashboardScreen;
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#f7f0e8",
+  },
+  Button:{
+    flex: 1 , 
+    flexDirection : "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#eadecf",
+    margin: 20,
+    borderRadius: 10,
   },
   Text: {
-    color: "#00f",
+    color: "#29648f",
+    fontSize : 50,
     fontWeight: "bold",
     marginTop: 10,
   },
+    ButtonsList:{
+    width: '90%',
+
+
+    }
 });
