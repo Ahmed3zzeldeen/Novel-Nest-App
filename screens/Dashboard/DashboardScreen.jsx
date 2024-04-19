@@ -85,6 +85,18 @@ const handlePress =  (id) => {
     		router.push(ROUTES.DASHBOARD.PROFILE);
     		break;
 
+    	case 2:
+    		router.push(ROUTES.DASHBOARD.MANAGE_USERS);
+    		break;
+    	case 3:
+    		router.push(ROUTES.DASHBOARD.MANAGE_BOOKS);
+    		break;
+    	case 4:
+    		router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
+    		break;
+    	case 5:
+    		router.replace(ROUTES.AUTH.SIGN_OUT);
+    		break;
     	default:
     		break;
     }
@@ -99,7 +111,7 @@ setDelUser(inputText);
 
 const router = useRouter();
 
-const Item = ({text , img  , id , pressed}) =>{
+const Item = ({text , img  , id}) =>{
   return (
       <View  >
 	  <Pressable style ={styles.Button} onPress = {()=>{handlePress(id)}}>
@@ -114,9 +126,10 @@ const Item = ({text , img  , id , pressed}) =>{
 
   return (
     <View style={styles.ScreenContainer}>
+      <Pressable onPress = {()=>{handlePress(5)}}><Text style = {{color:"#29648f" , fontSize:20 , alignSelf:"flex-end"}}>logout</Text></Pressable>
        <FlatList
         data={buttons}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
 	     <Item id = {item.id} img = {item.image} text = {item.text}pressed = {item.pressed}></Item>
         )}
         keyExtractor={(item) => item.id}
@@ -131,7 +144,6 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     justifyContent: "space-between",
-    alignItems: "center",
     backgroundColor: "#f7f0e8",
   },
   Button:{
@@ -150,8 +162,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
     ButtonsList:{
-    width: '90%',
-
-
+    width: '85%',
     }
 });
