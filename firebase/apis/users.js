@@ -49,7 +49,7 @@ async function addUser(uid, user_name, first_name, last_name, email, role) {
       orders: [],
       role: role,
       image:
-        "https://imgs.search.brave.com/9fS5PQgMiMZlyIE1fog3Hs4t6K9QjNRIEW6efirkaiM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8x/MS82OS9ibGFuay1h/dmF0YXItcHJvZmls/ZS1waWN0dXJlLXZl/Y3Rvci00NTE2MTE2/OS5qcGc",
+        "https://s3-alpha-sig.figma.com/img/823a/1021/43190b7b2b4507f04eaf9dcb3a5dfcaf?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hSytG50hHxVwKAr9Lp5QRKfQ~Rux9uu7EPexn6KBZ5pzWlb5xC-Lo3BcF9kkZW36Ke6A7kTJpLwdycbqUpka~~txxQTwfOEpw1sXLLPRW8yyJ~Lr6cCwv9orRYh7YU9if6LAamM5aluHDbSjQgoq6MAKivcbP1NTd0QUia5vYgNxU3TPZgq5Q5wtLCXi06LZHndp1tuWG5rR46RuLjuyQ97fc78nhcxswBzVP14M021zk0fTuXg8ZTzOIotvBx6SX9EnBbBBPZorzv~uT4Z5HK0RCbRKY47rqpOK6MBEPwe6Vm-ow4YX6G1sXg4U4hLj3Ef4Mn-uYFy2l8Jz1d1Q4A__",
     },
     uid,
   );
