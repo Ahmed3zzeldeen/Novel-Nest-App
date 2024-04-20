@@ -3,17 +3,23 @@ import { React, useEffect, useState} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
-import {getUsers, delUser} from '../../firebase/apis/users'
+import {findUserByEmail, getUsers,
+  findUsersByEmail,
+  findUsersByName,
+  delUser,
+} from '../../firebase/apis/users'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const ManageUsersScreen = () => {
   const [users,setUsers] =useState();
+  const [filteredUsers,setFilteredUsers] =useState();
   //require users from the database
   const reqUsers = async () => {
       try {
         const users = await getUsers();
         setUsers(users);
+        setFilteredUsers(users);
         console.log("users from :" , users);
         return users;
       } catch (e) {
@@ -61,6 +67,48 @@ const delUserById = async (id) => {
       </View>
     );
   };
+const getUserByEmail = async (email) => {
+    try {
+
+      const users = await findUsersByEmail(email);
+      console.log("searched in usersManage:" , user);
+      return users;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+
+const getUserByUsersName = async (userName) => {
+    try {
+
+      const users = await findUsersByName(userName);
+      setSearchedUser(user);
+      console.log("searched in usersManage:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+const onChangeText = async (text) => {
+    try {
+      const nameUsers = await findUsersByName(text);
+      const emailUsers = await findUsersByEmail(text);
+      console.log("out put of search" , nameUsers);
+      console.log("out put of search" , emailUsers);
+      const map = new Map(nameUsers.map(item => [item.id, item])); 
+      emailUsers.forEach(item => map.set(item.id, item));
+      let users = Array.from(map.values());
+      setFilteredUsers(users);
+      console.log("searched in usersManage:" , users);
+      return users;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+
 
   useEffect(() => {
       reqUsers();
@@ -89,11 +137,14 @@ const delUserById = async (id) => {
 	    style={{ backgroundColor : "#eadecf", width:'90%', height: 50, borderTopLeftRadius: 20,borderBottomLeftRadius : 20}}
 	    placeholder = "Search by user email or username"
 	    placeholderTextColor = "#29648F"
-	    ></TextInput>
+	    onChangeText={text =>  onChangeText(text)}
+
+            ></TextInput>
 	    <Text style = {{fontSize: 30 , backgroundColor:"#eadecf", color : "#29648F" ,borderTopRightRadius: 20,borderBottomRightRadius : 20,height:50}}>🔍</Text>
 	</View>
       <FlatList
-        data={users}
+	style = {{margin : 50 ,}}
+        data={filteredUsers}
         renderItem={({ item }) => (
           <Item
             id={item.id}
@@ -113,7 +164,7 @@ export default ManageUsersScreen;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "center",
     backgroundColor: "#f7f0e8",
   },
   text: {

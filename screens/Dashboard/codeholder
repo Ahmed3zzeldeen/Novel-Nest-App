@@ -1,32 +1,6 @@
 
 
 
-
-const getUserByEmail = async (email) => {
-    try {
-
-      const user = await find_user_by_email(email);
-      setSearchedUser(user);
-      console.log("searched in Dashboard:" , user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
-
-const getUserByUserName = async (userName) => {
-    try {
-
-      const user = await find_user_by_user_name(userName);
-      setSearchedUser(user);
-      console.log("searched in Dashboard:" , user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
 const getUserById = async (uid) => {
     try {
 

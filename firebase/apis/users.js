@@ -92,19 +92,19 @@ async function finduserById(uid) {
 }
 
 // tested ✓
-async function findUserByEmail(email) {
+async function findUsersByEmail(email) {
   const users = await getUsers();
-  console.log("from search :", users);
-  const filteredUsers = users.filter((item) => item.email.includes(emailSubstring));
+  console.log("from search by email:", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(email))});
   console.log("searched ", filteredUsers);
   return filteredUsers;
 }
 
 // tested ✓
-async function findUserByName(user_name) {
+async function findUsersByName(user_name) {
   const users = await getUsers();
-  console.log("from search :", users);
-  const filteredUsers = users.filter((item) => item.user_name.includes(user_name));
+  console.log("from search by name :", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(user_name))});
   console.log("searched ", filteredUsers);
   return filteredUsers;
 }
@@ -115,7 +115,7 @@ export {
   addUser,
   updateUser,
   delUser,
-  findUserByEmail,
+  findUsersByEmail,
   finduserById,
-  findUserByName,
+  findUsersByName,
 };
