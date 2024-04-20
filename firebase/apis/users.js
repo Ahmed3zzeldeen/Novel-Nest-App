@@ -95,13 +95,9 @@ async function finduserById(uid) {
 async function findUserByEmail(email) {
   const users = await getUsers();
   console.log("from search :", users);
-  const user = users.filter((item) => {
-    return item.email === email;
-  });
-  console.log("searched ", user);
-  if (user) {
-    return user[0];
-  }
+  const filteredUsers = users.filter((item) => item.email.includes(emailSubstring));
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
 }
 
 // tested ✓
