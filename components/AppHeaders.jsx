@@ -18,17 +18,13 @@ const AppHeaders = () => {
         options={{
           headerTitle: "Landing Page",
           headerRight: () => (
-            <View style={{flexDirection:'row'}}>
-              <Link
-                href={ROUTES.AUTH.LOG_IN}
-              >
+            <View style={{ flexDirection: "row" }}>
+              <Link href={ROUTES.AUTH.LOG_IN}>
                 <Text style={{ color: "#fff", fontWeight: "bold", margin: 10 }}>
                   Login
                 </Text>
               </Link>
-              <Link
-                href={ROUTES.AUTH.SIGN_UP}
-              >
+              <Link href={ROUTES.AUTH.SIGN_UP}>
                 <Text style={{ color: "#fff", fontWeight: "bold", margin: 10 }}>
                   signup
                 </Text>
@@ -43,7 +39,11 @@ const AppHeaders = () => {
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.HOME}
-        options={{ headerTitle: "Dashboard Page" }}
+        options={{
+          headerTitle: "Dashboard",
+          headerTitleAlign: "center",
+          headerStyle: { backgroundColor: "#29648f" },
+        }}
       />
       <Stack.Screen
         name={ROUTES.AUTH.LOG_IN}
