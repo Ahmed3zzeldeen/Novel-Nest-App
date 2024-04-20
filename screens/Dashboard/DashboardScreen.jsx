@@ -1,61 +1,164 @@
-import { StyleSheet, View, Text, Pressable, FlatList } from 'react-native'
-import {React,useEffect,useState} from 'react'
-import { useRouter } from 'expo-router';
-import {get_users} from '../../firebase/apis/users';
-
-const getUsers = async () => {
-    try {
-
-      const users = await get_users();
-      usersSet(users);
-      console.log("users from :" , users);
-      return users;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  FlatList,
+} from "react-native";
+import { React, useEffect} from "react";
+import { useRouter } from "expo-router";
+import ROUTES from "../../constants/routes";
+import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DashboardScreen = () => {
+  const buttons = [
+    {
+      pressed: false,
+      id: 1,
+      text: "ADMIN \nProfile",
+      image: "user-tie",
+      FontAwesome: 5,
+    },
+    { pressed: false, id: 2, text: "Manage \nUSERS", image: "group" },
+    {
+      pressed: false,
+      id: 3,
+      text: "Manage \nBOOKS",
+      image: "book",
+      FontAwesome: 5,
+    },
+    {
+      pressed: false,
+      id: 4,
+      text: "Manage \nORDERS",
+      image: "shopping-bag",
+      FontAwesome: 5,
+    },
+  ];
+  const handlePress = (id) => {
+    switch (id) {
+      case 1:
+        router.push(ROUTES.DASHBOARD.PROFILE);
+        break;
 
-[users,usersSet]=useState([]);
+      case 2:
+        router.push(ROUTES.DASHBOARD.MANAGE_USERS);
+        break;
+      case 3:
+        router.push(ROUTES.DASHBOARD.MANAGE_BOOKS);
+        break;
+      case 4:
+        router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
+        break;
+      case 5:
+        router.replace(ROUTES.AUTH.SIGN_OUT);
+        break;
+      default:
+        break;
+    }
+  };
 
-useEffect(() => {
-getUsers();
-},[]);
+  useEffect(() => {
+console.log(buttons);
+  }, []);
 
 
   const router = useRouter();
+
+  const Item = ({ text, img, id, awesome }) => {
+    return (
+      <View style={{ alignSelf: "center" }}>
+        <Pressable
+          style={styles.Button}
+          onPress={() => {
+            handlePress(id);
+          }}
+        >
+          {awesome === 5 ? (
+            <FontAwesome5
+              name={img}
+              size={85}
+              color="#29648F"
+              style={{ margin: 30 }}
+            />
+          ) : (
+            <FontAwesome
+              name={img}
+              size={60}
+              color="#29648F"
+              style={{ margin: 30 }}
+            />
+          )}
+          <Text style={styles.Text}>{text}</Text>
+        </Pressable>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.ScreenContainer}>
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>Dashboard Home Page</Text>
-      <Pressable onPress={() => router.back()}>
-        <Text style={styles.Text}>
-          Go Back
+    <SafeAreaView style={styles.ScreenContainer}>
+      <Pressable
+        onPress={() => {
+          handlePress(5);
+        }}
+      >
+        <Text style={{ color: "#29649f", fontSize: 20, alignSelf: "flex-end" }}>
+          <FontAwesome6
+            name="door-open"
+            size={24}
+            color="#29648F"
+            style={{ margin: 10 }}
+          />
+          logout
         </Text>
       </Pressable>
-       <FlatList
-        data={users}
+      <FlatList
+        data={buttons}
         renderItem={({ item }) => (
-	    <Text>{item.id}</Text>
+          <Item
+            id={item.id}
+            img={item.image}
+            text={item.text}
+            pressed={item.pressed}
+            awesome={item.FontAwesome}
+          ></Item>
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
       />
-
-    </View>
-  )
-}
+    </SafeAreaView>
+  );
+};
 
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#f7f0e8",
+  },
+  Button: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#eadecf",
+    margin: 20,
+    borderRadius: 10,
+    maxWidth: 350,
+    maxHeight:150,
   },
   Text: {
-    color: "#00f",
+    color: "#29648f",
+    fontSize: 50,
     fontWeight: "bold",
     marginTop: 10,
+  },
+  ButtonsList: {
+    flex: 1,
+    width: "85%",
+    alignSelf: "center",
+    flexWrap: "wrap",
   },
 });
