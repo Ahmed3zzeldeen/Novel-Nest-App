@@ -3,11 +3,33 @@ import { React, useEffect, useState} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
-import {getUsers} from '../../firebase/apis/users'
+import {getUsers, delUser} from '../../firebase/apis/users'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const ManageUsersScreen = () => {
+  const [users,setUsers] =useState();
+  //require users from the database
+  const reqUsers = async () => {
+      try {
+        const users = await getUsers();
+        setUsers(users);
+        console.log("users from :" , users);
+        return users;
+      } catch (e) {
+        console.error("couldn't get users", e);
+      }
+  };
+
+const delUserById = async (id) => {
+    try {
+      const response = await delUser(id);
+      await reqUsers();
+      console.log("deleted user" , response);
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
   const Item = ({ text, img, id, email }) => {
     return (
       <View style={styles.userCard}>
@@ -23,6 +45,7 @@ const ManageUsersScreen = () => {
 		size={24}
 		color="#29648F"
 		style={{ margin: 10 }}
+		onPress =  {()=> {delUserById(id)}}
 	      />
 	    </Pressable>
 	    <Pressable style = {{}}>
@@ -39,18 +62,6 @@ const ManageUsersScreen = () => {
     );
   };
 
-  const [users,setUsers] =useState();
-  //require users from the database
-  const reqUsers = async () => {
-      try {
-        const users = await getUsers();
-        setUsers(users);
-        console.log("users from :" , users);
-        return users;
-      } catch (e) {
-        console.error("couldn't get users", e);
-      }
-  };
   useEffect(() => {
       reqUsers();
   }, []);
