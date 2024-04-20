@@ -48,7 +48,8 @@ const delUserById = async (id) => {
 		onPress =  {()=> {delUserById(id)}}
 	      />
 	    </Pressable>
-	    <Pressable style = {{}}>
+	    <Pressable onPress = {()=>{router.push(ROUTES.DASHBOARD.EDIT_USER+id);
+	    }}>
 	      <FontAwesome
 		name="pencil-square"
 		size={24}
