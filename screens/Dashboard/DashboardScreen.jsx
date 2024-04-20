@@ -1,9 +1,8 @@
-import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button,Image} from 'react-native'
+import { StyleSheet, View, Text, Pressable, FlatList , TextInput,Button,Image,} from 'react-native'
 import {React,useEffect,useState} from 'react'
 import { useRouter } from 'expo-router';
-import {get_users , find_user_by_id, find_user_by_email , del_useri , find_user_by_user_name} from '../../firebase/apis/users';
-import l from '../../assets/images/icon.png';
 import ROUTES from  '../../constants/routes';
+import { FontAwesome5 , FontAwesome, FontAwesome6} from '@expo/vector-icons';
 
 
 const DashboardScreen = () => {
@@ -13,71 +12,11 @@ const [searchedUser, setSearchedUser]=useState();
 const [deluser, setDelUser]=useState();
 const [inputText, setInputText] = useState('');
 
-const getUsers = async () => {
-    try {
-
-      const users = await get_users();
-      usersSet(users);
-      console.log("users from :" , users);
-      return users;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
-const delUserById = async () => {
-    try {
-
-      const response = await del_user(deluser);
-      await getUsers();
-      console.log("deleted user" , response);
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
-const getUserByEmail = async (email) => {
-    try {
-
-      const user = await find_user_by_email(email);
-      setSearchedUser(user);
-      console.log("searched in Dashboard:" , user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
-
-const getUserByUserName = async (userName) => {
-    try {
-
-      const user = await find_user_by_user_name(userName);
-      setSearchedUser(user);
-      console.log("searched in Dashboard:" , user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
-const getUserById = async (uid) => {
-    try {
-
-      const user = await find_user_by_id(uid);
-      setSearchedUser(user);
-      console.log("searched in Dashboard:" , user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-};
-
 const buttons  = [
-	{pressed : false,id : 1,text : "ADMIN \nProfile" ,image:l},
-	{pressed : false,id : 2,text : "Manage \nUSERS" ,image:l},
-	{pressed : false,id : 3,text : "Manage \nBOOKS" ,image:l},
-	{pressed : false,id : 4,text : "Manage \nORDERS" ,image:l},
+	{pressed : false,id : 1,text : "ADMIN \nProfile" ,image:"user-tie", FontAwesome: 5},
+	{pressed : false,id : 2,text : "Manage \nUSERS" ,image:"group"},
+	{pressed : false,id : 3,text : "Manage \nBOOKS" ,image:"book",FontAwesome:5},
+	{pressed : false,id : 4,text : "Manage \nORDERS" ,image:"shopping-bag" , FontAwesome:5},
 ]
 const handlePress =  (id) => {
     switch (id) {
@@ -111,14 +50,17 @@ setDelUser(inputText);
 
 const router = useRouter();
 
-const Item = ({text , img  , id}) =>{
+const Item = ({text , img  , id, awesome}) =>{
   return (
-      <View  >
+      <View style = {{alignSelf:"center"}} >
 	  <Pressable style ={styles.Button} onPress = {()=>{handlePress(id)}}>
-		<Image source={img}
-		style = {{width:90,height:90, marginRight: 20}}
-		/>
-		<Text style = {styles.Text}>{text}</Text>
+	  {
+	      awesome === 5 ?
+		<FontAwesome5 name={img} size={85} color="#29648F" style = {{margin : 30}} />
+	      :
+		<FontAwesome name={img} size={60} color="#29648F" style = {{margin : 30}} />
+	  }	
+	  <Text style = {styles.Text}>{text}</Text>
 	      </Pressable>
       </View>
   );
@@ -126,11 +68,11 @@ const Item = ({text , img  , id}) =>{
 
   return (
     <View style={styles.ScreenContainer}>
-      <Pressable onPress = {()=>{handlePress(5)}}><Text style = {{color:"#29648f" , fontSize:20 , alignSelf:"flex-end"}}>logout</Text></Pressable>
+      <Pressable onPress = {()=>{handlePress(5)}}><Text style = {{color:"#29649f" , fontSize:20 , alignSelf:"flex-end"}}><FontAwesome6 name="door-open" size={24} color="#29648F" style = {{margin : 10}} />logout</Text></Pressable>
        <FlatList
         data={buttons}
         renderItem={({item}) => (
-	     <Item id = {item.id} img = {item.image} text = {item.text}pressed = {item.pressed}></Item>
+	     <Item id = {item.id} img = {item.image} text = {item.text}pressed = {item.pressed} awesome = {item.FontAwesome}></Item>
         )}
         keyExtractor={(item) => item.id}
       />
@@ -154,6 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eadecf",
     margin: 20,
     borderRadius: 10,
+    maxWidth : 350, 
   },
   Text: {
     color: "#29648f",
@@ -162,6 +105,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
     ButtonsList:{
+    flex: 1,
     width: '85%',
+    alignSelf:"center",
+    flexWrap: "wrap", 
     }
 });

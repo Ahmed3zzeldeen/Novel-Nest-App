@@ -1,0 +1,61 @@
+
+
+const getUsers = async () => {
+    try {
+
+      const users = await get_users();
+      usersSet(users);
+      console.log("users from :" , users);
+      return users;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+const delUserById = async () => {
+    try {
+
+      const response = await del_user(deluser);
+      await getUsers();
+      console.log("deleted user" , response);
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+const getUserByEmail = async (email) => {
+    try {
+
+      const user = await find_user_by_email(email);
+      setSearchedUser(user);
+      console.log("searched in Dashboard:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+
+const getUserByUserName = async (userName) => {
+    try {
+
+      const user = await find_user_by_user_name(userName);
+      setSearchedUser(user);
+      console.log("searched in Dashboard:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
+
+const getUserById = async (uid) => {
+    try {
+
+      const user = await find_user_by_id(uid);
+      setSearchedUser(user);
+      console.log("searched in Dashboard:" , user);
+      return user;
+    } catch (e) {
+      console.error("couldn't get users", e);
+    }
+};
