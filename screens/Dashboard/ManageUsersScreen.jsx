@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, View, Text,FlatList , Image} from 'react-native';
+import {Pressable, StyleSheet, View,TextInput, Text,FlatList , Image} from 'react-native';
 import { React, useEffect, useState} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
@@ -58,7 +58,6 @@ const delUserById = async (id) => {
 	      />
 	    </Pressable>
 	</View>
-	
       </View>
     );
   };
@@ -85,6 +84,14 @@ const delUserById = async (id) => {
           logout
         </Text>
       </Pressable>
+	<View style = {{flex:1, flexDirection : 'row',backgroundcolor:"#29648F",height:50}}>
+	    <TextInput
+	    style={{ backgroundColor : "#eadecf", width:'90%', height: 50, borderTopLeftRadius: 20,borderBottomLeftRadius : 20}}
+	    placeholder = "Search by user email or username"
+	    placeholderTextColor = "#29648F"
+	    ></TextInput>
+	    <Text style = {{fontSize: 30 , backgroundColor:"#eadecf", color : "#29648F" ,borderTopRightRadius: 20,borderBottomRightRadius : 20,height:50}}>🔍</Text>
+	</View>
       <FlatList
         data={users}
         renderItem={({ item }) => (
@@ -106,7 +113,7 @@ export default ManageUsersScreen;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-around",
     backgroundColor: "#f7f0e8",
   },
   text: {
@@ -118,11 +125,12 @@ const styles = StyleSheet.create({
       flex : 1 , 
       alignSelf: "center",
       margin: 10 ,
-      backgroundColor  : "#eadecf",
+      backgroundColor: "#eadecf",
       flexDirection : "row",
       flexWrap : "wrap" , 
       width: '85%' ,
       maxWidth: 350, 
+      borderRadius :10 , 
   },
   infoCard:{
     flex: 1,
