@@ -53,6 +53,14 @@ const AppHeaders = () => {
         name={ROUTES.AUTH.SIGN_UP}
         options={{ headerTitle: "Signup Page", presentation: "modal" }}
       />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.MANAGE_USERS}
+        options={{
+          headerTitle: "Users",
+          headerTitleAlign: "center",
+          headerStyle: { backgroundColor: "#29648f" },
+        }}
+      />
     </Stack>
   );
 };
