@@ -104,13 +104,9 @@ async function findUserByEmail(email) {
 async function findUserByName(user_name) {
   const users = await getUsers();
   console.log("from search :", users);
-  const user = users.filter((item) => {
-    return item.user_name === user_name;
-  });
-  console.log("searched ", user);
-  if (user) {
-    return user[0];
-  }
+  const filteredUsers = users.filter((item) => item.user_name.includes(user_name));
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
 }
 
 export {
