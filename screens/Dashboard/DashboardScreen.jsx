@@ -4,21 +4,15 @@ import {
   Text,
   Pressable,
   FlatList,
-  TextInput,
   Button,
-  Image,
 } from "react-native";
-import { React, useEffect, useState } from "react";
+import { React, useEffect} from "react";
 import { useRouter } from "expo-router";
 import ROUTES from "../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DashboardScreen = () => {
-  const [users, usersSet] = useState([]);
-  const [searchedUser, setSearchedUser] = useState();
-  const [deluser, setDelUser] = useState();
-  const [inputText, setInputText] = useState("");
-
   const buttons = [
     {
       pressed: false,
@@ -66,11 +60,10 @@ const DashboardScreen = () => {
     }
   };
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
-    setDelUser(inputText);
-  }, [inputText]);
+console.log(buttons);
+  }, []);
+
 
   const router = useRouter();
 
@@ -105,7 +98,7 @@ const DashboardScreen = () => {
   };
 
   return (
-    <View style={styles.ScreenContainer}>
+    <SafeAreaView style={styles.ScreenContainer}>
       <Pressable
         onPress={() => {
           handlePress(5);
@@ -134,7 +127,7 @@ const DashboardScreen = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -155,6 +148,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 10,
     maxWidth: 350,
+    maxHeight:150,
   },
   Text: {
     color: "#29648f",

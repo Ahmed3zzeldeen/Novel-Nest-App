@@ -23,7 +23,7 @@ async function get_docs() {
 }
 
 // tested ✓
-async function get_users() {
+async function getUsers() {
   let Users = await get_docs();
   let usersArray = [];
   Users.forEach((user) => {
@@ -34,7 +34,7 @@ async function get_users() {
 
 // should be used when reqister is done
 // and the uid should be got from firebase auth
-async function add_user(uid, user_name, first_name, last_name, email, role) {
+async function addUser(uid, user_name, first_name, last_name, email, role) {
   const docRef = doc(db, "users", uid);
   let res = await setDoc(
     docRef,
@@ -93,7 +93,7 @@ async function finduserById(uid) {
 
 // tested ✓
 async function findUserByEmail(email) {
-  const users = await get_users();
+  const users = await getUsers();
   console.log("from search :", users);
   const user = users.filter((item) => {
     return item.email === email;
@@ -106,7 +106,7 @@ async function findUserByEmail(email) {
 
 // tested ✓
 async function findUserByName(user_name) {
-  const users = await get_users();
+  const users = await getUsers();
   console.log("from search :", users);
   const user = users.filter((item) => {
     return item.user_name === user_name;
@@ -119,8 +119,8 @@ async function findUserByName(user_name) {
 
 export {
   get_docs,
-  get_users,
-  add_user,
+  getUsers,
+  addUser,
   updateUser,
   delUser,
   findUserByEmail,
