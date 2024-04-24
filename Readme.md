@@ -80,9 +80,9 @@
 
 ### Tasks Assigned to Team Members
 - Ahmed M. Ezzeldeen :
-  - [ ] Design flowchart Diagrams for Application Flow.
-  - [ ] Design UI/UX with Zeyad Ayman on Figma.
-  - [ ] Create the repo, setup the environment & folder structure
+  - [X] [Design flowchart Diagrams for Application Flow.](https://www.figma.com/file/LBntlgNbTLGxfNMjZC4IVW/Novel-Nest-Diagrams?type=whiteboard&t=lcHt87tUpqvh5Fjx-1)
+  - [X] [Design UI/UX with 'Mustafa Ahmed' on Figma.](https://www.figma.com/file/Kn5VCosRwoBgf5tNgy2USl/Novel-Nest-App-UI%2FUX?type=design&t=lcHt87tUpqvh5Fjx-6)
+  - [X] Create the repo, setup the environment & folder structure
   - [ ] Splash Screen:
     - [ ] Implement Session Management.
     - [ ] Determine User Admin Status.
@@ -94,6 +94,7 @@
     - [ ] Implement Password Reset Functionality.
 
 - Mustafa Ahmed:
+  - [X] [Design UI/UX with 'Ahmed Mohamed' on Figma.](https://www.figma.com/file/Kn5VCosRwoBgf5tNgy2USl/Novel-Nest-App-UI%2FUX?type=design&t=lcHt87tUpqvh5Fjx-6)
   - [ ] Home Screen:
     - [ ] Display Best Seller Books.
     - [ ] Implement Search and Filter Functionality for Books.
@@ -106,7 +107,7 @@
     - [ ] Retrieve User Information.
 
 - Zeyad Ayman:
-  - [ ] Design UI/UX with Ahmed Mohamed on Figma.
+  - [X] [Design DB Diagrams for Application.](https://www.figma.com/file/DHfRaDdCNeR1YnW3qtRsdz/Novel-Nest-DB-Diagrams?type=whiteboard&t=lcHt87tUpqvh5Fjx-1)
   - [ ] Dashboard Screen:
     - [ ] Implement Management of Books Screens.
   - [ ] ListOfBooks Screen:
@@ -124,7 +125,7 @@
     - [ ] Implement Management of Books Screens.
     - [ ] Retrieve User Information.
   - [ ] ListOfUsers Screen:
-    - [ ] Retrieve All Users.
+    - [X] Retrieve All Users.
     - [ ] Implement Search and Filter Functionality for Users.
     - [ ] Implement User Deletion.
   - [ ] EditUser Screen:
