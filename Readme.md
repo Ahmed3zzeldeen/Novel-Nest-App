@@ -86,12 +86,12 @@
   - [ ] Splash Screen:
     - [ ] Implement Session Management.
     - [ ] Determine User Admin Status.
-  - [ ] Signup Screen:
-    - [ ] Implement User Registration.
-  - [ ] Signin Screen:
-    - [ ] Implement User Login.
-  - [ ] Forgot Password Screen:
-    - [ ] Implement Password Reset Functionality.
+  - [X] Signup Screen:
+    - [X] Implement User Registration.
+  - [X] Signin Screen:
+    - [X] Implement User Login.
+  - [X] Forgot Password Screen:
+    - [X] Implement Password Reset Functionality.
 
 - Mustafa Ahmed:
   - [X] [Design UI/UX with 'Ahmed Mohamed' on Figma.](https://www.figma.com/file/Kn5VCosRwoBgf5tNgy2USl/Novel-Nest-App-UI%2FUX?type=design&t=lcHt87tUpqvh5Fjx-6)
@@ -126,8 +126,8 @@
     - [ ] Retrieve User Information.
   - [ ] ListOfUsers Screen:
     - [X] Retrieve All Users.
-    - [ ] Implement Search and Filter Functionality for Users.
-    - [ ] Implement User Deletion.
+    - [X] Implement Search and Filter Functionality for Users.
+    - [X] Implement User Deletion.
   - [ ] EditUser Screen:
     - [ ] Implement User Update Functionality.
   - [ ] AddUser Screen:
