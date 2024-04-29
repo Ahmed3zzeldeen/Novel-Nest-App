@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable , Stack} from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 
@@ -6,12 +6,7 @@ const HomeScreen = () => {
   const router = useRouter();
   return (
     <View style={styles.ScreenContainer}>
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>Home Page</Text>
-      <Pressable onPress={() => router.back()}>
-        <Text style={styles.Text}>
-          Go Back
-        </Text>
-      </Pressable>
+      <Text>From Home!</Text>
     </View>
   );
 };
