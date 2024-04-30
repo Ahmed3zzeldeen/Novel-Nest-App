@@ -4,15 +4,16 @@ import { ImageBackground, Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeHeader from "./HomeHeader";
+import COLORS from "@/constants/colors";
 
 const AppHeaders = () => {
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#00f",
+          backgroundColor: COLORS.primary,
         },
-        headerTintColor: "#fff",
+        headerTintColor: COLORS.white,
       }}
     >
       <Stack.Screen
@@ -20,14 +21,32 @@ const AppHeaders = () => {
         options={{
           headerTitle: "Landing Page",
           headerRight: () => (
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 10,
+              }}
+            >
               <Link href={ROUTES.AUTH.LOG_IN}>
-                <Text style={{ color: "#fff", fontWeight: "bold", margin: 10 }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontWeight: "bold",
+                    margin: 10,
+                  }}
+                >
                   Login
                 </Text>
               </Link>
               <Link href={ROUTES.AUTH.SIGN_UP}>
-                <Text style={{ color: "#fff", fontWeight: "bold", margin: 10 }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontWeight: "bold",
+                    margin: 10,
+                  }}
+                >
                   signup
                 </Text>
               </Link>
@@ -56,6 +75,10 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.AUTH.SIGN_UP}
         options={{ headerTitle: "Signup Page", presentation: "modal" }}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTH.FORGOT_PASSWORD}
+        options={{ headerTitle: "Reset password", presentation: "modal" }}
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.MANAGE_USERS}
