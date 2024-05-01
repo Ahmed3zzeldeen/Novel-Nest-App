@@ -4,8 +4,8 @@ import { ImageBackground, Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeHeader from "./HomeHeader";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HomeHeader from "./HomeHeader";
+import COLORS from "@/constants/colors";
+
 const AppHeaders = () => {
   return (
     <Stack
