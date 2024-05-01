@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, Stack } from "expo-router";
-import { Text, View } from "react-native";
+import { ImageBackground, Text, View } from "react-native";
 import ROUTES from "../constants/routes";
+import { SafeAreaView } from "react-native-safe-area-context";
+import HomeHeader from "./HomeHeader";
 import COLORS from "@/constants/colors";
 
 const AppHeaders = () => {
@@ -54,7 +56,9 @@ const AppHeaders = () => {
       />
       <Stack.Screen
         name={ROUTES.PUBLIC.HOME}
-        options={{ headerTitle: "Home Page" }}
+        options={{
+          header: () => (<HomeHeader />)
+        }}
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.HOME}
