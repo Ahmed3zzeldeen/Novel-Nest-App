@@ -97,9 +97,19 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         backgroundColor: COLORS.secondary,
+        width: '89%',
+        paddingLeft: '5%',
+        borderBottomLeftRadius: 5,
+        borderTopLeftRadius: 5,
     },
     searchBox: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginHorizontal: '10%',
+        justifyContent: 'space-between',
+        padding: 3,
+        backgroundColor: COLORS.secondary,
+        borderRadius: 5,
+        marginVertical: '5%'
     },
     searchIconBox: {
         backgroundColor: COLORS.secondary,
