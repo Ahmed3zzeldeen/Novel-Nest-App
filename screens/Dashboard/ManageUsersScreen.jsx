@@ -184,7 +184,7 @@ const ManageUsersScreen = () => {
           <Item
             id={item.id}
             img={item.image}
-            text={item.user_name}
+            text={item.username}
             email={item.email}
           ></Item>
         )}
