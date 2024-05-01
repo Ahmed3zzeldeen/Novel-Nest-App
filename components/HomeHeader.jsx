@@ -22,9 +22,31 @@ const HomeHeader = () => {
                     <Text style={styles.homeText}>Home</Text>
                     <View style={styles.headerIcons}>
                         <View>
-                            <Image source={require('../assets/images/icons/logout.png')}/>
+                            <Image 
+                                source={require('../assets/images/icons/logout.png')}
+                                // style={{width: 25 , height: 25}}
+                            />
                         </View>
-                        
+                        <View style={styles.cartBox}>
+                            <ImageBackground 
+                                source={require('../assets/images/icons/cart.png')}
+                                style={{
+                                    width: 35.71, 
+                                    height: 31.75,
+                                }}
+                                
+                            >
+                                <View style={styles.counter}>
+                                    <Text style={styles.counterText}>{counter}</Text>
+                                </View>
+                            </ImageBackground>
+                        </View>
+                        <View>
+                            <Image 
+                                source={require('../assets/images/icons/profile.png')}
+                                style={{width: 40 , height: 40}}
+                            />
+                        </View>
                         <View style={styles.cartBox}>
                             <ImageBackground 
                                 source={require('../assets/images/icons/cart.png')}
