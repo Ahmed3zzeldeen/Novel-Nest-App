@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
+import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar} from "react-native";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
@@ -7,7 +7,6 @@ import ROUTES from "@/constants/routes";
 const HomeHeader = () => {
 
     const [search , setSearch] = useState('');
-
     const [counter , setCounter] = useState(0);
 
     return (
@@ -24,26 +23,6 @@ const HomeHeader = () => {
                         <View>
                             <Image 
                                 source={require('../assets/images/icons/logout.png')}
-                            />
-                        </View>
-                        <View style={styles.cartBox}>
-                            <ImageBackground 
-                                source={require('../assets/images/icons/cart.png')}
-                                style={{
-                                    width: 35.71, 
-                                    height: 31.75,
-                                }}
-                                
-                            >
-                                <View style={styles.counter}>
-                                    <Text style={styles.counterText}>{counter}</Text>
-                                </View>
-                            </ImageBackground>
-                        </View>
-                        <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
-                            <Image 
-                                source={require('../assets/images/icons/profile.png')}
-                                style={{width: 40 , height: 40}}
                             />
                         </View>
                         <View style={styles.cartBox}>
@@ -90,9 +69,11 @@ export default HomeHeader;
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: COLORS.secondary,
         backgroundColor: COLORS.white,
     },
     header: {
+        marginTop: '10%',
         marginTop: '10%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -107,6 +88,7 @@ const styles = StyleSheet.create({
     headerIcons: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: 150,
         width: '35%',
         width: 150,
         justifyContent: 'space-between'
@@ -116,7 +98,8 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
         marginHorizontal: '5%',
-        marginVertical: '3%',
+        marginTop: '5%'
+
     },
     searchBar: {
         backgroundColor: COLORS.secondary,
@@ -144,6 +127,10 @@ const styles = StyleSheet.create({
         paddingLeft: '5%',
         borderBottomLeftRadius: 5,
         borderTopLeftRadius: 5,
+        width: '89%',
+        paddingLeft: '5%',
+        borderBottomLeftRadius: 5,
+        borderTopLeftRadius: 5,
     },
     searchBox: {
         flexDirection: 'row',
@@ -161,6 +148,21 @@ const styles = StyleSheet.create({
         padding: '3%',
         borderBottomRightRadius: 5,
         borderTopRightRadius: 5,
+    },
+    counter: {
+        width: 21.43,
+        height: 21.43,
+        backgroundColor: COLORS.primary,
+        alignItems: 'center',
+        borderRadius: 50,
+        position: 'absolute',
+        right: 25,
+        bottom: 20
+    },
+    counterText: {
+        color: COLORS.white,
+        fontSize: 16,
+        fontWeight: '700'
     },
     counter: {
         width: 21.43,
