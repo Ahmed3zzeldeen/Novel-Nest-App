@@ -88,7 +88,6 @@ const ManageUsersScreen = () => {
 
   const onChangeText = async (text) => {
     try {
-	console.log("text: ", text);
       const nameUsers = await searchUsersByName(text);
       const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
@@ -108,8 +107,24 @@ const ManageUsersScreen = () => {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
+      <View style={styles.buttonsArea}>
+	  <Pressable
+	    style={{ alignSelf: "center", margin: 10 , backgroundColor:COLORS.primary , borderRadius : 3}}
+	    onPress={() => {
+	      router.replace(ROUTES.DASHBOARD.ADD_NEW_USER);
+	    }}
+	  >
+	    <Text style={{ color: COLORS.white, fontSize: 20 ,margin : 3 }}>
+	      New{" "}
+	      <FontAwesome6
+		name="add"
+		size={24}
+		color={COLORS.white}
+	      />
+	    </Text>
+	  </Pressable>
       <Pressable
-        style={{ alignSelf: "flex-end", margin: 10 }}
+        style={{ alignSelf: "center",margin: 10 }}
         onPress={() => {
           router.replace(ROUTES.AUTH.SIGN_OUT);
         }}
@@ -124,6 +139,7 @@ const ManageUsersScreen = () => {
           logout
         </Text>
       </Pressable>
+      </View>
       <View
         style={{
           flex: 1,
@@ -182,6 +198,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: COLORS.white,
   },
+  buttonsArea:{
+      flex :1 , 
+      flexDirection: "row",
+      maxHeight: "10%",
+      Width:"100%",
+      justifyContent: "space-between",
+    },
   text: {
     color: COLORS.primary,
     fontSize: 24, // Adjusted for more standard viewing
@@ -204,5 +227,6 @@ const styles = StyleSheet.create({
   },
   Text: {
     color: COLORS.primary,
+    fontFamily: "Fira Sans",
   },
 });
