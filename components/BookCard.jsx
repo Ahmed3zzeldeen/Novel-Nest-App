@@ -1,7 +1,7 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {View , Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
 
-const BookCard = ({ image }) =>{ 
+const BookCard = ({image}) =>{ 
   
   return (
     <Pressable>
@@ -33,11 +33,6 @@ const BookCard = ({ image }) =>{
         <Pressable style={styles.cartButton}>
           <View style={styles.addToCartBox}>
             <Text style={styles.cartText}>Add To Cart</Text>
-            {/* <View>
-              <Image 
-                source={require('../assets/images/icons/cart-btn.png')}
-              />
-            </View> */}
           </View>
         </Pressable>
       </ImageBackground>

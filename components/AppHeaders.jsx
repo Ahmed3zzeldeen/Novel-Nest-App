@@ -1,9 +1,8 @@
 import React from "react";
 import { Link, Stack } from "expo-router";
-import { ImageBackground, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HomeHeader from "./HomeHeader";
+import { HomeHeader } from '@/components';
 import COLORS from "@/constants/colors";
 
 const AppHeaders = () => {

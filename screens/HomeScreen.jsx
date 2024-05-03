@@ -1,9 +1,8 @@
-import { StyleSheet, View, Text, Pressable , Stack, FlatList} from "react-native";
+import { StyleSheet, View, Text, FlatList} from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";
-import BestSellerCard from "@/components/BestSellerCard";
-import BookCard from "@/components/BookCard";
+import { BookCard , BestSellerCard } from "@/components";
 
 const HomeScreen = () => {
   const router = useRouter();
