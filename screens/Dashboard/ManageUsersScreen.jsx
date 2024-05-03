@@ -12,7 +12,8 @@ import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import {
-  findUserByEmail,
+  searchUsersByEmail,
+  searchUsersByName,
   getUsers,
   deleteUser,
 } from "../../firebase/apis/users";
@@ -82,33 +83,13 @@ const ManageUsersScreen = () => {
       </View>
     );
   };
-  const getUserByEmail = async (email) => {
-    try {
-      const users = await findUsersByEmail(email);
-      console.log("searched in usersManage:", user);
-      return users;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-  };
 
-  const getUserByUsersName = async (userName) => {
-    try {
-      const users = await findUsersByName(userName);
-      setSearchedUser(user);
-      console.log("searched in usersManage:", user);
-      return user;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-  };
 
   const onChangeText = async (text) => {
     try {
-      const nameUsers = await findUsersByName(text);
-      const emailUsers = await findUsersByEmail(text);
-      console.log("out put of search", nameUsers);
-      console.log("out put of search", emailUsers);
+	console.log("text: ", text);
+      const nameUsers = await searchUsersByName(text);
+      const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
       emailUsers.forEach((item) => map.set(item.id, item));
       let users = Array.from(map.values());
