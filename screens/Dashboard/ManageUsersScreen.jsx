@@ -14,6 +14,8 @@ import { router } from "expo-router";
 import {
   searchUsersByEmail,
   searchUsersByName,
+  searchUsersByEmail,
+  searchUsersByName,
   getUsers,
   deleteUser,
 } from "../../firebase/apis/users";
@@ -86,8 +88,10 @@ const ManageUsersScreen = () => {
   };
 
 
+
   const onChangeText = async (text) => {
     try {
+	console.log("text: ", text);
       const nameUsers = await searchUsersByName(text);
       const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
