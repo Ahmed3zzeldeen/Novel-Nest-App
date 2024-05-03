@@ -96,6 +96,24 @@ async function findUserByField(fieldName, value) {
   }));
   return users.length > 0 ? users[0] : null;
 }
+
+// tested ✓
+async function searchUsersByEmail(email) {
+  const users = await getUsers();
+  console.log("from search by email:", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(email))});
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
+}
+
+// tested ✓
+async function searchUsersByName(user_name) {
+  const users = await getUsers();
+  console.log("from search by name :", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(user_name))});
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
+}
 // using the findUserByField function example
 // const userByEmail = await findUserByField("email", "example@example.com");
 // const userByUsername = await findUserByField("username", "example_username");
@@ -111,4 +129,6 @@ export {
   deleteUser,
   findUserById,
   findUserByField,
+  searchUsersByName,
+  searchUsersByEmail,
 };
