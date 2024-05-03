@@ -1,4 +1,4 @@
-import { db } from "../Config";
+import { auth,db } from "../Config";
 import {
   collection,
   getDocs,
@@ -11,7 +11,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-
+import {deleteUserAuth} from "./auth";
 const usersCollectionRef = collection(db, "users");
 
 // tested ✓
@@ -41,12 +41,11 @@ async function createUser(
       fullName: `${firstName} ${lastName}`,
       email,
       role,
-      avater: "https://www.gravatar.com/avatar/",
+      avatar: "https://www.gravatar.com/avatar/",
     },
   );
   return res;
 }
-
 // on any change in the users
 // tested ✓
 onSnapshot(usersCollectionRef, (snapshot) => {
@@ -61,6 +60,8 @@ onSnapshot(usersCollectionRef, (snapshot) => {
 // tested ✓
 async function deleteUser(uid) {
   const userDocRef = doc(db, "users", uid);
+  let user = (await getDoc(userDocRef)) ;
+  // let  ress = await deleteUserAuth(user.data().email);
   const res = await deleteDoc(userDocRef);
   return res;
 }
@@ -95,6 +96,22 @@ async function findUserByField(fieldName, value) {
   }));
   return users.length > 0 ? users[0] : null;
 }
+
+// tested ✓
+async function searchUsersByEmail(email) {
+  const users = await getUsers();
+  const filteredUsers = users.filter((item) => {return (item.email.includes(email))});
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
+}
+
+// tested ✓
+async function searchUsersByName(userName) {
+  const users = await getUsers();
+  const filteredUsers = users.filter((item) => {return (item.username.includes(userName))});
+  console.log("searched ", filteredUsers);
+  return filteredUsers;
+}
 // using the findUserByField function example
 // const userByEmail = await findUserByField("email", "example@example.com");
 // const userByUsername = await findUserByField("username", "example_username");
@@ -110,4 +127,6 @@ export {
   deleteUser,
   findUserById,
   findUserByField,
+  searchUsersByName,
+  searchUsersByEmail,
 };
