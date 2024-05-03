@@ -100,15 +100,17 @@ async function findUserByField(fieldName, value) {
 // tested ✓
 async function searchUsersByEmail(email) {
   const users = await getUsers();
-  const filteredUsers = users.filter((item) => {return (item.email.includes(email))});
+  console.log("from search by email:", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(email))});
   console.log("searched ", filteredUsers);
   return filteredUsers;
 }
 
 // tested ✓
-async function searchUsersByName(userName) {
+async function searchUsersByName(user_name) {
   const users = await getUsers();
-  const filteredUsers = users.filter((item) => {return (item.username.includes(userName))});
+  console.log("from search by name :", users);
+  const filteredUsers = users.filter((item) => {return (item.user_name.includes(user_name))});
   console.log("searched ", filteredUsers);
   return filteredUsers;
 }
@@ -127,6 +129,8 @@ export {
   deleteUser,
   findUserById,
   findUserByField,
+  searchUsersByName,
+  searchUsersByEmail,
   searchUsersByName,
   searchUsersByEmail,
 };
