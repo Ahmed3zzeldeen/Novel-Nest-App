@@ -18,6 +18,7 @@ import {
   deleteUser,
 } from "../../firebase/apis/users";
 import { SafeAreaView } from "react-native-safe-area-context";
+import COLORS from "@/constants/colors";
 
 const ManageUsersScreen = () => {
   const [users, setUsers] = useState();
@@ -49,7 +50,7 @@ const ManageUsersScreen = () => {
       <View style={styles.userCard}>
         <Image
           source={{ uri: img }}
-          style={{ width: 50, height: 50, alignSelf: "flex-start", margin: 10 }}
+          style={{ width: 50, height: 50,borderRadius:25, alignSelf: "flex-start", margin: 10 }}
         />
         <View style={styles.infoCard}>
           <Text style={styles.Text}>{text}</Text>
@@ -60,7 +61,7 @@ const ManageUsersScreen = () => {
             <FontAwesome
               name="trash"
               size={24}
-              color="#29648F"
+              color={COLORS.primary}
               style={{ margin: 10 }}
               onPress={() => {
                 delUserById(id);
@@ -75,7 +76,7 @@ const ManageUsersScreen = () => {
             <FontAwesome
               name="pencil-square"
               size={24}
-              color="#29648F"
+              color={COLORS.primary}
               style={{ margin: 10 }}
             />
           </Pressable>
@@ -113,11 +114,11 @@ const ManageUsersScreen = () => {
           router.replace(ROUTES.AUTH.SIGN_OUT);
         }}
       >
-        <Text style={{ color: "#29649f", fontSize: 20 }}>
+        <Text style={{ color: COLORS.primary, fontSize: 20 }}>
           <FontAwesome6
             name="door-open"
             size={24}
-            color="#29648F"
+            color={COLORS.primary}
             style={{ margin: 10 }}
           />
           logout
@@ -127,27 +128,27 @@ const ManageUsersScreen = () => {
         style={{
           flex: 1,
           flexDirection: "row",
-          backgroundcolor: "#29648F",
+          backgroundcolor: COLORS.primary,
           height: 50,
         }}
       >
         <TextInput
           style={{
-            backgroundColor: "#eadecf",
+            backgroundColor: COLORS.secondary,
             width: "90%",
             height: 50,
             borderTopLeftRadius: 20,
             borderBottomLeftRadius: 20,
           }}
           placeholder="Search by user email or username"
-          placeholderTextColor="#29648F"
+          placeholderTextColor={COLORS.primary}
           onChangeText={(text) => onChangeText(text)}
         ></TextInput>
         <Text
           style={{
             fontSize: 30,
-            backgroundColor: "#eadecf",
-            color: "#29648F",
+            backgroundColor: COLORS.secondary,
+            color: COLORS.primary,
             borderTopRightRadius: 20,
             borderBottomRightRadius: 20,
             height: 50,
@@ -162,7 +163,7 @@ const ManageUsersScreen = () => {
         renderItem={({ item }) => (
           <Item
             id={item.id}
-            img={item.image}
+            img={item.avatar}
             text={item.username}
             email={item.email}
           ></Item>
@@ -179,10 +180,10 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#f7f0e8",
+    backgroundColor: COLORS.white,
   },
   text: {
-    color: "#29648f",
+    color: COLORS.primary,
     fontSize: 24, // Adjusted for more standard viewing
     fontWeight: "bold",
   },
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     margin: 10,
-    backgroundColor: "#eadecf",
+    backgroundColor: COLORS.secondary,
     flexDirection: "row",
     flexWrap: "wrap",
     width: "85%",
@@ -202,6 +203,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   Text: {
-    color: "#29648F",
+    color: COLORS.primary,
   },
 });
