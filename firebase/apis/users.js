@@ -41,7 +41,7 @@ async function createUser(
       fullName: `${firstName} ${lastName}`,
       email,
       role,
-      avater: "https://www.gravatar.com/avatar/",
+      avatar: "https://www.gravatar.com/avatar/",
     },
   );
   return res;
