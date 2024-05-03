@@ -1,4 +1,4 @@
-import { db } from "../Config";
+import { auth,db } from "../Config";
 import {
   collection,
   getDocs,
@@ -11,7 +11,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-
+import {deleteUserAuth} from "./auth";
 const usersCollectionRef = collection(db, "users");
 
 // tested ✓
@@ -46,7 +46,6 @@ async function createUser(
   );
   return res;
 }
-
 // on any change in the users
 // tested ✓
 onSnapshot(usersCollectionRef, (snapshot) => {
@@ -61,6 +60,8 @@ onSnapshot(usersCollectionRef, (snapshot) => {
 // tested ✓
 async function deleteUser(uid) {
   const userDocRef = doc(db, "users", uid);
+  let user = (await getDoc(userDocRef)) ;
+  // let  ress = await deleteUserAuth(user.data().email);
   const res = await deleteDoc(userDocRef);
   return res;
 }

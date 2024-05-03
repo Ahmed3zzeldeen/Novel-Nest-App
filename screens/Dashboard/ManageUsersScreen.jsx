@@ -14,9 +14,7 @@ import { router } from "expo-router";
 import {
   findUserByEmail,
   getUsers,
-  findUsersByEmail,
-  findUsersByName,
-  delUser,
+  deleteUser,
 } from "../../firebase/apis/users";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -38,7 +36,7 @@ const ManageUsersScreen = () => {
 
   const delUserById = async (id) => {
     try {
-      const response = await delUser(id);
+      const response = await deleteUser(id);
       await reqUsers();
       console.log("deleted user", response);
     } catch (e) {
