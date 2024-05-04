@@ -14,7 +14,7 @@ import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from "react-native-safe-area-context";
-import {uplouadFile} from "../../firebase/apis/storage";
+import {uplouadFile, getLink} from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 const AddUserScreen = () => {
   const [userNameprev, setUserNameprev] = useState("");
@@ -45,7 +45,7 @@ const AddUserScreen = () => {
   };
 
   useEffect(() => {
-      console.log(image);
+      // console.log(image);
   }, [image]);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -65,16 +65,14 @@ const AddUserScreen = () => {
   const uploadImage = async () => {
        const response = await fetch(image);
        const blob = await response.blob();
-       uplouadFile (blob);
-       // const ref = storage.ref().child(new Date().toISOString());
-       // const snapshot = await ref.put(blob);
-       // return (await snapshot.ref.getDownloadURL());
+       const ref = await uplouadFile ('bsbs',blob);
+       console.log(await getLink(ref.ref));
   };
   return (
     <SafeAreaView style={styles.screenContainer}>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      {image && <Button title="Upload to Firebase" onPress={() => uploadImage().then(url => alert("Uploaded successfully: " + url))} />}
+      {image && <Button title="Upload to Firebase" onPress={() => uploadImage().then(url =>{})} />}
       <View style={styles.buttonsArea}>
 	  <Pressable
 	    style={{ alignSelf: "flex-end",margin: 10 }}
