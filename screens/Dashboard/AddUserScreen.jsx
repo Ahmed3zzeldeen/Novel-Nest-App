@@ -17,37 +17,45 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {uplouadFile, getLink} from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
+import { Switch } from "react-native-web";
 const AddUserScreen = () => {
-  const [userNameprev, setUserNameprev] = useState("");
-  const [firstNameprev, setFirstNameprev] = useState("");
-  const [lastNameprev, setLastNameprev] = useState("");
-  const [emailprev, setEmailprev] = useState("");
-  const [userNameinput, setUserNameinput] = useState("");
-  const [firstNameinput, setFirstNameinput] = useState("");
-  const [lastNameinput, setLastNameinput] = useState("");
-  const [emailinput, setEmailinput] = useState("");
-  const [passinput, setPassinput] = useState("");
+  const [userNameprev, setUserNameprev] = useState();
+  const [firstNameprev, setFirstNameprev] = useState();
+  const [lastNameprev, setLastNameprev] = useState();
+  const [emailprev, setEmailprev] = useState();
+  const [userNameinput, setUserNameinput] = useState();
+  const [firstNameinput, setFirstNameinput] = useState();
+  const [lastNameinput, setLastNameinput] = useState();
+  const [emailinput, setEmailinput] = useState();
+  const [passinput, setPassinput] = useState();
   const [image, setImage] = useState(null);
   //require users from the database
 
-  const onChangeText = async (text) => {
-    try {
-      const nameUsers = await searchUsersByName(text);
-      const emailUsers = await searchUsersByEmail(text);
-      const map = new Map(nameUsers.map((item) => [item.id, item]));
-      emailUsers.forEach((item) => map.set(item.id, item));
-      let users = Array.from(map.values());
-      setFilteredUsers(users);
-      console.log("searched in usersManage:", users);
-      return users;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
+  const onChange= (type, text) => {
+      switch (type) {
+   	case 1:
+		setFirstNameinput(text);
+		setFirstNameprev(text);
+		break;
+     	case 2:
+		setLastNameinput(text);
+	setLastNameprev(text);
+	break;
+  	case 3:
+	setUserNameinput(text);
+	setUserNameprev(text);
+	break;
+  	case 4:
+	setEmailinput(text);
+	setEmailprev(text);
+	break;
+  	case 5:
+	setPassinput(text);
+		break;
+      		break;
+      }
   };
 
-  useEffect(() => {
-      // console.log(image);
-  }, [image]);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -69,13 +77,13 @@ const AddUserScreen = () => {
        const ref = await uplouadFile ('bsbs',blob);
        return (await getLink(ref.ref));
   };
-  const Input = ({ text,placeHolder, width , setter1 , setter2}) => {
+  const Input = ({ text,placeHolder, width , type}) => {
     return (
       <View style={{flex :1 , gap : 5}}>
 	<Text style = {{width : 160 , height : 20 , fontWeight:"700" , color: COLORS.primary,fontFamily: "Fira Sans",}}>{text}</Text>
 	<TextInput placeholder = {placeHolder}
         placeholderTextColor={COLORS.primary_70}
-        onChangeText={(text) => {setter1(text);setter2(text); }}
+        onChangeText={(text) => onChange(type,text)}
 	style = {{width : width , backgroundColor: COLORS.secondary , height : 30 , fontFamily: "Fira Sans",borderTopColor:COLORS.primary,borderRadius: 5}}
 	>
 	</TextInput>
@@ -123,12 +131,12 @@ const AddUserScreen = () => {
       <Text style= {styles.Text}>Email: {emailprev} </Text>
       <View style ={styles.inputsArea}>
 	    <View style = {styles.firstRow}>
-		<Input text = "First Name:" placeHolder = "Robert"  width = {160}/>
-		<Input text = "Last Name:" placeHolder = "martin"  width = {160}/>
+		<Input text = "First Name:" placeHolder = "Robert"  width = {160} type ={1}  />
+		<Input text = "Last Name:" placeHolder = "martin"  width = {160}type ={2}/>
 	    </View>
-	    <Input text = "Username:" placeHolder = "RobertMartin123"  width = {"100%"}/>
-	    <Input text = "Email:" placeHolder = "example@something.com"  width = {"100%"}/>
-	    <Input text = "Password" placeHolder = "Password here!"  width = {"100%"}/>
+	    <Input text = "Username:" placeHolder = "RobertMartin123"  width = {"100%"}type ={3}/>
+	    <Input text = "Email:" placeHolder = "example@something.com"  width = {"100%"}type ={4}/>
+	    <Input text = "Password" placeHolder = "Password here!"  width = {"100%"}type ={6}/>
       </View>
     </SafeAreaView>
   );
