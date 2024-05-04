@@ -92,7 +92,17 @@ const AddUserScreen = () => {
       <Text style={styles.text}>User Preview</Text>
       <View style = {styles.AvatarArea}>
 	  <Image source={(image)? { uri: image }: profilePic} style={{ width: 50, height: 50 , borderRadius:5 }} />
-	  <Pressable style = {styles.avatarButton} onPress = {()=>{pickImage();}}><Text style= {{color:COLORS.white,fontSize :18, fontFamily: "Fira Sans" , fontWeight:700 , alignSelf:"center" }}>Avatar</Text> </Pressable>
+	  <Pressable style = {styles.avatarButton} onPress = {()=>{pickImage();}}>
+	      <Text style= {{color:COLORS.secondary,fontSize :18, fontFamily: "Fira Sans" , fontWeight:"700" , alignSelf:"center" }}>
+		  Avatar
+	      </Text> 
+	      <FontAwesome6
+		name="cloud-arrow-up"
+		size={18}
+		color={COLORS.secondary}
+		style={{ alignSelf : "center" }}
+	      />
+	  </Pressable>
       </View>
       <Text style= {styles.Text}>Username: {userNameprev} </Text>
       <Text style= {styles.Text}>First Name: {firstNameprev} </Text>
@@ -108,14 +118,18 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingLeft : 10 ,
   },
   avatarButton:{
+    flex: 1,
     backgroundColor: COLORS.primary,
     width : 113, 
     height : 34 , 
     borderRadius: 5, 
     justifyContent : "center",
     alignSelf:"center",
+    gap: 3, 
+    flexDirection: "row",
     
   },
   AvatarArea:{
@@ -124,11 +138,13 @@ const styles = StyleSheet.create({
       width: 171, 
       maxHeight: 50 , 
       gap: 8 , 
+      marginTop: 10, 
+      marginBottom : 10 ,
     },
   text: {
     color: COLORS.primary,
     fontSize: 20, // Adjusted for more standard viewing
-    fontWeight: 700,
+    fontWeight: "700",
   },
   userCard: {
     flex: 1,
@@ -149,6 +165,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: "Fira Sans",
     fontSize: 16,
-    fontWeight: 700,
+    fontWeight: "700",
+      marginBottom : 10 ,
   }
 });
