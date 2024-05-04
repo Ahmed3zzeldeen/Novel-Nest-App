@@ -13,10 +13,9 @@ import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
-import { auth,db, storage } from "../../firebase/Config";
+import { auth,db,storage} from "../../firebase/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "@/constants/colors";
-
 const AddUserScreen = () => {
   const [userNameprev, setUserNameprev] = useState("");
   const [firstNameprev, setFirstNameprev] = useState("");
@@ -46,18 +45,21 @@ const AddUserScreen = () => {
   };
 
   useEffect(() => {
-  }, []);
-
+      console.log(image);
+  }, [image]);
   const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
   const uploadImage = async () => {
@@ -65,7 +67,7 @@ const AddUserScreen = () => {
        const blob = await response.blob();
        const ref = storage.ref().child(new Date().toISOString());
        const snapshot = await ref.put(blob);
-       return await snapshot.ref.getDownloadURL();
+       // return (await snapshot.ref.getDownloadURL());
   };
   return (
     <SafeAreaView style={styles.screenContainer}>
