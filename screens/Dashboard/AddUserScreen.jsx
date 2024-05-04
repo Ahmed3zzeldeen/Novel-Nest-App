@@ -5,86 +5,30 @@ import {
   TextInput,
   Text,
   FlatList,
+  Button,
   Image,
 } from "react-native";
 import { React, useEffect, useState } from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
-import {
-  searchUsersByEmail,
-  searchUsersByName,
-  getUsers,
-  deleteUser,
-} from "../../firebase/apis/users";
+import * as ImagePicker from 'expo-image-picker';
+import { auth,db, storage } from "../../firebase/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "@/constants/colors";
 
 const AddUserScreen = () => {
-  const [users, setUsers] = useState();
-  const [filteredUsers, setFilteredUsers] = useState();
+  const [userNameprev, setUserNameprev] = useState("");
+  const [firstNameprev, setFirstNameprev] = useState("");
+  const [lastNameprev, setLastNameprev] = useState("");
+  const [emailprev, setEmailprev] = useState("");
+  const [userNameinput, setUserNameinput] = useState("");
+  const [firstNameinput, setFirstNameinput] = useState("");
+  const [lastNameinput, setLastNameinput] = useState("");
+  const [emailinput, setEmailinput] = useState("");
+  const [passinput, setPassinput] = useState("");
+  const [image, setImage] = useState(null);
   //require users from the database
-  const reqUsers = async () => {
-    try {
-      const users = await getUsers();
-      setUsers(users);
-      setFilteredUsers(users);
-      console.log("users from :", users);
-      return users;
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-  };
-
-  const delUserById = async (id) => {
-    try {
-      const response = await deleteUser(id);
-      await reqUsers();
-      console.log("deleted user", response);
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-  };
-  const Item = ({ text, img, id, email }) => {
-    return (
-      <View style={styles.userCard}>
-        <Image
-          source={{ uri: img }}
-          style={{ width: 50, height: 50,borderRadius:25, alignSelf: "flex-start", margin: 10 }}
-        />
-        <View style={styles.infoCard}>
-          <Text style={styles.Text}>{text}</Text>
-          <Text style={styles.Text}>{email}</Text>
-        </View>
-        <View>
-          <Pressable style={{ alignSelf: "flex-end" }}>
-            <FontAwesome
-              name="trash"
-              size={24}
-              color={COLORS.primary}
-              style={{ margin: 10 }}
-              onPress={() => {
-                delUserById(id);
-              }}
-            />
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              router.push(ROUTES.DASHBOARD.EDIT_USER + id);
-            }}
-          >
-            <FontAwesome
-              name="pencil-square"
-              size={24}
-              color={COLORS.primary}
-              style={{ margin: 10 }}
-            />
-          </Pressable>
-        </View>
-      </View>
-    );
-  };
-
 
   const onChangeText = async (text) => {
     try {
@@ -102,29 +46,55 @@ const AddUserScreen = () => {
   };
 
   useEffect(() => {
-    reqUsers();
   }, []);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  const uploadImage = async () => {
+       const response = await fetch(image);
+       const blob = await response.blob();
+       const ref = storage.ref().child(new Date().toISOString());
+       const snapshot = await ref.put(blob);
+       return await snapshot.ref.getDownloadURL();
+  };
   return (
     <SafeAreaView style={styles.screenContainer}>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      {image && <Button title="Upload to Firebase" onPress={() => uploadImage().then(url => alert("Uploaded successfully: " + url))} />}
       <View style={styles.buttonsArea}>
-      <Pressable
-        style={{ alignSelf: "center",margin: 10 }}
-        onPress={() => {
-          router.replace(ROUTES.AUTH.SIGN_OUT);
-        }}
-      >
-        <Text style={{ color: COLORS.primary, fontSize: 20 }}>
-          <FontAwesome6
-            name="door-open"
-            size={24}
-            color={COLORS.primary}
-            style={{ margin: 10 }}
-          />
-          logout
-        </Text>
-      </Pressable>
+	  <Pressable
+	    style={{ alignSelf: "flex-end",margin: 10 }}
+	    onPress={() => {
+	      router.replace(ROUTES.AUTH.SIGN_OUT);
+	    }}
+	  >
+	    <Text style={{ color: COLORS.primary, fontSize: 20 }}>
+	      <FontAwesome6
+		name="door-open"
+		size={24}
+		color={COLORS.primary}
+		style={{ margin: 10 }}
+	      />
+	      logout
+	    </Text>
+	  </Pressable>
       </View>
+      <Text style={styles.text}>User Preview</Text>
+      <Text style= {styles.Text}>Username: {userNameprev} </Text>
+      <Text style= {styles.Text}>First Name: {firstNameprev} </Text>
+      <Text style= {styles.Text}>Last Name: {lastNameprev} </Text>
+      <Text style= {styles.Text}>Email: {emailprev} </Text>
     </SafeAreaView>
   );
 };
@@ -134,7 +104,6 @@ export default AddUserScreen;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: COLORS.white,
   },
   buttonsArea:{
@@ -142,11 +111,11 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       maxHeight: "10%",
       Width:"100%",
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
     },
   text: {
     color: COLORS.primary,
-    fontSize: 24, // Adjusted for more standard viewing
+    fontSize: 20, // Adjusted for more standard viewing
     fontWeight: "bold",
   },
   userCard: {
@@ -166,6 +135,5 @@ const styles = StyleSheet.create({
   },
   Text: {
     color: COLORS.primary,
-    fontFamily: "Fira Sans",
   },
 });
