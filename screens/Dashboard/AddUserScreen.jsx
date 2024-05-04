@@ -67,7 +67,19 @@ const AddUserScreen = () => {
        const response = await fetch(image);
        const blob = await response.blob();
        const ref = await uplouadFile ('bsbs',blob);
-       console.log(await getLink(ref.ref));
+       return (await getLink(ref.ref));
+  };
+  const Input = ({ text,placeHolder, width , setter}) => {
+    return (
+      <View style={{flex :1 , gap : 5}}>
+	<Text style = {{width : 160 , height : 20 , fontWeight:"700"}}>{text}</Text>
+	<TextInput placeholder = {placeHolder}
+        placeholderTextColor={COLORS.primary}
+	style = {{}}
+	>
+	</TextInput>
+      </View>
+    );
   };
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -141,6 +153,12 @@ const styles = StyleSheet.create({
       marginTop: 10, 
       marginBottom : 10 ,
     },
+  inputsArea:{
+      flex : 1 ,
+      flexDirection: "row",
+      flexWrap : "wrap",
+
+  },
   text: {
     color: COLORS.primary,
     fontSize: 20, // Adjusted for more standard viewing
