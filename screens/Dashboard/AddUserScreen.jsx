@@ -16,6 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from "react-native-safe-area-context";
 import {uplouadFile, getLink} from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
+import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
 const AddUserScreen = () => {
   const [userNameprev, setUserNameprev] = useState("");
   const [firstNameprev, setFirstNameprev] = useState("");
@@ -70,9 +71,6 @@ const AddUserScreen = () => {
   };
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      {image && <Button title="Upload to Firebase" onPress={() => uploadImage().then(url =>{})} />}
       <View style={styles.buttonsArea}>
 	  <Pressable
 	    style={{ alignSelf: "flex-end",margin: 10 }}
@@ -92,6 +90,10 @@ const AddUserScreen = () => {
 	  </Pressable>
       </View>
       <Text style={styles.text}>User Preview</Text>
+      <View style = {styles.AvatarArea}>
+	  <Image source={(image)? { uri: image }: profilePic} style={{ width: 50, height: 50 , borderRadius:5 }} />
+	  <Pressable style = {styles.avatarButton} onPress = {()=>{pickImage();}}><Text style= {{color:COLORS.white,fontSize :18, fontFamily: "Fira Sans" , fontWeight:700 , alignSelf:"center" }}>Avatar</Text> </Pressable>
+      </View>
       <Text style= {styles.Text}>Username: {userNameprev} </Text>
       <Text style= {styles.Text}>First Name: {firstNameprev} </Text>
       <Text style= {styles.Text}>Last Name: {lastNameprev} </Text>
@@ -107,17 +109,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
   },
-  buttonsArea:{
+  avatarButton:{
+    backgroundColor: COLORS.primary,
+    width : 113, 
+    height : 34 , 
+    borderRadius: 5, 
+    justifyContent : "center",
+    alignSelf:"center",
+    
+  },
+  AvatarArea:{
       flex :1 , 
       flexDirection: "row",
-      maxHeight: "10%",
-      Width:"100%",
-      justifyContent: "flex-end",
+      width: 171, 
+      maxHeight: 50 , 
+      gap: 8 , 
     },
   text: {
     color: COLORS.primary,
     fontSize: 20, // Adjusted for more standard viewing
-    fontWeight: "bold",
+    fontWeight: 700,
   },
   userCard: {
     flex: 1,
@@ -136,5 +147,8 @@ const styles = StyleSheet.create({
   },
   Text: {
     color: COLORS.primary,
-  },
+    fontFamily: "Fira Sans",
+    fontSize: 16,
+    fontWeight: 700,
+  }
 });
