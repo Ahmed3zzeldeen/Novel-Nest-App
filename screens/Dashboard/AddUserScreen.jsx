@@ -69,13 +69,14 @@ const AddUserScreen = () => {
        const ref = await uplouadFile ('bsbs',blob);
        return (await getLink(ref.ref));
   };
-  const Input = ({ text,placeHolder, width , setter}) => {
+  const Input = ({ text,placeHolder, width , setter1 , setter2}) => {
     return (
       <View style={{flex :1 , gap : 5}}>
-	<Text style = {{width : 160 , height : 20 , fontWeight:"700"}}>{text}</Text>
+	<Text style = {{width : 160 , height : 20 , fontWeight:"700" , color: COLORS.primary,fontFamily: "Fira Sans",}}>{text}</Text>
 	<TextInput placeholder = {placeHolder}
-        placeholderTextColor={COLORS.primary}
-	style = {{}}
+        placeholderTextColor={COLORS.primary_70}
+        onChangeText={(text) => {setter1(text);setter2(text); }}
+	style = {{width : width , backgroundColor: COLORS.secondary , height : 30 , fontFamily: "Fira Sans",borderTopColor:COLORS.primary,borderRadius: 5}}
 	>
 	</TextInput>
       </View>
@@ -120,6 +121,15 @@ const AddUserScreen = () => {
       <Text style= {styles.Text}>First Name: {firstNameprev} </Text>
       <Text style= {styles.Text}>Last Name: {lastNameprev} </Text>
       <Text style= {styles.Text}>Email: {emailprev} </Text>
+      <View style ={styles.inputsArea}>
+	    <View style = {styles.firstRow}>
+		<Input text = "First Name:" placeHolder = "Robert"  width = {160}/>
+		<Input text = "Last Name:" placeHolder = "martin"  width = {160}/>
+	    </View>
+	    <Input text = "Username:" placeHolder = "RobertMartin123"  width = {"100%"}/>
+	    <Input text = "Email:" placeHolder = "example@something.com"  width = {"100%"}/>
+	    <Input text = "Password" placeHolder = "Password here!"  width = {"100%"}/>
+      </View>
     </SafeAreaView>
   );
 };
@@ -153,11 +163,16 @@ const styles = StyleSheet.create({
       marginTop: 10, 
       marginBottom : 10 ,
     },
-  inputsArea:{
+  firstRow:{
       flex : 1 ,
       flexDirection: "row",
       flexWrap : "wrap",
-
+      gap : 10,
+      rowGap : 30,
+  },
+  inputsArea:{
+      gap : 10,
+      marginRight : 30,
   },
   text: {
     color: COLORS.primary,
