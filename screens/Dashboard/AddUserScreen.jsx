@@ -13,8 +13,8 @@ import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
-import { auth,db,storage} from "../../firebase/Config";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {uplouadFile} from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 const AddUserScreen = () => {
   const [userNameprev, setUserNameprev] = useState("");
@@ -65,8 +65,9 @@ const AddUserScreen = () => {
   const uploadImage = async () => {
        const response = await fetch(image);
        const blob = await response.blob();
-       const ref = storage.ref().child(new Date().toISOString());
-       const snapshot = await ref.put(blob);
+       uplouadFile (blob);
+       // const ref = storage.ref().child(new Date().toISOString());
+       // const snapshot = await ref.put(blob);
        // return (await snapshot.ref.getDownloadURL());
   };
   return (
