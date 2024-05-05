@@ -114,6 +114,7 @@ console.log(buttons);
         </Text>
       </Pressable>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={buttons}
         renderItem={({ item }) => (
           <Item

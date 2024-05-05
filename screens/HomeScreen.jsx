@@ -1,12 +1,12 @@
-import { StyleSheet, View, Text, Pressable , Stack, FlatList} from "react-native";
+import { StyleSheet, View, Text, FlatList} from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";
-import BestSellerCard from "@/components/BestSellerCard";
-import BookCard from "@/components/BookCard";
+import { BookCard , BestSellerCard } from "@/components";
 
 const HomeScreen = () => {
   const router = useRouter();
+
   const [BestSellerBooks , setBestSellerBooks] = useState([
     {ISBN:1 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
     {ISBN:2 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
@@ -25,6 +25,7 @@ const HomeScreen = () => {
         data={BestSellerBooks}
         renderItem={({item}) => (<BestSellerCard cover={item.cover}/>)}
         keyExtractor={(item) => item.ISBN}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.moreBooks}>
         <Text style={styles.searchText}>Search Results:</Text>
@@ -33,9 +34,10 @@ const HomeScreen = () => {
       <FlatList
         style={styles.searchList}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
-        keyExtractor={(item) => item.id}
+        renderItem={({item}) => (<BookCard cover={item.cover}/>)}
+        keyExtractor={(item) => item.ISBN}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -75,5 +77,5 @@ const styles = StyleSheet.create({
   searchList: {
     marginHorizontal: '5%',
     height: '20%',
-  }
+  },
 });
