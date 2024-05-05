@@ -9,3 +9,4 @@ export {default as OrderCard} from './OrderCard.jsx';
 export {default as BottomSheet} from './BottomSheet.jsx';
 export {default as CustomPopup} from './CustomPopup.jsx';
 export {default as CustomButton} from './CustomButton.jsx';
+export {default as MoreBooksHeader} from './MoreBooksHeader.jsx';

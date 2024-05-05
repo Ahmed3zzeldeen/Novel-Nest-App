@@ -3,7 +3,7 @@ import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import COLORS from "@/constants/colors";
-import {HomeHeader} from '@/components';
+import {HomeHeader, MoreBooksHeader} from '@/components';
 
 const AppHeaders = () => {
   return (
@@ -73,6 +73,12 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.EDIT_PROFILE}
         options={{ headerTitle: "My Profile", presentation: "modal" }}
+      />
+      <Stack.Screen
+        name={ROUTES.PUBLIC.BOOKS}
+        options={{
+          header: () => (<MoreBooksHeader/>)
+        }}
       />
       <Stack.Screen
         name={ROUTES.AUTH.SIGN_UP}
