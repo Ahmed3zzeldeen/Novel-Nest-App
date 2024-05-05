@@ -1,6 +1,8 @@
-import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar} from "react-native";
+import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
+import { router } from "expo-router";
+import ROUTES from "@/constants/routes";
 
 const HomeHeader = () => {
 
@@ -37,12 +39,12 @@ const HomeHeader = () => {
                                 </View>
                             </ImageBackground>
                         </View>
-                        <View>
+                        <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                             <Image 
                                 source={require('../assets/images/icons/profile.png')}
                                 style={{width: 40 , height: 40}}
                             />
-                        </View>
+                        </Pressable>
                     </View>
                 </View>
                 <Text style={styles.usernameText}>Hey! USERNAME</Text>
