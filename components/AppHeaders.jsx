@@ -55,6 +55,10 @@ const AppHeaders = () => {
         }}
       />
       <Stack.Screen
+        name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
+        options={{headerTitle: "List of books"}}
+      />
+      <Stack.Screen
         name={ROUTES.PUBLIC.HOME}
         options={{
           header: () => (<HomeHeader />)

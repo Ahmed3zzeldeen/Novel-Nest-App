@@ -1,13 +1,13 @@
 import COLORS from '@/constants/colors';
 import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
 
-const BestSellerCard = ({ image }) =>{ 
+const BestSellerCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
   
   return (
     <Pressable>
       <ImageBackground 
         style={styles.container}
-        source={image}
+        source={cover}
         imageStyle={{
           borderRadius: 13.8,
         }}

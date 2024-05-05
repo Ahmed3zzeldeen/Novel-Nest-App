@@ -1,31 +1,31 @@
 import COLORS from '@/constants/colors';
 import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
-
-const BookCard = ({ image }) =>{ 
-  
+import { useState } from 'react';
+const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
+  let [numOfBooks, setNumOfBooks] = useState(0);
   return (
     <Pressable>
       <ImageBackground 
         style={styles.container}
-        source={image}
+        source={cover}
         imageStyle={{
           borderRadius: 13.8,    
         }}
       >
         <View style={styles.detailBackground}>
           <View>
-            <Text style={styles.details}>Category: <Text style={styles.content}>Drama</Text></Text>
-            <Text style={styles.details}>Price: <Text style={styles.content}>100EGP</Text></Text>
-            <Text style={styles.details}>Pages: <Text style={styles.content}>140</Text></Text>
+            <Text style={styles.details}>Category: <Text style={styles.content}>{category}</Text></Text>
+            <Text style={styles.details}>Price: <Text style={styles.content}>{price}EGP</Text></Text>
+            <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
             <Pressable style={styles.circleButton}>
-              <Text style={styles.symbol}>-</Text>
+              <Text style={styles.symbol} onPress={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}>-</Text>
             </Pressable>
             <View>
-              <Text style={styles.bookCounter}>10</Text>
+              <Text style={styles.bookCounter}>{numOfBooks}</Text>
             </View>
-            <Pressable style={styles.circleButton}>
+            <Pressable style={styles.circleButton} onPress={() => {setNumOfBooks(++numOfBooks)}}>
               <Text style={styles.symbol}>+</Text>
             </Pressable>
           </View>
@@ -33,11 +33,6 @@ const BookCard = ({ image }) =>{
         <Pressable style={styles.cartButton}>
           <View style={styles.addToCartBox}>
             <Text style={styles.cartText}>Add To Cart</Text>
-            {/* <View>
-              <Image 
-                source={require('../assets/images/icons/cart-btn.png')}
-              />
-            </View> */}
           </View>
         </Pressable>
       </ImageBackground>
