@@ -23,6 +23,7 @@ const HomeHeader = () => {
                 style={{height: 200}}
                 imageStyle={{ borderBottomLeftRadius: 50 , borderBottomRightRadius: 50 , opacity: 0.87 }}
             >
+                <View style={styles.darkCover}></View>
                 <View style={styles.header}>
                     <Text style={styles.homeText}>Home</Text>
                     <View style={styles.headerIcons}>
@@ -65,7 +66,7 @@ const HomeHeader = () => {
                     <View style={[styles.searchIconBox]} >
                         <FontAwesome 
                             name='search' size={15} 
-                            style={{marginRight: 15}} 
+                            style={{marginRight: '2.5%'}} 
                             color={COLORS.primary}
                         />
                     </View>
@@ -79,9 +80,17 @@ export default HomeHeader;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.secondary,
         backgroundColor: COLORS.white,
     },
+    darkCover: {
+        position: 'absolute',
+        backgroundColor: 'black',
+        width: '100%',
+        height: '100%',
+        borderBottomLeftRadius: 50 , 
+        borderBottomRightRadius: 50,
+        opacity: 0.5
+    },  
     header: {
         marginTop: '10%',
         flexDirection: 'row',
