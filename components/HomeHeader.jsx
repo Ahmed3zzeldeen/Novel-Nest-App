@@ -24,7 +24,6 @@ const HomeHeader = () => {
                         <View>
                             <Image 
                                 source={require('../assets/images/icons/logout.png')}
-                                // style={{width: 25 , height: 25}}
                             />
                         </View>
                         <View style={styles.cartBox}>
@@ -41,7 +40,7 @@ const HomeHeader = () => {
                                 </View>
                             </ImageBackground>
                         </View>
-                        <View>
+                        <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                             <Image 
                                 source={require('../assets/images/icons/profile.png')}
                                 style={{width: 40 , height: 40}}
