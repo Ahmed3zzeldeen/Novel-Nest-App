@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar} from "react-native";
+import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
