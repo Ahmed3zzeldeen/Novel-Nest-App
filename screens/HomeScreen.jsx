@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { StyleSheet, View, Text , FlatList} from "react-native";
-=======
-import { StyleSheet, View, Text, Pressable , Stack, FlatList} from "react-native";
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";

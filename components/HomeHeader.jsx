@@ -1,23 +1,11 @@
-<<<<<<< HEAD
-import { ImageBackground, StyleSheet, Text, View , Image , TextInput} from "react-native";
-=======
 import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar} from "react-native";
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 
 const HomeHeader = () => {
 
     const [search , setSearch] = useState('');
-<<<<<<< HEAD
 
-    return (
-        <View style={styles.container}>
-            <ImageBackground 
-                source={{uri: 'https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__'}}
-                style={{height: 200}}
-                imageStyle={{ borderBottomLeftRadius: 50 , borderBottomRightRadius: 50 , opacity: 0.87 }}
-=======
     const [counter , setCounter] = useState(0);
 
     return (
@@ -27,27 +15,14 @@ const HomeHeader = () => {
                 source={{uri: 'https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__'}}
                 style={{height: 200}}
                 imageStyle={{ borderBottomLeftRadius: 50 , borderBottomRightRadius: 50 , opacity: 0.87}}
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
             >
                 <View style={styles.header}>
                     <Text style={styles.homeText}>Home</Text>
                     <View style={styles.headerIcons}>
                         <View>
-<<<<<<< HEAD
                             <Image source={require('../assets/images/icons/logout.png')}/>
                         </View>
-                        <View>
-                            <Image source={require('../assets/images/icons/cart.png')}/>
-                        </View>
-                        <View>
-                            <Image source={require('../assets/images/icons/profile.png')}/>
-=======
-                            <Image 
-                                source={require('../assets/images/icons/logout.png')}
-                                // style={{width: 25 , height: 25}}
-                            />
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
-                        </View>
+                        
                         <View style={styles.cartBox}>
                             <ImageBackground 
                                 source={require('../assets/images/icons/cart.png')}
@@ -91,24 +66,15 @@ const HomeHeader = () => {
 export default HomeHeader;
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
-=======
     container: {
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.white,
     },
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
     header: {
         marginTop: '10%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: '5%',
-<<<<<<< HEAD
-        borderWidth: 1,
-        borderColor: 'green',
-
-=======
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
     },
     homeText: {
         color: COLORS.secondary,
@@ -118,10 +84,7 @@ const styles = StyleSheet.create({
     headerIcons: {
         flexDirection: 'row',
         alignItems: 'center',
-<<<<<<< HEAD
         width: '35%',
-=======
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
         width: 150,
         justifyContent: 'space-between'
     },
@@ -130,7 +93,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
         marginHorizontal: '5%',
-<<<<<<< HEAD
         marginVertical: '3%',
     },
     searchBar: {
@@ -141,8 +103,6 @@ const styles = StyleSheet.create({
     },
     searchIconBox: {
         backgroundColor: COLORS.secondary,
-=======
->>>>>>> c693c795f32240501a26f3949e36a6e1ba7f3051
         marginTop: '5%'
     },
     searchBar: {
@@ -184,8 +144,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700'
     },
-    cartBox: {
-        borderWdith: 1,
-        borderColor: 'green'
-    }
 });
