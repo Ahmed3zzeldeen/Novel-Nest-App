@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { createUser, findUserByField } from "./users.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import USER_ROLES from "@/constants/userRoles";
 
 // Listen for authentication state changes.
 onAuthStateChanged(auth, (user) => {
@@ -28,7 +29,7 @@ async function register(
   username,
   email,
   password,
-  role = "user"
+  role = USER_ROLES.USER
 ) {
   try {
     const credentials = await createUserWithEmailAndPassword(
