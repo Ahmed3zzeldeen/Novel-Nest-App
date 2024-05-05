@@ -1,6 +1,9 @@
 import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
+import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
+import { router } from "expo-router";
+import ROUTES from "@/constants/routes";
 import { router } from "expo-router";
 import ROUTES from "@/constants/routes";
 
@@ -8,9 +11,11 @@ const HomeHeader = () => {
 
     const [search , setSearch] = useState('');
     const [counter , setCounter] = useState(0);
+    const [counter , setCounter] = useState(0);
 
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="light-content"/>
             <StatusBar barStyle="light-content"/>
             <ImageBackground 
                 source={{uri: 'https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__'}}
@@ -21,7 +26,9 @@ const HomeHeader = () => {
                     <Text style={styles.homeText}>Home</Text>
                     <View style={styles.headerIcons}>
                         <View>
-                            <Image source={require('../assets/images/icons/logout.png')}/>
+                            <Image 
+                                source={require('../assets/images/icons/logout.png')}
+                            />
                         </View>
                         <View>
                             <Image source={require('../assets/images/icons/cart.png')}/>
@@ -52,6 +59,12 @@ const HomeHeader = () => {
                                 style={{width: 40 , height: 40}}
                             />
                         </Pressable>
+                        <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
+                            <Image 
+                                source={require('../assets/images/icons/profile.png')}
+                                style={{width: 40 , height: 40}}
+                            />
+                        </Pressable>
                     </View>
                 </View>
                 <Text style={styles.usernameText}>Hey! USERNAME</Text>
@@ -76,6 +89,7 @@ export default HomeHeader;
 
 const styles = StyleSheet.create({
     header: {
+        marginTop: '10%',
         marginTop: '10%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -130,6 +144,10 @@ const styles = StyleSheet.create({
         paddingLeft: '5%',
         borderBottomLeftRadius: 5,
         borderTopLeftRadius: 5,
+        width: '89%',
+        paddingLeft: '5%',
+        borderBottomLeftRadius: 5,
+        borderTopLeftRadius: 5,
     },
     searchBox: {
         flexDirection: 'row',
@@ -139,8 +157,40 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.secondary,
         borderRadius: 5,
         marginVertical: '5%'
+        flexDirection: 'row',
+        marginHorizontal: '10%',
+        justifyContent: 'space-between',
+        padding: 3,
+        backgroundColor: COLORS.secondary,
+        borderRadius: 5,
+        marginVertical: '5%'
     },
     searchIconBox: {
+        backgroundColor: COLORS.secondary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '3%',
+        borderBottomRightRadius: 5,
+        borderTopRightRadius: 5,
+    },
+    counter: {
+        width: 21.43,
+        height: 21.43,
+        backgroundColor: COLORS.primary,
+        alignItems: 'center',
+        borderRadius: 50,
+        position: 'absolute',
+        right: 25,
+        bottom: 20
+    },
+    counterText: {
+        color: COLORS.white,
+        fontSize: 16,
+        fontWeight: '700'
+    },
+    cartBox: {
+        borderWdith: 1,
+        borderColor: 'green'
         backgroundColor: COLORS.secondary,
         alignItems: 'center',
         justifyContent: 'center',
