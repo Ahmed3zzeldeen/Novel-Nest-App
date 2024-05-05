@@ -1,9 +1,8 @@
 import React from "react";
 import { Link, Stack } from "expo-router";
-import { ImageBackground, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HomeHeader from "./HomeHeader";
+import { HomeHeader } from "@/components";
 import COLORS from "@/constants/colors";
 
 const AppHeaders = () => {
@@ -57,7 +56,7 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.HOME}
         options={{
-          header: () => (<HomeHeader />)
+          header: () => (<HomeHeader/>)
         }}
       />
       <Stack.Screen
@@ -71,6 +70,12 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.AUTH.LOG_IN}
         options={{ headerTitle: "Login Page" }}
+      />
+      <Stack.Screen
+        name={ROUTES.PUBLIC.EDIT_PROFILE}
+        options={{
+          headerTitle: "My Profile", presentation: "modal"
+        }}
       />
       <Stack.Screen
         name={ROUTES.AUTH.SIGN_UP}
