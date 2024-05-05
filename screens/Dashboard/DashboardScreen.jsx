@@ -46,7 +46,7 @@ const DashboardScreen = () => {
         router.push(ROUTES.DASHBOARD.MANAGE_USERS);
         break;
       case 3:
-        router.push(ROUTES.DASHBOARD.MANAGE_BOOKS);
+        router.push(ROUTES.DASHBOARD.LIST_OF_BOOKS);
         break;
       case 4:
         router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
