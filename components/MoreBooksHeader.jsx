@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "@/constants/routes";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 import { logout } from "@/firebase/apis/auth";
-const HomeHeader = () => {
+
+const MoreBooksScreenHeader = () => {
 
     const [search , setSearch] = useState('');
     const [counter , setCounter] = useState(0);
@@ -25,12 +26,20 @@ const HomeHeader = () => {
             >
                 <View style={styles.darkCover}></View>
                 <View style={styles.header}>
-                    <Text style={styles.homeText}>Home</Text>
+                    <View style={styles.leftHeader}>
+                        <Pressable onPress={() => router.replace(ROUTES.PUBLIC.HOME)}>
+                            <FontAwesome5 
+                                name="angle-left" 
+                                size={24} 
+                                color={COLORS.white}
+                                style={{marginRight: '5%'}} 
+                            />
+                        </Pressable>
+                        <Text style={styles.homeText}>List of books</Text>
+                    </View>
                     <View style={styles.headerIcons}>
                         <Pressable onPress={handleLogout}>
-                            <Image 
-                                source={require('../assets/images/icons/logout.png')}
-                            />
+                            <Image source={require('../assets/images/icons/logout.png')}/>
                         </Pressable>
                         <View style={styles.cartBox}>
                             <ImageBackground 
@@ -39,7 +48,6 @@ const HomeHeader = () => {
                                     width: 35.71, 
                                     height: 31.75,
                                 }}
-                                
                             >
                                 <View style={styles.counter}>
                                     <Text style={styles.counterText}>{counter}</Text>
@@ -76,7 +84,7 @@ const HomeHeader = () => {
     );
 };
 
-export default HomeHeader;
+export default MoreBooksScreenHeader;
 
 const styles = StyleSheet.create({
     container: {
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 50 , 
         borderBottomRightRadius: 50,
         opacity: 0.5
-    },  
+    },
     header: {
         marginTop: '10%',
         flexDirection: 'row',
@@ -152,4 +160,8 @@ const styles = StyleSheet.create({
         right: 25,
         bottom: 20
     },
+    leftHeader: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 });

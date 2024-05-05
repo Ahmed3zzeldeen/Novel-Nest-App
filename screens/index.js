@@ -2,6 +2,7 @@
 export { default as LandingScreen } from './LandingScreen.jsx';
 export { default as HomeScreen } from './HomeScreen.jsx';
 export { default as ProfileScreen } from './ProfileScreen.jsx';
+export { default as MoreBooksScreen } from './MoreBooksScreen.jsx';
 
 // Auth Screens
 export { default as LoginScreen } from './Auth/LoginScreen.jsx';

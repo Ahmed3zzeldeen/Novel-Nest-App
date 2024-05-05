@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: 167,
     height: 250,
     borderRadius: 13.8,
-    marginRight: 10,
+    marginHorizontal: '1.71%',
     marginBottom: 10,
     justifyContent: 'flex-end'
   },

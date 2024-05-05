@@ -2,7 +2,8 @@ import { StyleSheet, View, Text, FlatList} from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";
-import { BookCard , BestSellerCard } from "@/components";
+import { BookCard , BestSellerCard , CustomLink } from "@/components";
+import ROUTES from "@/constants/routes";
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -29,7 +30,11 @@ const HomeScreen = () => {
       />
       <View style={styles.moreBooks}>
         <Text style={styles.searchText}>Search Results:</Text>
-        <Text style={styles.linkBooks}>More Books</Text>
+        <CustomLink
+          text={'More Books'}
+          style={styles.linkBooks}
+          href={ROUTES.PUBLIC.BOOKS}
+        />
       </View>
       <FlatList
         style={styles.searchList}
@@ -72,7 +77,8 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     textDecorationLine: 'underline',
     fontWeight: '600',
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 0
   },
   searchList: {
     marginHorizontal: '5%',
