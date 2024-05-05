@@ -2,8 +2,6 @@ import React from "react";
 import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
-import { HomeHeader } from "@/components";
-import COLORS from "@/constants/colors";
 
 const AppHeaders = () => {
   return (

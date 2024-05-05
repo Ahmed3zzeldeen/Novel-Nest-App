@@ -1,5 +1,5 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {View , Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
 import { useState } from 'react';
 const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
   let [numOfBooks, setNumOfBooks] = useState(0);

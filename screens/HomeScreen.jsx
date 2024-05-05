@@ -76,32 +76,4 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
     height: '20%',
   },
-  headLine: {
-    color: COLORS.primary,
-    fontWeight: "700",
-    fontSize: 20,
-    marginHorizontal: '3%',
-    marginTop: '5%'
-  },
-  moreBooks: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: '5%'
-  },
-  searchText: {
-    color: COLORS.primary,
-    fontWeight: '700',
-    fontSize: 20
-  },
-  linkBooks: {
-    color: COLORS.primary,
-    textDecorationLine: 'underline',
-    fontWeight: '600',
-    fontSize: 16
-  },
-  searchList: {
-    marginHorizontal: '5%',
-    height: '20%',
-  }
 });
