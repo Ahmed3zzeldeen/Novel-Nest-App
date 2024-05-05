@@ -23,8 +23,9 @@ const HomeScreen = () => {
         horizontal
         style={{maxHeight: 180 , margin: '3%'}}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BestSellerCard image={item.image}/>)}
-        keyExtractor={(item) => item.id}
+        renderItem={({item}) => (<BestSellerCard cover={item.cover}/>)}
+        keyExtractor={(item) => item.ISBN}
+        showsHorizontalScrollIndicator={false}
       />
       <View style={styles.moreBooks}>
         <Text style={styles.searchText}>Search Results:</Text>
@@ -33,9 +34,10 @@ const HomeScreen = () => {
       <FlatList
         style={styles.searchList}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BookCard image={item.image}/>)}
-        keyExtractor={(item) => item.id}
+        renderItem={({item}) => (<BookCard cover={item.cover}/>)}
+        keyExtractor={(item) => item.ISBN}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

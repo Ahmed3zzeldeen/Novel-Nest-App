@@ -13,7 +13,6 @@ const ROUTES = {
   AUTH: {
     SIGN_UP: 'auth/signup',
     LOG_IN: 'auth/login',
-    SIGN_OUT: 'auth/signout',
     FORGOT_PASSWORD: 'auth/forgot-password',
   },
   DASHBOARD: {

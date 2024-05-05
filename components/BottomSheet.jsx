@@ -45,7 +45,7 @@ const BottomSheet = ({ modalVisibility }) => {
             <Text style={styles.inputLabel}>Last Name:</Text>
             <CustomTextInput 
               placeholder={'Martin'}
-              value={firstName}
+              value={lastName}
               onChangeText={(value) => setLastName(value)}
               InputStyle={styles.inputSheet}
             />
@@ -54,7 +54,7 @@ const BottomSheet = ({ modalVisibility }) => {
             <Text style={styles.inputLabel}>Username:</Text>
             <CustomTextInput 
               placeholder={'RobertMartin123'}
-              value={firstName}
+              value={username}
               onChangeText={(value) => setUsername(value)}
               InputStyle={styles.inputSheet}
             />

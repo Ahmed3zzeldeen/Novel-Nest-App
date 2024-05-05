@@ -58,6 +58,7 @@ const ProfileScreen = () => {
         data={orders}
         renderItem={({item}) => (<OrderCard order={item}/>)}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
       />
       {visible && <BottomSheet modalVisibility={setVisible}/>}
     </View>

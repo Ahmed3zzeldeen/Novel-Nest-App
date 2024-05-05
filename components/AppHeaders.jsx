@@ -2,6 +2,8 @@ import React from "react";
 import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
+import COLORS from "@/constants/colors";
+import {HomeHeader} from '@/components';
 
 const AppHeaders = () => {
   return (
@@ -61,7 +63,6 @@ const AppHeaders = () => {
         name={ROUTES.DASHBOARD.HOME}
         options={{
           headerTitle: "Dashboard",
-          headerTitleAlign: "center",
           headerStyle: { backgroundColor: "#29648f" },
         }}
       />
@@ -71,9 +72,7 @@ const AppHeaders = () => {
       />
       <Stack.Screen
         name={ROUTES.PUBLIC.EDIT_PROFILE}
-        options={{
-          headerTitle: "My Profile", presentation: "modal"
-        }}
+        options={{ headerTitle: "My Profile", presentation: "modal" }}
       />
       <Stack.Screen
         name={ROUTES.AUTH.SIGN_UP}
