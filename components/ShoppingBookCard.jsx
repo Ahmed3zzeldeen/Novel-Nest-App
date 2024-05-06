@@ -63,14 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: '5%',
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 3,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 5,
+    borderBottomWidth: 3,
+    borderColor: 'rgba(0 , 0 , 0 , 0.25)',
   },
   imageBox: {
     justifyContent: 'center',
