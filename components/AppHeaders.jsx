@@ -89,7 +89,7 @@ const AppHeaders = () => {
         options={{ headerTitle: "Reset password", presentation: "modal" }}
       />
       <Stack.Screen
-        name={ROUTES.DASHBOARD.MANAGE_USERS}
+        name={ROUTES.DASHBOARD.LIST_OF_USERS}
         options={{
           headerTitle: "Users",
           headerTitleAlign: "center",
@@ -99,6 +99,22 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
         options={{headerTitle: "List of books"}}
+      />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.ADD_NEW_ORDER}
+        options={{
+          headerTitle: "Order Screen",
+          headerTitleAlign: "center",
+          headerStyle: { backgroundColor: "#29648f" },
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.LIST_OF_ORDERS}
+        options={{
+          headerTitle: "List Of Orders",
+          headerTitleAlign: "center",
+          headerStyle: { backgroundColor: "#29648f" },
+        }}
       />
     </Stack>
   );
