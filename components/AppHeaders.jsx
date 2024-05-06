@@ -75,6 +75,10 @@ const AppHeaders = () => {
         options={{ headerTitle: "My Profile", presentation: "modal" }}
       />
       <Stack.Screen
+        name={ROUTES.PUBLIC.CART}
+        options={{ headerTitle: "Cart", presentation: "modal" }}
+      />
+      <Stack.Screen
         name={ROUTES.PUBLIC.BOOKS}
         options={{
           header: () => (<MoreBooksHeader/>)
