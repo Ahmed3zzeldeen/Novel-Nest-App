@@ -89,7 +89,7 @@ const AppHeaders = () => {
         options={{ headerTitle: "Reset password", presentation: "modal" }}
       />
       <Stack.Screen
-        name={ROUTES.DASHBOARD.MANAGE_USERS}
+        name={ROUTES.DASHBOARD.ADD_NEW_USER}
         options={{
           headerTitle: "Users",
           headerTitleAlign: "center",
