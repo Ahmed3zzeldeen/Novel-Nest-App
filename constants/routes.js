@@ -27,10 +27,6 @@ const ROUTES = {
     LIST_OF_ORDERS: 'dashboard/list-of-orders',
     EDIT_ORDER: 'dashboard/edit-order/:id', // Dynamic route parameter for order ID
     ADD_NEW_ORDER: 'dashboard/add-new-order',
-    PROFILE: 'dashboard/admin-profile/:id',
-    MANAGE_USERS: 'dashboard/manage-users',
-    MANAGE_BOOKS: 'dashboard/manage-books',
-    MANAGE_ORDERS: 'dashboard/manage-orders',
   },
 };
 
