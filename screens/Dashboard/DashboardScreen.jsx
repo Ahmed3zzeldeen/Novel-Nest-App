@@ -10,6 +10,8 @@ import { useRouter } from "expo-router";
 import ROUTES from "../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { logout } from "@/firebase/apis/auth";
+import COLORS from "@/constants/colors";
 
 const DashboardScreen = () => {
   const buttons = [
@@ -36,23 +38,29 @@ const DashboardScreen = () => {
       FontAwesome: 5,
     },
   ];
+  
+  const handleLogout = async () => {
+    await logout();
+    router.replace(ROUTES.AUTH.LOG_IN);
+  };
+
   const handlePress = (id) => {
     switch (id) {
       case 1:
-        router.push(ROUTES.DASHBOARD.PROFILE);
+        router.push(ROUTES.DASHBOARD.MY_PROFILE);
         break;
 
       case 2:
-        router.push(ROUTES.DASHBOARD.MANAGE_USERS);
+        router.push(ROUTES.DASHBOARD.LIST_OF_USERS);
         break;
       case 3:
         router.push(ROUTES.DASHBOARD.LIST_OF_BOOKS);
         break;
       case 4:
-        router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
+        router.push(ROUTES.DASHBOARD.LIST_OF_ORDERS);
         break;
       case 5:
-        router.replace(ROUTES.AUTH.SIGN_OUT);
+        handleLogout();
         break;
       default:
         break;
@@ -103,11 +111,11 @@ console.log(buttons);
           handlePress(5);
         }}
       >
-        <Text style={{ color: "#29649f", fontSize: 20, alignSelf: "flex-end" }}>
+        <Text style={{ color: COLORS.primary, fontSize: 20, alignSelf: "flex-end" }}>
           <FontAwesome6
             name="door-open"
             size={24}
-            color="#29648F"
+            color={COLORS.primary}
             style={{ margin: 10 }}
           />
           logout
