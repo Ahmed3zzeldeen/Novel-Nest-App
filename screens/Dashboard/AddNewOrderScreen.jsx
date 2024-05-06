@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const OrderScreen = () => {
+const AddNewOrderScreen = () => {
   return (
     <View style={styles.Container}>
-      <Text>OrderScreen</Text>
+      <Text>AddNewOrderScreen</Text>
     </View>
   )
 }
 
-export default OrderScreen
+export default AddNewOrderScreen
 
 const styles = StyleSheet.create({
   Container:{
