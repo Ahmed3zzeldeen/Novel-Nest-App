@@ -39,17 +39,17 @@ const DashboardScreen = () => {
   const handlePress = (id) => {
     switch (id) {
       case 1:
-        router.push(ROUTES.DASHBOARD.PROFILE);
+        router.push(ROUTES.DASHBOARD.MY_PROFILE);
         break;
 
       case 2:
-        router.push(ROUTES.DASHBOARD.MANAGE_USERS);
+        router.push(ROUTES.DASHBOARD.LIST_OF_USERS);
         break;
       case 3:
         router.push(ROUTES.DASHBOARD.LIST_OF_BOOKS);
         break;
       case 4:
-        router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
+        router.push(ROUTES.DASHBOARD.LIST_OF_ORDERS);
         break;
       case 5:
         router.replace(ROUTES.AUTH.SIGN_OUT);
