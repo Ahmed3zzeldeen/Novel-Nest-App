@@ -9,4 +9,5 @@ export { default as ForgetPasswordScreen } from './Auth/ForgetPasswordScreen.jsx
 
 // Dashboard Screens
 export { default as DashboardScreen } from './Dashboard/DashboardScreen.jsx';
-
+export { default as ListOfBooks} from './Dashboard/Books-Screens/ListOfBooks.jsx';
+export { default as NewBook } from './Dashboard/Books-Screens/NewBook.jsx';

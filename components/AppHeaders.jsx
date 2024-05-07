@@ -88,6 +88,14 @@ const AppHeaders = () => {
           headerStyle: { backgroundColor: "#29648f" },
         }}
       />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
+        options={{headerTitle: "List of books"}}
+      />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.ADD_NEW_BOOK}
+        options={{headerTitle: "Add new book"}}
+      />
     </Stack>
   );
 };
