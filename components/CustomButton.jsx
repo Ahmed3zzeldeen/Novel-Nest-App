@@ -17,7 +17,7 @@ const CustomButton = ({
       style={{ ...styles.button , ...buttonStyle }}
       onPress={functionality ? () => functionality() : () => {}}
     >
-      <Text style={{ ...styles.text , ...textButtonStyle }}>{textButton? textButton: 'Button'}</Text>
+      {textButton && <Text style={{ ...styles.text , ...textButtonStyle }}>{textButton? textButton: 'Button'}</Text>}
       {icon && <FontAwesome
         name={iconName}
         color={iconColor}

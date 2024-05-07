@@ -10,10 +10,11 @@ const CustomPopup = ({
   button2Style,
   button1Function,
   button2Function,
+  popupStyle,
   title,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container , ...popupStyle}}>
       <View style={styles.popup}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.popupContent}>
