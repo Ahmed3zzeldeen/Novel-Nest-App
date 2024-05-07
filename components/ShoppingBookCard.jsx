@@ -65,9 +65,12 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
     shadowColor: COLORS.black,
     shadowOffset: {
-      width: 0,
+      width: 3,
       height: 2,
     },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 5,
   },
   imageBox: {
     justifyContent: 'center',
