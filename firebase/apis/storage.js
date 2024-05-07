@@ -7,7 +7,9 @@ async function uplouadFile(fileName,file) {
     return response;
 }
 async function getLink(ref) {
-    return await getDownloadURL(ref);
+    const mataData = await getDownloadURL(ref);
+    console.log("mataData", mataData);
+    return mataData;
 }
 
 export {uplouadFile, getLink};
