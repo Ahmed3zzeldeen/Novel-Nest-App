@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginTop: 0
   },
   searchList: {
-    marginHorizontal: "auto",
+    marginHorizontal: "5%",
     height: '20%',
   },
 });
