@@ -41,7 +41,7 @@ const MoreBooksScreenHeader = () => {
                         <Pressable onPress={handleLogout}>
                             <Image source={require('../assets/images/icons/logout.png')}/>
                         </Pressable>
-                        <View style={styles.cartBox}>
+                        <Pressable style={styles.cartBox} onPress={() => router.navigate(ROUTES.PUBLIC.CART)}>
                             <ImageBackground 
                                 source={require('../assets/images/icons/cart.png')}
                                 style={{
@@ -53,7 +53,7 @@ const MoreBooksScreenHeader = () => {
                                     <Text style={styles.counterText}>{counter}</Text>
                                 </View>
                             </ImageBackground>
-                        </View>
+                        </Pressable>
                         <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                             <Image 
                                 source={require('../assets/images/icons/profile.png')}
