@@ -5,6 +5,7 @@ import { router } from "expo-router";
 import ROUTES from "@/constants/routes";
 import { FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 import { logout } from "@/firebase/apis/auth";
+import CartIconCounter from "./CartIconCounter";
 
 const MoreBooksScreenHeader = () => {
 
@@ -39,21 +40,9 @@ const MoreBooksScreenHeader = () => {
                     </View>
                     <View style={styles.headerIcons}>
                         <Pressable onPress={handleLogout}>
-                            <Image source={require('../assets/images/icons/logout.png')}/>
+                            <FontAwesome5 name="door-open" size={30} color={COLORS.secondary}/>
                         </Pressable>
-                        <View style={styles.cartBox}>
-                            <ImageBackground 
-                                source={require('../assets/images/icons/cart.png')}
-                                style={{
-                                    width: 35.71, 
-                                    height: 31.75,
-                                }}
-                            >
-                                <View style={styles.counter}>
-                                    <Text style={styles.counterText}>{counter}</Text>
-                                </View>
-                            </ImageBackground>
-                        </View>
+                        <CartIconCounter/>
                         <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                             <Image 
                                 source={require('../assets/images/icons/profile.png')}
