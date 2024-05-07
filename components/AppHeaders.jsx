@@ -100,6 +100,10 @@ const AppHeaders = () => {
         name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
         options={{headerTitle: "List of books"}}
       />
+       <Stack.Screen
+        name={ROUTES.DASHBOARD.EDIT_ORDER}
+        options={{headerTitle: "Edit Order"}}
+      />
     </Stack>
   );
 };

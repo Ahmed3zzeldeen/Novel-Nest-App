@@ -49,7 +49,7 @@ const DashboardScreen = () => {
         router.push(ROUTES.DASHBOARD.LIST_OF_BOOKS);
         break;
       case 4:
-        router.push(ROUTES.DASHBOARD.MANAGE_ORDERS);
+        router.push(ROUTES.DASHBOARD.EDIT_ORDER);
         break;
       case 5:
         router.replace(ROUTES.AUTH.SIGN_OUT);
