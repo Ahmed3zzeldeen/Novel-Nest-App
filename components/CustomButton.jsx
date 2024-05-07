@@ -1,5 +1,5 @@
 import COLORS from "@/constants/colors";
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { Pressable , Text , StyleSheet } from "react-native";
 
 const CustomButton = ({
@@ -18,7 +18,7 @@ const CustomButton = ({
       onPress={functionality ? () => functionality() : () => {}}
     >
       <Text style={{ ...styles.text , ...textButtonStyle }}>{textButton? textButton: 'Button'}</Text>
-      {icon && <MaterialIcons
+      {icon && <FontAwesome
         name={iconName}
         color={iconColor}
         size={iconSize}
