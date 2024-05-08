@@ -10,4 +10,5 @@ export {default as BottomSheet} from './BottomSheet.jsx';
 export {default as CustomPopup} from './CustomPopup.jsx';
 export {default as CustomButton} from './CustomButton.jsx';
 export {default as MoreBooksHeader} from './MoreBooksHeader.jsx';
+export {default as CartIconCounter} from './CartIconCounter.jsx';
 export {default as ShoppingBookCard} from './ShoppingBookCard.jsx';
