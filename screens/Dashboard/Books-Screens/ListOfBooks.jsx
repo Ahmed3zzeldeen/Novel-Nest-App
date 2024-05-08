@@ -5,7 +5,6 @@ import ROUTES from "../../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import BookCard from "@/components/BookCard";
-
 export default function ListOfBooks() {
 
     const [BestSellerBooks , setBestSellerBooks] = useState([
@@ -18,11 +17,12 @@ export default function ListOfBooks() {
     const filteredData = BestSellerBooks.filter(item =>
         item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
     );
+    const router = useRouter();
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'light-content'} hidden/>
             <View style={styles.containerOfNewButtonAndLogout}>
-                <Pressable>
+                <Pressable onPress={() => {router.push(ROUTES.DASHBOARD.ADD_NEW_BOOK);}}>
                     <View style={styles.newButton}>
                         <Text style={styles.newButtonText}>New</Text>
                         <FontAwesome name='plus' size={20} color={COLORS.secondary} style={styles.newButtonIcon}></FontAwesome>
@@ -42,8 +42,8 @@ export default function ListOfBooks() {
             <FlatList
                 style={styles.searchList}
                 data={filteredData}
-                renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages} />)}
-                keyExtractor={(item) => item.ISBN}
+                renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
+                keyExtractor={(item) => {item.ISBN}}
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
             />        
@@ -54,8 +54,8 @@ export default function ListOfBooks() {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: 'white'
     },
     containerOfNewButtonAndLogout: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         marginTop: 3
     },
     searchList: {
-        marginHorizontal: 20,
+        marginHorizontal: 25,
         marginVertical: 20,
         height: '20%',
     },
@@ -111,7 +111,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 345,
+        maxWidth: 340,
+        minWidth: 200,
+        width: '100%',
         height: 43,
         backgroundColor: COLORS.secondary,
         flexDirection: 'row',
