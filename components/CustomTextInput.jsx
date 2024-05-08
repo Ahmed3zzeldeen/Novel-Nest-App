@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 import CustomLink from "./CustomLink";
@@ -44,6 +45,36 @@ const CustomTextInput = ({
   );
 };
 
+CustomTextInput.Select = function Select({
+  label,
+  placeholder,
+  value = { label: "Option 1", value: "Option_1" },
+  onValueChange,
+  items = [
+    { label: "Option 1", value: "Option_1" },
+    { label: "Option 2", value: "Option_2" },
+    { label: "Option 3", value: "Option_3" },
+    { label: "Option 4", value: "Option_4" },
+  ],
+  error,
+  InputStyle,
+}) {
+  const [Error, setError] = useState(error);
+
+  return (
+    <View style={styles.container}>
+      <Text style={{ ...styles.label, ...styles.labelContiner }}>{label}</Text>
+      <RNPickerSelect
+        value={value}
+        onValueChange={onValueChange}
+        items={items}
+        style={{ ...pickerSelectStyles, ...InputStyle }}
+        placeholder={placeholder}
+      />
+      {error && <Text style={styles.error}>{Error}</Text>}
+    </View>
+  );
+};
 export default CustomTextInput;
 
 const styles = StyleSheet.create({
@@ -75,5 +106,48 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     marginBottom: 10,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 14,
+    backgroundColor: COLORS.background,
+    color: COLORS.placeholderText,
+    borderWidth: 3,
+    borderRadius: 5,
+    borderBottomColor: COLORS.primary,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    paddingRight: 30,
+  },
+  inputAndroid: {
+    fontSize: 14,
+    backgroundColor: COLORS.background,
+    color: COLORS.placeholderText,
+    borderWidth: 3,
+    borderRadius: 5,
+    borderBottomColor: COLORS.primary,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    paddingRight: 30,
+  },
+  inputWeb: {
+    padding: 5,
+    backgroundColor: COLORS.background,
+    color: COLORS.placeholderText,
+    borderRadius: 5,
+    borderBottomColor: COLORS.primary,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    borderBottomWidth: 3,
+    paddingRight: 30,
   },
 });
