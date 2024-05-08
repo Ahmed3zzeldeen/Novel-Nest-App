@@ -6,6 +6,7 @@ import COLORS from "@/constants/colors";
 import {HomeHeader, MoreBooksHeader} from '@/components';
 
 const AppHeaders = () => {
+
   return (
     <Stack
       screenOptions={{
