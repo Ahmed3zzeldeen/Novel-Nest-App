@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: '97%',
         height: 50,
-        alignContent: 'center',
         justifyContent: 'space-between'
     },
     logoutButton: {
