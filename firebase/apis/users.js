@@ -129,6 +129,4 @@ export {
   findUserByField,
   searchUsersByName,
   searchUsersByEmail,
-  searchUsersByName,
-  searchUsersByEmail,
 };

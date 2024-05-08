@@ -12,11 +12,13 @@ import { FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import {
-  findUserByEmail,
+  searchUsersByEmail,
+  searchUsersByName,
   getUsers,
   deleteUser,
 } from "../../firebase/apis/users";
 import { SafeAreaView } from "react-native-safe-area-context";
+import COLORS from "@/constants/colors";
 
 const ManageUsersScreen = () => {
   const [users, setUsers] = useState();
@@ -48,7 +50,7 @@ const ManageUsersScreen = () => {
       <View style={styles.userCard}>
         <Image
           source={{ uri: img }}
-          style={{ width: 50, height: 50, alignSelf: "flex-start", margin: 10 }}
+          style={{ width: 50, height: 50,borderRadius: 25, alignSelf: "flex-start", margin: 10 }}
         />
         <View style={styles.infoCard}>
           <Text style={styles.Text}>{text}</Text>
@@ -124,27 +126,45 @@ const ManageUsersScreen = () => {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <Pressable
-        style={{ alignSelf: "flex-end", margin: 10 }}
-        onPress={() => {
-          router.replace(ROUTES.AUTH.SIGN_OUT);
-        }}
-      >
-        <Text style={{ color: "#29649f", fontSize: 20 }}>
-          <FontAwesome6
-            name="door-open"
-            size={24}
-            color="#29648F"
-            style={{ margin: 10 }}
-          />
-          logout
-        </Text>
-      </Pressable>
+  <View style={styles.buttonsArea}>
+        <Pressable
+          style={{ alignSelf: "center", margin: 10, backgroundColor: COLORS.primary, borderRadius: 3 }}
+          onPress={() => {
+            router.replace(ROUTES.DASHBOARD.ADD_NEW_USER);
+          }}
+        >
+          <Text style={{ color: COLORS.white, fontSize: 20, margin: 3 }}>
+            New{" "}
+            <FontAwesome6
+              name="add"
+              size={24}
+              color={COLORS.white}
+            />
+          </Text>
+        </Pressable>
+        <Pressable
+          style={{ alignSelf: "center", margin: 10 }}
+          onPress={() => {
+            router.replace(ROUTES.AUTH.SIGN_OUT);
+          }}
+        >
+          <Text style={{ color: COLORS.primary, fontSize: 20 }}>
+            <FontAwesome6
+              name="door-open"
+              size={24}
+              color={COLORS.primary}
+              style={{ margin: 10 }}
+            />
+            logout
+          </Text>
+        </Pressable>
+      </View>
       <View
         style={{
-          flex: 1,
-          flexDirection: "row",
-          backgroundcolor: "#29648F",
+          backgroundcolor: COLORS.primary,
+          backgroundColor: COLORS.secondary,
+          width: "85%",
+          maxWidth: 450,
           height: 50,
           borderRadius: 20,
           alignSelf:"center"
@@ -152,28 +172,15 @@ const ManageUsersScreen = () => {
         >
         <TextInput
           style={{
-            backgroundColor: "#eadecf",
-            width: "90%",
-            height: 50,
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
+            height:50,
+            paddingHorizontal:10,
+            borderRadius: 20,
           }}
           placeholder="Search by user email or username"
           placeholderTextColor={COLORS.primary}
           onChangeText={(text) => onChangeText(text)}
-        ></TextInput>
-        <Text
-          style={{
-            fontSize: 30,
-            backgroundColor: "#eadecf",
-            color: "#29648F",
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-            height: 50,
-          }}
-        >
-          🔍
-        </Text>
+        />
+        <FontAwesome name="search" size={24} color={COLORS.primary} style={{position:"absolute" , right:10 , top: 12 }} />
       </View>
       <FlatList
         style={{ flex: 1 }}
@@ -198,7 +205,14 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#f7f0e8",
+    backgroundColor: COLORS.white,
+    },
+  buttonsArea: {
+    flex: 1,
+    flexDirection: "row",
+    maxHeight: "10%",
+    Width: "100%",
+    justifyContent: "space-between",
   },
   text: {
     color: COLORS.primary,
