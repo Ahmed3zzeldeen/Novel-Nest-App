@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "@/constants/routes";
-import { FontAwesome , FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 import { logout } from "@/firebase/apis/auth";
 import CartIconCounter from "./CartIconCounter";
-const HomeHeader = () => {
+
+const MoreBooksScreenHeader = () => {
 
     const [search , setSearch] = useState('');
     const [counter , setCounter] = useState(0);
@@ -26,7 +27,17 @@ const HomeHeader = () => {
             >
                 <View style={styles.darkCover}></View>
                 <View style={styles.header}>
-                    <Text style={styles.homeText}>Home</Text>
+                    <View style={styles.leftHeader}>
+                        <Pressable onPress={() => router.replace(ROUTES.PUBLIC.HOME)}>
+                            <FontAwesome5 
+                                name="angle-left" 
+                                size={24} 
+                                color={COLORS.white}
+                                style={{marginRight: '5%'}} 
+                            />
+                        </Pressable>
+                        <Text style={styles.homeText}>List of books</Text>
+                    </View>
                     <View style={styles.headerIcons}>
                         <Pressable onPress={handleLogout}>
                             <FontAwesome5 name="door-open" size={30} color={COLORS.secondary}/>
@@ -62,7 +73,7 @@ const HomeHeader = () => {
     );
 };
 
-export default HomeHeader;
+export default MoreBooksScreenHeader;
 
 const styles = StyleSheet.create({
     container: {
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 50 , 
         borderBottomRightRadius: 50,
         opacity: 0.5
-    },  
+    },
     header: {
         marginTop: '10%',
         flexDirection: 'row',
@@ -94,8 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: 150,
-        justifyContent: 'space-between',
-        gap: 5
+        justifyContent: 'space-between'
     },
     usernameText: {
         color: COLORS.secondary,
@@ -139,4 +149,8 @@ const styles = StyleSheet.create({
         right: 25,
         bottom: 20
     },
+    leftHeader: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 });

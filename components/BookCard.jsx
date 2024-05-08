@@ -1,10 +1,17 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {View , Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import ROUTES from '@/constants/routes';
+import CustomButton from './CustomButton';
+
 const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
-  let [numOfBooks, setNumOfBooks] = useState(0);
+  const [numOfBooks, setNumOfBooks] = useState(0);
+  
+  const router = useRouter();
+
   return (
-    <Pressable>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
       <ImageBackground 
         style={styles.container}
         source={cover}
@@ -19,15 +26,21 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
             <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
-            <Pressable style={styles.circleButton}>
-              <Text style={styles.symbol} onPress={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}>-</Text>
-            </Pressable>
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'-'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}
+            />
             <View>
               <Text style={styles.bookCounter}>{numOfBooks}</Text>
             </View>
-            <Pressable style={styles.circleButton} onPress={() => {setNumOfBooks(++numOfBooks)}}>
-              <Text style={styles.symbol}>+</Text>
-            </Pressable>
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'+'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {setNumOfBooks(++numOfBooks)}}
+            />
           </View>
         </View>
         <Pressable style={styles.cartButton}>
@@ -47,7 +60,7 @@ const styles = StyleSheet.create({
     width: 167,
     height: 250,
     borderRadius: 13.8,
-    marginRight: 10,
+    marginHorizontal: '1.71%',
     marginBottom: 10,
     justifyContent: 'flex-end'
   },
@@ -96,12 +109,13 @@ const styles = StyleSheet.create({
   },
   symbol: {
     color: COLORS.secondary,
-    fontWeight: '800',
-    fontSize: 15
+    fontWeight: '700',
+    fontSize: 18,
+    textAlign: 'center'
   },
   bookCounter: {
     color: COLORS.primary,
     fontWeight: '700',
     fontSize: 15
-  }
+  },
 });

@@ -45,6 +45,7 @@ export default function ListOfBooks() {
                 renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
                 keyExtractor={(item) => {item.ISBN}}
                 numColumns={2}
+                showsVerticalScrollIndicator={false}
             />        
         </View>
     )
@@ -116,9 +117,10 @@ const styles = StyleSheet.create({
         height: 43,
         backgroundColor: COLORS.secondary,
         flexDirection: 'row',
+        borderRadius: 5
     },
     search:{
-        paddingHorizontal: 20,
+        paddingLeft: '5%',
         height: '100%',      
         width: 325,
         fontSize: 18,

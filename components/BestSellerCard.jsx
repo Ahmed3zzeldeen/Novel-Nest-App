@@ -1,10 +1,14 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {StyleSheet, ImageBackground, Pressable} from 'react-native';
+import { useRouter } from 'expo-router';
+import ROUTES from '@/constants/routes';
 
 const BestSellerCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
   
+  const router = useRouter();
+
   return (
-    <Pressable>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
       <ImageBackground 
         style={styles.container}
         source={cover}
