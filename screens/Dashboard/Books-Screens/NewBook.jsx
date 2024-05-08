@@ -1,13 +1,77 @@
-import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, ScrollView } from 'react-native'
+import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, ScrollView, Alert } from 'react-native'
 import {React, useState} from "react";
-import { useRouter } from "expo-router";
-import ROUTES from "../../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import BookCard from "@/components/BookCard";
+import BestSellerBooks from "../Books-Screens/ListOfBooks"
+import { FieldValue } from 'firebase/firestore';
 export default function ListOfBooks() {
-
-    const router = useRouter();
+    const [switcher1, setSwitcher1] = useState(true);
+    const [price, setPrice] = useState('');
+    const [pages, setPages] = useState('');
+    const [author, setAuthor] = useState('');
+    const [ISBN, setISBN] = useState('');
+    const [category, setCategory] = useState('');
+    const [cover, setCover] = useState('');
+    const [bookTitle, setBookTitle] = useState('');
+    const [errorMessage, setErrorMessage] = useState('Invalid');
+    const [book, setBook] = useState('');
+    const arr = [{ISBN:1 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
+    {ISBN:2 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
+    {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
+    {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5}]
+    function cancelHandler() {
+        var switcher1;
+        Alert.alert('Informations you entered\n\ndeleted successfully');
+        setAuthor('');
+        setBookTitle('');
+        setCategory('');
+        setPages('');
+        setPrice('');
+        setISBN('');
+        setCover('');
+    }
+    function createHandler(){
+        if(author.localeCompare('') !== 0){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' author, ');
+        }
+        if(bookTitle === ''){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' book title, ');
+        }
+        if(category === ''){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' category, ');
+        }
+        if(pages === ''){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' pages, ');
+        }
+        if(price === ''){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' price, ');
+        }
+        if(ISBN === ''){
+            setSwitcher1(false);
+            setErrorMessage(errorMessage + ' ISBN, ');
+        }
+        if(switcher1){
+            setBook({ISBN:{ISBN} , cover: require('../../../assets/images/icons/cover 3.png'), price: {price}, author: {author}, bookTitle: {bookTitle}, numOfPages: {pages}, category: {category}, rate: 4.5});
+            arr.push(book);
+            console.log(book);
+        }
+        setSwitcher1(true);
+    }
+    //problem here
+    function isUnique (text){
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i].ISBN === text){
+                console.log(arr[i].ISBN === text);
+                return false;
+            }
+        }
+        return true;
+    }
     return (
         <ScrollView>
             <View style={styles.container}> 
@@ -26,10 +90,10 @@ export default function ListOfBooks() {
                         <FontAwesome5 name='book' size={110} style={{height: 147, width:120}} color={'#A0A0A1'}></FontAwesome5>
                         <View style={styles.containerOfTextDetails}>
                             <View style={{marginTop: -30}}>
-                                <Text style={styles.textDetails}>Book title: </Text>
-                                <Text style={styles.textDetails}>Price: </Text>
+                                <Text style={styles.textDetails}>Book title: {bookTitle}</Text>
+                                <Text style={styles.textDetails}>Price: {price}</Text>
                                 <Text style={styles.textDetails}>Quantity: </Text>
-                                <Text style={styles.textDetails}>ISBN: </Text>
+                                <Text style={styles.textDetails}>ISBN: {ISBN}</Text>
                             </View>
                             <Pressable style={styles.coverButton}>
                                 <Text style={{color:COLORS.secondary, fontWeight: '700', fontSize: 20}}>Cover</Text>
@@ -40,18 +104,18 @@ export default function ListOfBooks() {
 
                     <View style={[styles.bookTitleContainer, {marginTop: 20}]}>
                         <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>Book Title:</Text>
-                        <TextInput placeholder='Book Title' placeholderTextColor={COLORS.primary_70} style={styles.bookTitleInput}></TextInput>
+                        <TextInput placeholder='Book Title' value={bookTitle} placeholderTextColor={COLORS.primary_70} style={styles.bookTitleInput} onChangeText={(text) => {setBookTitle(text)}}></TextInput>
                     </View>
 
                     <View style={[styles.authorNameContainer, {marginTop: 20}]}>
                         <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>Author Name:</Text>
-                        <TextInput placeholder='Book Title' placeholderTextColor={COLORS.primary_70} style={styles.authorNameInput}></TextInput>
+                        <TextInput placeholder='Author Name' value={author} placeholderTextColor={COLORS.primary_70} style={styles.authorNameInput} onChangeText={(text) => {setAuthor(text)}}></TextInput>
                     </View>
 
                     <View style={[styles.categoryContainer, {marginTop: 20, shadowColor: COLORS.primary}]}>
                         <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>Category:</Text>
                         <View style={[styles.categoryInputBar, {flexDirection: 'row', width: 350, backgroundColor: COLORS.secondary, color: COLORS.primary}]}>
-                            <TextInput placeholder='Select Category' placeholderTextColor={COLORS.primary_70} style={[styles.categoryInput, {color: COLORS.primary}]}/>
+                            <TextInput placeholder='Select Category' value={category} placeholderTextColor={COLORS.primary_70} style={[styles.categoryInput, {color: COLORS.primary, height: '100%', width: '90%'}]} onChangeText={(text) => {setCategory(text)}}/>
                             <Pressable>
                                 <FontAwesome5 name="caret-square-down" size={22} color={COLORS.primary}></FontAwesome5>
                             </Pressable>
@@ -61,23 +125,23 @@ export default function ListOfBooks() {
                     <View style={[styles.pageAndPriceContainer, {flexDirection: 'row', width: 350, marginTop: 20, justifyContent: 'space-between'}]}>
                         <View style={styles.containerOfPages}>
                             <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>Pages: </Text>
-                            <TextInput placeholder='Enter the pages' placeholderTextColor={COLORS.primary_70} style={styles.pagesAndPriceInput}></TextInput>
+                            <TextInput placeholder='The pages' value={pages} placeholderTextColor={COLORS.primary_70} style={styles.pagesAndPriceInput} onChangeText={(text) => {setPages(text);}}></TextInput>
                         </View>
 
                         <View style={styles.containerOfPrice}>
                             <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>Price: </Text>
-                            <TextInput placeholder='Enter the price' placeholderTextColor={COLORS.primary_70} style={styles.pagesAndPriceInput}></TextInput>
+                            <TextInput placeholder='The price' value={price} placeholderTextColor={COLORS.primary_70} style={styles.pagesAndPriceInput} onChangeText={(text) => {setPrice(text);}}></TextInput>
                         </View>
                     </View>
 
                     <View style={[styles.containerOfISBN, {marginTop: 20}]}>
                         <Text style={{color: COLORS.primary, fontSize: 22, fontWeight: '700'}}>ISBN:</Text>
-                        <TextInput placeholder='ISBN' placeholderTextColor={COLORS.primary_70} style={styles.ISBNInput}></TextInput>
+                        <TextInput placeholder='ISBN' value={ISBN} placeholderTextColor={COLORS.primary_70} style={styles.ISBNInput} onChangeText={(text) => {setISBN(text);}}></TextInput>
                     </View>
 
                     <View style={[styles.cancelAndCreateButtonsContainer, {marginTop: 20}]}>
-                        <Pressable style={styles.cancelButton}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}}>Cancel</Text></Pressable>
-                        <Pressable style={styles.createButton}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}}>Create</Text></Pressable>
+                        <Pressable style={styles.cancelButton} onPress={() => {cancelHandler()}}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}}>Cancel</Text></Pressable>
+                        <Pressable style={styles.createButton}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}} onPress={() => {createHandler();}}>Create</Text></Pressable>
                     </View>
 
                 </View>
@@ -120,7 +184,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         maxWidth: 350,
         minWidth: 200,
-        width: '100%',
         borderRadius: 10,
         backgroundColor: COLORS.secondary,
         flexDirection: 'row',
