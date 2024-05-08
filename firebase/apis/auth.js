@@ -32,17 +32,36 @@ async function register(
   role = USER_ROLES.USER
 ) {
   try {
+    let emailLower;
+    let usernameLower;
+    // Validation for Username & Email
+    if (username) {
+      usernameLower = username.toLowerCase();
+      const foundUserByUsername = await findUserByField('username' , usernameLower);
+      if (foundUserByUsername) {
+        throw new Error('Username is already exist enter another one');
+      }
+    }
+
+    if (email) {
+      emailLower = email.toLowerCase();
+      const foundUserByEmail = await findUserByField('email' , emailLower);
+      if (foundUserByEmail) {
+        throw new Error('Email is already exist enter another one');
+      }
+    }
+
     const credentials = await createUserWithEmailAndPassword(
       auth,
-      email,
+      emailLower,
       password
     );
     await createUser(
       auth.currentUser.uid,
+      usernameLower,
       firstName,
       lastName,
-      username,
-      email,
+      emailLower,
       role
     );
     return credentials;
