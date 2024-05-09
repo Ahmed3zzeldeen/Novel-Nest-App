@@ -5,6 +5,7 @@ import ROUTES from "../../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import BookCard from "@/components/BookCard";
+import { deleteDoc } from 'firebase/firestore';
 export default function ListOfBooks() {
 
     const [BestSellerBooks , setBestSellerBooks] = useState([
@@ -18,6 +19,10 @@ export default function ListOfBooks() {
         item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
     );
     const router = useRouter();
+    const deleteBook = async(ISBN) =>{
+        const bookRef = doc(db, 'books', ISBN);
+        await deleteDoc(bookRef);
+    }
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'light-content'} hidden/>

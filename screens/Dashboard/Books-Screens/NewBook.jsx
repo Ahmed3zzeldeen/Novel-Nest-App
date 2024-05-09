@@ -2,8 +2,8 @@ import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, Scro
 import {React, useState} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import bes from "../Books-Screens/ListOfBooks"
-import { FieldValue } from 'firebase/firestore';
+import {app, db, auth} from '../../../firebase/Config'
+import { collection , addDoc} from 'firebase/firestore';
 export default function ListOfBooks() {
     const [price, setPrice] = useState('');
     const [pages, setPages] = useState('');
@@ -23,8 +23,10 @@ export default function ListOfBooks() {
     {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
     {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5}]
     function cancelHandler() {
-        var switcher1;
-        Alert.alert('Informations you entered\n\ndeleted successfully');
+        Alert.alert('Cleared successfully');
+        clear();
+    }
+    function clear(){
         setAuthor('');
         setBookTitle('');
         setCategory('');
@@ -37,22 +39,37 @@ export default function ListOfBooks() {
         let switcher = true;
         if(!author || !bookTitle || !category || !pages || !price || !ISBN){
             switcher = false;
-            setErrorMessage('There\'re missed fields.');
+            alert('There are missed fields.');
         }
         if(isNaN(price) || isNaN(ISBN) || isNaN(pages)){
             switcher = false;
-            setErrorMessage('Invalid number!');
+            alert('Invalid number!');
         }
         if(ISBN.length != 13){
             switcher = false;
-            setErrorMessage('ISBN Should be 13 digits.');
+            alert('ISBN Should be 13 digits.');
         }
         if(switcher){
-            setBooks(books.push({ISBN:ISBN , cover: require('../../../assets/images/icons/cover 3.png'), price: price, author: author, bookTitle: bookTitle, numOfPages: pages, category: category, rate: 4.5}));
-            console.log(books);
+            addBook();
+            clear();
+            alert('The item has been added successfully');
         }
-        else{
-            alert(errorMessage);
+    }
+    const addBook = async() => {
+        try{
+            const docRef = await addDoc(collection(db, "books"), {
+                author: author,
+                bookTitle: bookTitle,
+                price: price,
+                pages: pages,
+                ISBN: ISBN,
+                category: category,
+                cover: cover,
+            });
+            console.log("Document added with id: ", docRef.id);
+            clear();
+        }catch(e){
+            console.log("Error adding document", e);
         }
     }
     //problem here
@@ -134,7 +151,7 @@ export default function ListOfBooks() {
 
                     <View style={[styles.cancelAndCreateButtonsContainer, {marginTop: 20}]}>
                         <Pressable style={styles.cancelButton} onPress={() => {cancelHandler()}}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}}>Cancel</Text></Pressable>
-                        <Pressable style={styles.createButton}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}} onPress={() => {createHandler();}}>Create</Text></Pressable>
+                        <Pressable style={styles.createButton}><Text style={{color: COLORS.secondary, fontSize: 18, fontWeight: '700'}} onPress={() => createHandler()}>Create</Text></Pressable>
                     </View>
 
                 </View>
