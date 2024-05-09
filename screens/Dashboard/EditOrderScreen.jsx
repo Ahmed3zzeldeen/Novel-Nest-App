@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable, Image } from 'react-native';
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "../../constants/routes";
@@ -8,7 +8,7 @@ import { findOrderById } from '@/firebase/apis/orders';
 import { formatData } from '@/utils';
 
 const EditOrderScreen = ({ orderId }) => {
-  const [orderData, setOrderData] = useState(null);
+  const [orderData, setOrderData] = useState(null); 
   const [editMode, setEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -46,25 +46,27 @@ const EditOrderScreen = ({ orderId }) => {
   const renderItem = ({ item }) => (
     <View style={styles.Center3}>
       <View style={styles.item}>
-        <View style={styles.ImageConatiner}>
-          <Image source={item.cover} style={styles.ImageWH} />
-        </View>
         <View style={styles.TextConatiner}>
           <Text style={styles.BookText}>Book Title : {item.bookTitle}</Text>
           <Text style={styles.BookText}>Price : {item.price} $</Text>
           <Text style={styles.BookText}>ISBN : {item.ISBN}</Text>
-        </View>
-        {editMode && (
-          <View style={styles.editButtons}>
-            <Pressable style={styles.editButton} onPress={incrementQuantity}>
-              <Text style={styles.buttonText}>+</Text>
-            </Pressable>
-            <Text>{quantity}</Text>
-            <Pressable style={styles.editButton} onPress={decrementQuantity}>
-              <Text style={styles.buttonText}>-</Text>
-            </Pressable>
+          <View style={styles.DisItem}>
+            {editMode && (
+              <View style={styles.editButtons}>
+                <Pressable style={styles.editButton} onPress={incrementQuantity}>
+                  <Text style={styles.buttonText}>+</Text>
+                </Pressable>
+                <Text>{quantity}</Text>
+                <Pressable style={styles.editButton} onPress={decrementQuantity}>
+                  <Text style={styles.buttonText}>-</Text>
+                </Pressable>
+              </View>
+            )}
           </View>
-        )}
+        </View>
+        <View style={styles.ImageConatiner}>
+          <Image source={item.cover} style={styles.ImageWH} />
+        </View>
       </View>
     </View>
   );
@@ -250,9 +252,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   editButtons: {
-    width: 120,
-    height: 120,
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     justifyContent: 'flex-end',
     flex: 1,
@@ -270,6 +270,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  DisItem: {
+    backgroundColor: 'red',
+    marginTop: 10,
+    flexDirection: 'row-reverse',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
