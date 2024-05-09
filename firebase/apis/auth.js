@@ -6,16 +6,23 @@ import {
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { createUser, findUserByField } from "./users.js";
+import { createUser, findUserByField, findUserById } from "./users.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import USER_ROLES from "@/constants/userRoles";
+
+const fetchCurrentUserFromOurStore = async (uid) => {
+  const currUser = await findUserById(uid);
+  return currUser;
+}
 
 // Listen for authentication state changes.
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // set user in local storage using async storage
-    console.log("User is logged in:", user.uid);
-    AsyncStorage.setItem("user", JSON.stringify(user));
+    fetchCurrentUserFromOurStore(user.uid).then(
+      (cUser) => {
+        AsyncStorage.setItem("user", JSON.stringify(cUser));
+      }
+    );
   } else {
     console.log("User is logged out");
     AsyncStorage.removeItem("user");
@@ -91,9 +98,10 @@ async function logout() {
     const user = auth.currentUser;
     if (user) {
       await signOut(auth);
+      console.log("User logged out successfully.");
+    } else {
       throw new Error("No user is currently logged in");  
     }
-    console.log("User logged out successfully.");
   } catch (error) {
     throw error;
   }
