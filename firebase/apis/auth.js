@@ -10,9 +10,13 @@ import { createUser, findUserByField } from "./users.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import USER_ROLES from "@/constants/userRoles";
 
+
+
+let userUid; 
 // Listen for authentication state changes.
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    userUid = user.uid;
     // set user in local storage using async storage
     console.log("User is logged in:", user.uid);
     AsyncStorage.setItem("user", JSON.stringify(user));
@@ -21,6 +25,10 @@ onAuthStateChanged(auth, (user) => {
     AsyncStorage.removeItem("user");
   }
 });
+
+const getCurrentUserUid = () => {
+  return userUid;
+}
 
 // Register a new user.
 async function register(
@@ -112,4 +120,4 @@ async function resetPassword(email) {
   }
 }
 
-export { register, login, logout, resetPassword };
+export { register, login, logout, resetPassword, getCurrentUserUid };

@@ -6,6 +6,11 @@ import { useState } from "react";
 const BookScreen = ({ book }) => {
 
   const [counter , setCounter] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
+
+  const cartButtonStyle = {
+    text: addToCart? 'Remove From Cart' : 'Add To Cart'
+  }
 
   return (
     <View style={styles.container}>
@@ -46,8 +51,9 @@ const BookScreen = ({ book }) => {
             </View>
             <CustomButton
               buttonStyle={styles.button}
-              textButton={'Add To Cart'}
+              textButton={cartButtonStyle.text}
               textButtonStyle={styles.textButton}
+              functionality={addToCart ?() => setAddToCart(false) : () => setAddToCart(true)}
             />
           </View>
         </View>

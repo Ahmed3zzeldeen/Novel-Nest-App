@@ -7,8 +7,22 @@ import CustomButton from './CustomButton';
 
 const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
   const [numOfBooks, setNumOfBooks] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
   
   const router = useRouter();
+
+  const cartButtonStyle = {
+    backgroundColor: (addToCart) ? COLORS.danger : COLORS.primary,
+    textButton: (addToCart)? 'Remove From Cart' : 'Add To Cart'
+  }
+
+  const handleAddToCart = () => {
+    setAddToCart(true)
+  }
+
+  const handleRemoveFromCart = () => {
+    setAddToCart(false);
+  }
 
   return (
     <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
@@ -43,9 +57,9 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
             />
           </View>
         </View>
-        <Pressable style={styles.cartButton}>
-          <View style={styles.addToCartBox}>
-            <Text style={styles.cartText}>Add To Cart</Text>
+        <Pressable style={styles.cartButton} onPress={addToCart ? () => handleRemoveFromCart() : () => handleAddToCart()}>
+          <View style={{ ...styles.addToCartBox , backgroundColor: cartButtonStyle.backgroundColor}}>
+            <Text style={styles.cartText}>{cartButtonStyle.textButton}</Text>
           </View>
         </Pressable>
       </ImageBackground>
