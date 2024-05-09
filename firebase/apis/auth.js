@@ -29,6 +29,10 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+const getCurrentUserUid = () => {
+  return userUid;
+}
+
 // Register a new user.
 async function register(
   firstName,
@@ -120,4 +124,4 @@ async function resetPassword(email) {
   }
 }
 
-export { register, login, logout, resetPassword };
+export { register, login, logout, resetPassword, getCurrentUserUid };

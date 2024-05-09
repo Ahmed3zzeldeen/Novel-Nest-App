@@ -6,6 +6,7 @@ import { BookCard , BestSellerCard , CustomLink } from "@/components";
 import ROUTES from "@/constants/routes";
 
 const HomeScreen = () => {
+
   const router = useRouter();
 
   const [BestSellerBooks , setBestSellerBooks] = useState([
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 0
   },
   searchList: {
-    marginHorizontal: "auto",
+    marginHorizontal: "5%",
     height: '20%',
   },
 });

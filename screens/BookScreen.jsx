@@ -6,6 +6,11 @@ import { useState } from "react";
 const BookScreen = ({ book }) => {
 
   const [counter , setCounter] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
+
+  const cartButtonStyle = {
+    text: addToCart? 'Remove From Cart' : 'Add To Cart'
+  }
 
   return (
     <View style={styles.container}>
@@ -46,8 +51,9 @@ const BookScreen = ({ book }) => {
             </View>
             <CustomButton
               buttonStyle={styles.button}
-              textButton={'Add To Cart'}
+              textButton={cartButtonStyle.text}
               textButtonStyle={styles.textButton}
+              functionality={addToCart ?() => setAddToCart(false) : () => setAddToCart(true)}
             />
           </View>
         </View>
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     borderRadius: 14.61,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   circleButton: {
@@ -120,11 +126,12 @@ const styles = StyleSheet.create({
     width: 38.96,
     height: 38.96,
     borderRadius: 50,
+  
   },
   circleButtonText: {
     color: COLORS.secondary,
     fontWeight: '700',
-    fontSize: 25,
+    fontSize: 18,
     textAlign: 'center',
   },
   counter: {
