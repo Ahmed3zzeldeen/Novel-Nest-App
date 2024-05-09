@@ -43,7 +43,7 @@ export default function ListOfBooks() {
                 style={styles.searchList}
                 data={filteredData}
                 renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
-                keyExtractor={(item) => {item.ISBN}}
+                keyExtractor={(item) => item.ISBN}
                 numColumns={2}
             />        
         </View>

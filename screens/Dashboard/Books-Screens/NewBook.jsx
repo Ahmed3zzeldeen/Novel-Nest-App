@@ -2,10 +2,9 @@ import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, Scro
 import {React, useState} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import BestSellerBooks from "../Books-Screens/ListOfBooks"
+import bes from "../Books-Screens/ListOfBooks"
 import { FieldValue } from 'firebase/firestore';
 export default function ListOfBooks() {
-    const [switcher1, setSwitcher1] = useState(true);
     const [price, setPrice] = useState('');
     const [pages, setPages] = useState('');
     const [author, setAuthor] = useState('');
@@ -13,8 +12,12 @@ export default function ListOfBooks() {
     const [category, setCategory] = useState('');
     const [cover, setCover] = useState('');
     const [bookTitle, setBookTitle] = useState('');
-    const [errorMessage, setErrorMessage] = useState('Invalid');
-    const [book, setBook] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [books, setBooks] = useState([{ISBN:1 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
+    {ISBN:2 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
+    {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
+    {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5}]);
+    
     const arr = [{ISBN:1 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
     {ISBN:2 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
     {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
@@ -31,36 +34,26 @@ export default function ListOfBooks() {
         setCover('');
     }
     function createHandler(){
-        if(author.localeCompare('') !== 0){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' author, ');
+        let switcher = true;
+        if(!author || !bookTitle || !category || !pages || !price || !ISBN){
+            switcher = false;
+            setErrorMessage('There\'re missed fields.');
         }
-        if(bookTitle === ''){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' book title, ');
+        if(isNaN(price) || isNaN(ISBN) || isNaN(pages)){
+            switcher = false;
+            setErrorMessage('Invalid number!');
         }
-        if(category === ''){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' category, ');
+        if(ISBN.length != 13){
+            switcher = false;
+            setErrorMessage('ISBN Should be 13 digits.');
         }
-        if(pages === ''){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' pages, ');
+        if(switcher){
+            setBooks(books.push({ISBN:ISBN , cover: require('../../../assets/images/icons/cover 3.png'), price: price, author: author, bookTitle: bookTitle, numOfPages: pages, category: category, rate: 4.5}));
+            console.log(books);
         }
-        if(price === ''){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' price, ');
+        else{
+            alert(errorMessage);
         }
-        if(ISBN === ''){
-            setSwitcher1(false);
-            setErrorMessage(errorMessage + ' ISBN, ');
-        }
-        if(switcher1){
-            setBook({ISBN:{ISBN} , cover: require('../../../assets/images/icons/cover 3.png'), price: {price}, author: {author}, bookTitle: {bookTitle}, numOfPages: {pages}, category: {category}, rate: 4.5});
-            arr.push(book);
-            console.log(book);
-        }
-        setSwitcher1(true);
     }
     //problem here
     function isUnique (text){
@@ -222,7 +215,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         shadowColor: COLORS.primary,
         borderRadius: 4,
-        shadowOffset: {height: 4, width: 0},
+        shadowOffset: {height: 2.5, width: 0},
         borderBottomColor: COLORS.primary,
         borderBottomWidth: 5,
         color: COLORS.primary
