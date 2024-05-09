@@ -98,7 +98,7 @@ const AddUserScreen = () => {
         <CustomTextInput label="Username:" placeholder="RobertMartin123" value={usernameInput} onChangeText={(e) => setUsernameInput(e)} />
         <CustomTextInput label="Email:" placeholder="example@something.com" value={emailInput} onChangeText={(e) => setEmailInput(e)} />
         <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
-        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={"Admin"} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => setRole(e)}  />
+        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={{label: "Admin" , value:"ADMIN"}} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => setRole(e)}  />
       </View >
       <View style = {styles.optionButtons}>
             <CustomButton
@@ -107,7 +107,7 @@ const AddUserScreen = () => {
               textButtonStyle={{color  : COLORS.white}}
             />
             <CustomButton
-              buttonStyle={{backgroundColor: COLORS.success , margin : 10}}
+              buttonStyle={{backgroundColor: COLORS.success }}
               textButton={'Create'}
               textButtonStyle={{color  : COLORS.white}}
             />
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: COLORS.white,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
   avatarButton: {
     flex: 1,
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     gap: 10
   },
   inputsArea: {
+    marginTop : 30  ,
     gap: 10,
-    marginRight: 10,
   },
   text: {
     color: COLORS.primary,
@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
 	flex : 1 , 
 	flexDirection : "row" , 
 	justifyContent : "space-between",
-	margin : 20 , 
+	marginVertical: 30 ,
+	alignItems: "center"
+
     }
 
 });
