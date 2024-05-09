@@ -5,6 +5,7 @@ import {
   Text,
   FlatList,
   Image,
+  Alert,
 } from "react-native";
 import { React, useEffect, useState } from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
@@ -17,13 +18,14 @@ import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
 import { CustomTextInput , CustomButton } from "@/components";
 const AddUserScreen = () => {
-  const [usernameInput, setUsernameInput] = useState();
-  const [firstNameInput, setFirstNameInput] = useState();
-  const [lastNameInput, setLastNameInput] = useState();
-  const [emailInput, setEmailInput] = useState();
-  const [passInput, setPassInput] = useState();
-  const [role, setRole] = useState();
+  const [usernameInput, setUsernameInput] = useState("");
+  const [firstNameInput, setFirstNameInput] = useState("");
+  const [lastNameInput, setLastNameInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [passInput, setPassInput] = useState("");
+  const [role, setRole] = useState("");
   const [image, setImage] = useState(null);
+  const [error, setError] = useState(null);
   //require users from the database
 
   const pickImage = async () => {
@@ -48,7 +50,24 @@ const AddUserScreen = () => {
     const ref = await uplouadFile(`avatar-${new Date()}`, blob);
     return (await getLink(ref.ref));
   };
+  const createUser = async () => {
+      try {
+	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role ){
 
+	} 
+	else {
+	    throw new Error('Enter complete data please');
+	}
+      }catch(e){
+	setError(e);
+      }
+  }
+
+  useEffect(() => {
+      if (error !== null){
+	  alert(`${error}`);
+      }
+  }, [error]);
   return (
     <ScrollView showsVerticalScrollIndicator = {false} style={styles.screenContainer}>
       <View style={styles.buttonsArea}>
@@ -98,7 +117,7 @@ const AddUserScreen = () => {
         <CustomTextInput label="Username:" placeholder="RobertMartin123" value={usernameInput} onChangeText={(e) => setUsernameInput(e)} />
         <CustomTextInput label="Email:" placeholder="example@something.com" value={emailInput} onChangeText={(e) => setEmailInput(e)} />
         <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
-        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={{label: "Admin" , value:"ADMIN"}} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => setRole(e)}  />
+        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={""} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => (e)? setRole(e) : null}  />
       </View >
       <View style = {styles.optionButtons}>
             <CustomButton
@@ -109,9 +128,11 @@ const AddUserScreen = () => {
             <CustomButton
               buttonStyle={{backgroundColor: COLORS.success }}
               textButton={'Create'}
+	      functionality = {()=>{createUser();}}
               textButtonStyle={{color  : COLORS.white}}
             />
       </View>
+      <Text>{role}</Text>
     </ScrollView>
   );
 };
