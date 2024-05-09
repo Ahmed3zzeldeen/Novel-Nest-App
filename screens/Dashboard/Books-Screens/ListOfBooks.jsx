@@ -9,23 +9,20 @@ import {app, db, auth} from '../../../firebase/Config'
 import { deleteDoc,  collection , getDocs } from 'firebase/firestore';
 export default function ListOfBooks() {
 
-    const [BestSellerBooks , setBestSellerBooks] = useState([{ISBN:1 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:2 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    const [BestSellerBooks , setBestSellerBooks] = useState([  {ISBN:1 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:2 , cover: require('../../../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
     {ISBN:3 , cover: require('../../../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
     {ISBN:4 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
     {ISBN:5 , cover: require('../../../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:6 , cover: require('../../../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'}]);
+    {ISBN:6 , cover: require('../../../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'}
+    ]);
     useEffect(() => {
-        getBook(), searching()
+        getBook();
     }, []);
     const [searchText, setSearchText] = useState('');
-    const searching = () =>{   
-        if(BestSellerBooks){
-            const filteredData = BestSellerBooks.filter(item =>
-                item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
-            );
-        }
-    } 
+    const filteredData = BestSellerBooks.filter(item =>
+        item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
+    );
     const router = useRouter();
     const deleteBook = async(ISBN) =>{
         const bookRef = doc(db, 'books', ISBN);
@@ -34,7 +31,7 @@ export default function ListOfBooks() {
     const getBook = async () =>{
         const querySnapshot = await getDocs(collection(db, "books"));
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, doc.data());
+            // console.log(doc.id, doc.data());
             // setBestSellerBooks({...doc.data(), id: doc.id});
         });
     };
