@@ -11,17 +11,18 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView , ScrollView } from "react-native-safe-area-context";
+import { SafeAreaView , ScrollView } from "react-native";
 import { uplouadFile, getLink } from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
-import { CustomTextInput , CustomButton} from "@/components";
+import { CustomTextInput , CustomButton } from "@/components";
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState();
   const [firstNameInput, setFirstNameInput] = useState();
   const [lastNameInput, setLastNameInput] = useState();
   const [emailInput, setEmailInput] = useState();
   const [passInput, setPassInput] = useState();
+  const [role, setRole] = useState();
   const [image, setImage] = useState(null);
   //require users from the database
 
@@ -49,7 +50,7 @@ const AddUserScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.screenContainer}>
+    <ScrollView showsVerticalScrollIndicator = {false} style={styles.screenContainer}>
       <View style={styles.buttonsArea}>
         <Pressable
           style={{ alignSelf: "flex-end", margin: 10 }}
@@ -97,21 +98,21 @@ const AddUserScreen = () => {
         <CustomTextInput label="Username:" placeholder="RobertMartin123" value={usernameInput} onChangeText={(e) => setUsernameInput(e)} />
         <CustomTextInput label="Email:" placeholder="example@something.com" value={emailInput} onChangeText={(e) => setEmailInput(e)} />
         <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
-        <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
+        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={"Admin"} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => setRole(e)}  />
       </View >
       <View style = {styles.optionButtons}>
             <CustomButton
-              buttonStyle={{backgroundColor: "red"}}
-              textButton={'cancel'}
+              buttonStyle={{backgroundColor: COLORS.danger}}
+              textButton={'Cancel'}
               textButtonStyle={{color  : COLORS.white}}
             />
             <CustomButton
-              buttonStyle={{backgroundColor: "green"}}
+              buttonStyle={{backgroundColor: COLORS.success , margin : 10}}
               textButton={'Create'}
               textButtonStyle={{color  : COLORS.white}}
             />
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
   },
   inputsArea: {
     gap: 10,
-    marginRight: 30,
+    marginRight: 10,
   },
   text: {
     color: COLORS.primary,
@@ -185,8 +186,8 @@ const styles = StyleSheet.create({
     optionButtons: {
 	flex : 1 , 
 	flexDirection : "row" , 
-	justifyContent : "space-evenly",
-	margin : 30 , 
+	justifyContent : "space-between",
+	margin : 20 , 
     }
 
 });

@@ -69,7 +69,7 @@ CustomTextInput.Select = function Select({
         onValueChange={onValueChange}
         items={items}
         style={{ ...pickerSelectStyles, ...InputStyle }}
-        placeholder={placeholder}
+        // placeholder={placeholder}
       />
       {error && <Text style={styles.error}>{Error}</Text>}
     </View>
