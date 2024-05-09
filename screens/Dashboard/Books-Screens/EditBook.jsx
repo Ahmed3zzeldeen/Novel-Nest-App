@@ -2,7 +2,7 @@ import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, Scro
 import { React, useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import { createBook } from '@/firebase/apis/books';
+import { updateBook } from '@/firebase/apis/books';
 export default function ListOfBooks() {
     const [ISBN, setISBN] = useState('');
     const [author, setAuthor] = useState('');
@@ -42,7 +42,7 @@ export default function ListOfBooks() {
             Alert.alert('ISBN Should be 13 digits.');
         }
         if (switcher) {
-            addBook();
+            updateBook();
             clear();
             Alert.alert('The item is added successfully');
         }
