@@ -17,7 +17,7 @@ import { uplouadFile, getLink } from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
 import { CustomTextInput , CustomButton } from "@/components";
-import { register } from "../../firebase/apis/auth";
+import { register , logout} from "../../firebase/apis/auth";
 
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState("");
@@ -57,6 +57,7 @@ const AddUserScreen = () => {
 	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role ){
 	    let cred = await register(firstNameInput , lastNameInput , usernameInput , emailInput , passInput , role);
 	    console.log(cred.user.uid);
+	    // a dead end ;;
 	} 
 	else {
 	    throw new Error('Enter complete data please');
