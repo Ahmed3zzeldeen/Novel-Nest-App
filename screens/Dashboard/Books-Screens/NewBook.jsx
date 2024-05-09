@@ -1,9 +1,9 @@
 import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, ScrollView, Alert } from 'react-native'
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import {app, db, auth} from '../../../firebase/Config'
-import { collection , addDoc} from 'firebase/firestore';
+import { collection , addDoc, getDocs} from 'firebase/firestore';
 export default function ListOfBooks() {
     const [price, setPrice] = useState('');
     const [pages, setPages] = useState('');
@@ -30,20 +30,20 @@ export default function ListOfBooks() {
         let switcher = true;
         if(!author || !bookTitle || !category || !pages || !price || !ISBN){
             switcher = false;
-            alert('There are missed fields.');
+            Alert.alert('There are missed fields.');
         }
         if(isNaN(price) || isNaN(ISBN) || isNaN(pages)){
             switcher = false;
-            alert('Invalid number!');
+            Alert.alert('Invalid number!');
         }
         if(ISBN.length != 13){
             switcher = false;
-            alert('ISBN Should be 13 digits.');
+            Alert.alert('ISBN Should be 13 digits.');
         }
         if(switcher){
             addBook();
             clear();
-            alert('The item is added successfully');
+            Alert.alert('The item is added successfully');
         }
     }
     const addBook = async() => {
@@ -55,23 +55,13 @@ export default function ListOfBooks() {
                 pages: pages,
                 ISBN: ISBN,
                 category: category,
-                cover: cover,
+                cover: cover
             });
             console.log("Document added with id: ", docRef.id);
             clear();
         }catch(e){
             console.log("Error adding document", e);
         }
-    }
-    //problem here
-    function isUnique (text){
-        for(let i = 0; i < arr.length; i++){
-            if(arr[i].ISBN === text){
-                console.log(arr[i].ISBN === text);
-                return false;
-            }
-        }
-        return true;
     }
     return (
         <ScrollView>

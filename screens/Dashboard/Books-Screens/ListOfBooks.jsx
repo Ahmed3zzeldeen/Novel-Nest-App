@@ -1,28 +1,40 @@
 import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList } from 'react-native'
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import { useRouter } from "expo-router";
 import ROUTES from "../../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import BookCard from "@/components/BookCard";
-import { deleteDoc } from 'firebase/firestore';
+import {app, db, auth} from '../../../firebase/Config'
+import { deleteDoc,  collection , getDocs } from 'firebase/firestore';
 export default function ListOfBooks() {
 
-    const [BestSellerBooks , setBestSellerBooks] = useState([
-        {ISBN:2 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
-        {ISBN:3 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
-        {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
-        {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5},
-    ]);
+    const [BestSellerBooks , setBestSellerBooks] = useState([]);
+    useEffect(() => {
+        getBook(), searching()
+    }, []);
+    ////////////////////////
     const [searchText, setSearchText] = useState('');
-    const filteredData = BestSellerBooks.filter(item =>
-        item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
-    );
+    const searching = () =>{   
+        if(BestSellerBooks){
+            const filteredData = BestSellerBooks.filter(item =>
+                item.bookTitle.toLowerCase().includes(searchText.toLowerCase())
+            );
+        }
+    } 
+    ////////////////////////
     const router = useRouter();
     const deleteBook = async(ISBN) =>{
         const bookRef = doc(db, 'books', ISBN);
         await deleteDoc(bookRef);
     }
+    const getBook = async () =>{
+        const querySnapshot = await getDocs(collection(db, "books"));
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, doc.data());
+            setBestSellerBooks({...doc.data(), id: doc.id});
+        });
+    };
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'light-content'} hidden/>
@@ -46,7 +58,7 @@ export default function ListOfBooks() {
             </View>
             <FlatList
                 style={styles.searchList}
-                data={filteredData}
+                data={BestSellerBooks}
                 renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
                 keyExtractor={(item) => item.ISBN}
                 numColumns={2}
