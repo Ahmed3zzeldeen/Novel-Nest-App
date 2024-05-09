@@ -13,15 +13,6 @@ export default function ListOfBooks() {
     const [cover, setCover] = useState('');
     const [bookTitle, setBookTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [books, setBooks] = useState([{ISBN:1 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
-    {ISBN:2 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
-    {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
-    {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5}]);
-    
-    const arr = [{ISBN:1 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey2', numOfPages: 120, category: 'dramaB', rate: 4.5},
-    {ISBN:2 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'a2', numOfPages: 120, category: 'dramaE', rate: 4.5},
-    {ISBN:3 , cover: require('../../../assets/images/icons/cover 2.png'), price: 100, author: 'Ahmed', bookTitle: 'journey3', numOfPages: 120, category: 'dramaC', rate: 4.5},
-    {ISBN:4 , cover: require('../../../assets/images/icons/cover 3.png'), price: 100, author: 'Ahmed', bookTitle: 'journey4', numOfPages: 120, category: 'dramaD', rate: 4.5}]
     function cancelHandler() {
         Alert.alert('Cleared successfully');
         clear();
@@ -52,7 +43,7 @@ export default function ListOfBooks() {
         if(switcher){
             addBook();
             clear();
-            alert('The item has been added successfully');
+            alert('The item is added successfully');
         }
     }
     const addBook = async() => {
