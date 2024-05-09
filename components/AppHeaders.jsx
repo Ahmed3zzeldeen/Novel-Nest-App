@@ -97,8 +97,14 @@ const AppHeaders = () => {
         name={ROUTES.DASHBOARD.LIST_OF_USERS}
         options={{
           headerTitle: "Users",
-          headerTitleAlign: "center",
-          headerStyle: { backgroundColor: "#29648f" },
+          headerStyle: { backgroundColor: COLORS.primary },
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.DASHBOARD.ADD_NEW_USER}
+        options={{
+          headerTitle: "New User",
+          headerStyle: { backgroundColor: COLORS.primary},
         }}
       />
       <Stack.Screen
@@ -108,8 +114,9 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.DASHBOARD.ADD_NEW_ORDER}
         options={{
-          headerTitle: "Order Screen",
-          headerTitleAlign: "center",
+
+          headerTitle: "Edit Order",
+          headerTitleAlign: "left",
           headerStyle: { backgroundColor: "#29648f" },
         }}
       />
@@ -117,10 +124,11 @@ const AppHeaders = () => {
         name={ROUTES.DASHBOARD.LIST_OF_ORDERS}
         options={{
           headerTitle: "List Of Orders",
-          headerTitleAlign: "center",
-          headerStyle: { backgroundColor: "#29648f" },
+          headerStyle: { backgroundColor: COLORS.primary},
+
         }}
       />
+    
     </Stack>
   );
 };
