@@ -3,7 +3,7 @@ import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import COLORS from "@/constants/colors";
-import {HomeHeader, MoreBooksHeader} from '@/components';
+import { HomeHeader, MoreBooksHeader } from '@/components';
 
 const AppHeaders = () => {
 
@@ -57,7 +57,7 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.HOME}
         options={{
-          header: () => (<HomeHeader/>)
+          header: () => (<HomeHeader />)
         }}
       />
       <Stack.Screen
@@ -82,7 +82,7 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.BOOKS}
         options={{
-          header: () => (<MoreBooksHeader/>)
+          header: () => (<MoreBooksHeader />)
         }}
       />
       <Stack.Screen
@@ -104,12 +104,12 @@ const AppHeaders = () => {
         name={ROUTES.DASHBOARD.ADD_NEW_USER}
         options={{
           headerTitle: "New User",
-          headerStyle: { backgroundColor: COLORS.primary},
+          headerStyle: { backgroundColor: COLORS.primary },
         }}
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
-        options={{headerTitle: "List of books"}}
+        options={{ headerTitle: "List of books" }}
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.ADD_NEW_ORDER}
@@ -121,24 +121,22 @@ const AppHeaders = () => {
         }}
       />
       <Stack.Screen
-<<<<<<< HEAD
         name={ROUTES.DASHBOARD.LIST_OF_BOOKS}
-        options={{headerTitle: "List of books"}}
+        options={{ headerTitle: "List of books" }}
       />
       <Stack.Screen
         name={ROUTES.DASHBOARD.ADD_NEW_BOOK}
-        options={{headerTitle: "Add new book"}}
+        options={{ headerTitle: "Add new book" }}
       />
-=======
+      <Stack.Screen
         name={ROUTES.DASHBOARD.LIST_OF_ORDERS}
         options={{
           headerTitle: "List Of Orders",
-          headerStyle: { backgroundColor: COLORS.primary},
+          headerStyle: { backgroundColor: COLORS.primary },
 
         }}
       />
-    
->>>>>>> 7207e716fb13c17ba80a88d2d4783e2831416f46
+
     </Stack>
   );
 };
