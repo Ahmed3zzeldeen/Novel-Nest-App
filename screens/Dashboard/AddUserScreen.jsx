@@ -12,11 +12,13 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView , ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { uplouadFile, getLink } from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
 import { CustomTextInput , CustomButton } from "@/components";
+import { register } from "../../firebase/apis/auth";
+
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState("");
   const [firstNameInput, setFirstNameInput] = useState("");
@@ -53,7 +55,8 @@ const AddUserScreen = () => {
   const createUser = async () => {
       try {
 	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role ){
-
+	    let cred = await register(firstNameInput , lastNameInput , usernameInput , emailInput , passInput , role);
+	    console.log(cred.user.uid);
 	} 
 	else {
 	    throw new Error('Enter complete data please');
@@ -132,7 +135,6 @@ const AddUserScreen = () => {
               textButtonStyle={{color  : COLORS.white}}
             />
       </View>
-      <Text>{role}</Text>
     </ScrollView>
   );
 };

@@ -39,7 +39,7 @@ async function register(
       usernameLower = username.toLowerCase();
       const foundUserByUsername = await findUserByField('username' , usernameLower);
       if (foundUserByUsername) {
-        throw new Error('Username is already exist enter another one');
+        throw new Error('Username already exists enter another one');
       }
     }
 
@@ -47,7 +47,7 @@ async function register(
       emailLower = email.toLowerCase();
       const foundUserByEmail = await findUserByField('email' , emailLower);
       if (foundUserByEmail) {
-        throw new Error('Email is already exist enter another one');
+        throw new Error('Email already exists enter another one');
       }
     }
 
