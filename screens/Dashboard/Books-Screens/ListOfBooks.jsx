@@ -9,11 +9,15 @@ import {app, db, auth} from '../../../firebase/Config'
 import { deleteDoc,  collection , getDocs } from 'firebase/firestore';
 export default function ListOfBooks() {
 
-    const [BestSellerBooks , setBestSellerBooks] = useState([]);
+    const [BestSellerBooks , setBestSellerBooks] = useState([{ISBN:1 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:2 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:3 , cover: require('../../../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:4 , cover: require('../../../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:5 , cover: require('../../../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
+    {ISBN:6 , cover: require('../../../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'}]);
     useEffect(() => {
         getBook(), searching()
     }, []);
-    ////////////////////////
     const [searchText, setSearchText] = useState('');
     const searching = () =>{   
         if(BestSellerBooks){
@@ -22,7 +26,6 @@ export default function ListOfBooks() {
             );
         }
     } 
-    ////////////////////////
     const router = useRouter();
     const deleteBook = async(ISBN) =>{
         const bookRef = doc(db, 'books', ISBN);
@@ -32,7 +35,7 @@ export default function ListOfBooks() {
         const querySnapshot = await getDocs(collection(db, "books"));
         querySnapshot.forEach((doc) => {
             console.log(doc.id, doc.data());
-            setBestSellerBooks({...doc.data(), id: doc.id});
+            // setBestSellerBooks({...doc.data(), id: doc.id});
         });
     };
     return (
