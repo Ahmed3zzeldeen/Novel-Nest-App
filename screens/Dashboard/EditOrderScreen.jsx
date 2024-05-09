@@ -9,15 +9,17 @@ import { formatData } from '@/utils';
 
 const EditOrderScreen = ({ orderId }) => {
   const [orderData, setOrderData] = useState(null);
-  const [EditMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const fetchOrderFromStore = async () => {
     const order = await findOrderById(orderId);
     setOrderData(order);
   }
+
   useLayoutEffect(() => {
     fetchOrderFromStore();
-  }, [])
+  }, []);
 
   if (!orderData) {
     return (
@@ -28,8 +30,18 @@ const EditOrderScreen = ({ orderId }) => {
   }
 
   const toggleEditMode = () => {
-    setEditMode(!EditMode);
+    setEditMode(!editMode);
   }
+
+  const incrementQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.Center3}>
@@ -42,12 +54,13 @@ const EditOrderScreen = ({ orderId }) => {
           <Text style={styles.BookText}>Price : {item.price} $</Text>
           <Text style={styles.BookText}>ISBN : {item.ISBN}</Text>
         </View>
-        {EditMode && (
+        {editMode && (
           <View style={styles.editButtons}>
-            <Pressable style={styles.editButton} onPress={() => incrementBooks(item)}>
+            <Pressable style={styles.editButton} onPress={incrementQuantity}>
               <Text style={styles.buttonText}>+</Text>
             </Pressable>
-            <Pressable style={styles.editButton} onPress={() => decrementBooks(item)}>
+            <Text>{quantity}</Text>
+            <Pressable style={styles.editButton} onPress={decrementQuantity}>
               <Text style={styles.buttonText}>-</Text>
             </Pressable>
           </View>
@@ -55,41 +68,6 @@ const EditOrderScreen = ({ orderId }) => {
       </View>
     </View>
   );
-
-  const incrementBooks = (item) => {
-    const updatedBooks = orderData.books.map(book => {
-      if (book.id === item.id) {
-        return {
-          ...book,
-          numberOfBooks: book.numberOfBooks + 1 
-        };
-      }
-      return book;
-    });
-  
-    setOrderData({
-      ...orderData,
-      books: updatedBooks
-    });
-  };
-  
-  const decrementBooks = (item) => {
-    const updatedBooks = orderData.books.map(book => {
-      if (book.id === item.id) {
-        return {
-          ...book,
-          numberOfBooks: Math.max(0, book.numberOfBooks - 1) 
-        };
-      }
-      return book;
-    });
-  
-    setOrderData({
-      ...orderData,
-      books: updatedBooks
-    });
-  };
-  
 
   return (
     <View style={styles.container}>
@@ -121,7 +99,7 @@ const EditOrderScreen = ({ orderId }) => {
             <View style={styles.Box2}>
               <Pressable style={styles.ContainerIcon} onPress={toggleEditMode}>
                 <FontAwesome5
-                  name={EditMode ? "times" : "pen"}
+                  name={editMode ? "times" : "pen"}
                   size={12}
                   color="#fff"
                   style={styles.icon}
@@ -211,7 +189,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%'
   },
-
   ContainerIcon: {
     width: 22,
     height: 22,
@@ -273,28 +250,26 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   editButtons: {
-    width:120,
-    height:120,
+    width: 120,
+    height: 120,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
     flex: 1,
-    
   },
   editButton: {
-    width:30,
-    height:30,
+    width: 30,
+    height: 30,
     backgroundColor: COLORS.primary,
     borderRadius: 100,
     marginHorizontal: 5,
-    justifyContent:'center',
-    alignItems:'center',
-
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
     fontSize: 20,
-    fontWeight:'bold'
+    fontWeight: 'bold'
   }
 });
 
