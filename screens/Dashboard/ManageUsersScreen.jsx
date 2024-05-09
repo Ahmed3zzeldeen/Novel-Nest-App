@@ -86,8 +86,8 @@ const ManageUsersScreen = () => {
   };
   const getUserByEmail = async (email) => {
     try {
-      const users = await findUsersByEmail(email);
-      console.log("searched in usersManage:", user);
+      const users = await searchUsersByEmail(email);
+      console.log("searched in usersManage:", users);
       return users;
     } catch (e) {
       console.error("couldn't get users", e);
@@ -96,10 +96,9 @@ const ManageUsersScreen = () => {
 
   const getUserByUsersName = async (userName) => {
     try {
-      const users = await findUsersByName(userName);
-      setSearchedUser(user);
-      console.log("searched in usersManage:", user);
-      return user;
+      const users = await searchUsersByName(userName);
+      setSearchedUser(users);
+      return users;
     } catch (e) {
       console.error("couldn't get users", e);
     }
@@ -107,6 +106,7 @@ const ManageUsersScreen = () => {
 
   const onChangeText = async (text) => {
     try {
+	console.log("text",text);
       const nameUsers = await searchUsersByName(text);
       const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
@@ -184,6 +184,7 @@ const ManageUsersScreen = () => {
       </View>
       <FlatList
         style={{ flex: 1 }}
+	showsVerticalScrollIndicator={false}
         data={filteredUsers}
         renderItem={({ item }) => (
           <Item

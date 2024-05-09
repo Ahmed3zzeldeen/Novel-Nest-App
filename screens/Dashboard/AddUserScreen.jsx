@@ -11,11 +11,11 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView , ScrollView } from "react-native-safe-area-context";
 import { uplouadFile, getLink } from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
-import { CustomTextInput } from "@/components";
+import { CustomTextInput , CustomButton} from "@/components";
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState();
   const [firstNameInput, setFirstNameInput] = useState();
@@ -68,25 +68,27 @@ const AddUserScreen = () => {
           </Text>
         </Pressable>
       </View>
-      <Text style={styles.text}>User Preview</Text>
-      <View style={styles.AvatarArea}>
-        <Image source={(image) ? { uri: image } : profilePic} style={{ width: 50, height: 50, borderRadius: 100 }} />
-        <Pressable style={styles.avatarButton} onPress={() => { pickImage(); }}>
-          <Text style={{ color: COLORS.secondary, fontSize: 18, fontFamily: "Fira Sans", fontWeight: "700", alignSelf: "center" }}>
-            Avatar
-          </Text>
-          <FontAwesome6
-            name="cloud-arrow-up"
-            size={18}
-            color={COLORS.secondary}
-            style={{ alignSelf: "center" }}
-          />
-        </Pressable>
+      <View>
+	  <Text style={styles.text}>User Preview</Text>
+	  <View style={styles.AvatarArea}>
+	    <Image source={(image) ? { uri: image } : profilePic} style={{ width: 50, height: 50, borderRadius: 100 }} />
+	    <Pressable style={styles.avatarButton} onPress={() => { pickImage(); }}>
+	      <Text style={{ color: COLORS.secondary, fontSize: 18, fontFamily: "Fira Sans", fontWeight: "700", alignSelf: "center" }}>
+		Avatar
+	      </Text>
+	      <FontAwesome6
+		name="cloud-arrow-up"
+		size={18}
+		color={COLORS.secondary}
+		style={{ alignSelf: "center" }}
+	      />
+	    </Pressable>
+	  </View>
+	  <Text style={styles.Text}>Username: {usernameInput} </Text>
+	  <Text style={styles.Text}>First Name: {firstNameInput} </Text>
+	  <Text style={styles.Text}>Last Name: {lastNameInput} </Text>
+	  <Text style={styles.Text}>Email: {emailInput} </Text>
       </View>
-      <Text style={styles.Text}>Username: {usernameInput} </Text>
-      <Text style={styles.Text}>First Name: {firstNameInput} </Text>
-      <Text style={styles.Text}>Last Name: {lastNameInput} </Text>
-      <Text style={styles.Text}>Email: {emailInput} </Text>
       <View style={styles.inputsArea}>
         <View style={styles.firstRow}>
           <CustomTextInput label="First Name:" placeholder="Robert" value={firstNameInput} onChangeText={(e) => setFirstNameInput(e)} />
@@ -95,6 +97,19 @@ const AddUserScreen = () => {
         <CustomTextInput label="Username:" placeholder="RobertMartin123" value={usernameInput} onChangeText={(e) => setUsernameInput(e)} />
         <CustomTextInput label="Email:" placeholder="example@something.com" value={emailInput} onChangeText={(e) => setEmailInput(e)} />
         <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
+        <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
+      </View >
+      <View style = {styles.optionButtons}>
+            <CustomButton
+              buttonStyle={{backgroundColor: "red"}}
+              textButton={'cancel'}
+              textButtonStyle={{color  : COLORS.white}}
+            />
+            <CustomButton
+              buttonStyle={{backgroundColor: "green"}}
+              textButton={'Create'}
+              textButtonStyle={{color  : COLORS.white}}
+            />
       </View>
     </SafeAreaView>
   );
@@ -133,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: 'space-between',
+    minHeight : 67,
     gap: 10
   },
   inputsArea: {
@@ -165,5 +181,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     marginBottom: 10,
-  }
+  },
+    optionButtons: {
+	flex : 1 , 
+	flexDirection : "row" , 
+	justifyContent : "space-evenly",
+	margin : 30 , 
+    }
+
 });
