@@ -1,11 +1,37 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {View , Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import ROUTES from '@/constants/routes';
+import CustomButton from './CustomButton';
 
+<<<<<<< HEAD
 import { useState } from 'react';
   const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
   let [numOfBooks, setNumOfBooks] = useState(0);
+=======
+const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
+  const [numOfBooks, setNumOfBooks] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
+  
+  const router = useRouter();
+
+  const cartButtonStyle = {
+    backgroundColor: (addToCart) ? COLORS.danger : COLORS.primary,
+    textButton: (addToCart)? 'Remove From Cart' : 'Add To Cart'
+  }
+
+  const handleAddToCart = () => {
+    setAddToCart(true)
+  }
+
+  const handleRemoveFromCart = () => {
+    setAddToCart(false);
+  }
+
+>>>>>>> 7207e716fb13c17ba80a88d2d4783e2831416f46
   return (
-    <Pressable>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
       <ImageBackground 
         style={styles.container}
         source={cover}
@@ -20,6 +46,7 @@ import { useState } from 'react';
             <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
+<<<<<<< HEAD
             <Pressable style={styles.circleButton}>
               <Text style={styles.symbol} onPress={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}>-</Text>
             </Pressable>
@@ -29,16 +56,28 @@ import { useState } from 'react';
             <Pressable style={styles.circleButton} onPress={() => {setNumOfBooks(++numOfBooks)}}>
               <Text style={styles.symbol}>+</Text>
             </Pressable>
+=======
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'-'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}
+            />
+            <View>
+              <Text style={styles.bookCounter}>{numOfBooks}</Text>
+            </View>
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'+'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {setNumOfBooks(++numOfBooks)}}
+            />
+>>>>>>> 7207e716fb13c17ba80a88d2d4783e2831416f46
           </View>
         </View>
-        <Pressable style={styles.cartButton}>
-          <View style={styles.addToCartBox}>
-            <Text style={styles.cartText}>Add To Cart</Text>
-            {/* <View>
-              <Image 
-                source={require('../assets/images/icons/cart-btn.png')}
-              />
-            </View> */}
+        <Pressable style={styles.cartButton} onPress={addToCart ? () => handleRemoveFromCart() : () => handleAddToCart()}>
+          <View style={{ ...styles.addToCartBox , backgroundColor: cartButtonStyle.backgroundColor}}>
+            <Text style={styles.cartText}>{cartButtonStyle.textButton}</Text>
           </View>
         </Pressable>
       </ImageBackground>
@@ -53,7 +92,7 @@ const styles = StyleSheet.create({
     width: 167,
     height: 250,
     borderRadius: 13.8,
-    marginRight: 10,
+    marginHorizontal: '1.71%',
     marginBottom: 10,
     justifyContent: 'flex-end'
   },
@@ -102,12 +141,13 @@ const styles = StyleSheet.create({
   },
   symbol: {
     color: COLORS.secondary,
-    fontWeight: '800',
-    fontSize: 15
+    fontWeight: '700',
+    fontSize: 18,
+    textAlign: 'center'
   },
   bookCounter: {
     color: COLORS.primary,
     fontWeight: '700',
     fontSize: 15
-  }
+  },
 });

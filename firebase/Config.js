@@ -1,6 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+<<<<<<< HEAD
 import { getFirestore, getDocs } from "firebase/firestore";
+=======
+import { getFirestore } from "firebase/firestore";
+import { getStorage, ref } from 'firebase/storage';
+>>>>>>> 7207e716fb13c17ba80a88d2d4783e2831416f46
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -25,5 +30,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+<<<<<<< HEAD
 
 export { app, db, auth, getDocs };
+=======
+const storage = getStorage(app);
+export { app, db, auth,storage};
+>>>>>>> 7207e716fb13c17ba80a88d2d4783e2831416f46

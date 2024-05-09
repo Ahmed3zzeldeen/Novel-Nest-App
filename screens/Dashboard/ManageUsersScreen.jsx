@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { React, useEffect, useState } from "react";
-import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome6 , FontAwesome5} from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import {
@@ -50,34 +50,36 @@ const ManageUsersScreen = () => {
       <View style={styles.userCard}>
         <Image
           source={{ uri: img }}
-          style={{ width: 50, height: 50,borderRadius:25, alignSelf: "flex-start", margin: 10 }}
+          style={{ width: 50, height: 50,borderRadius: 25, alignSelf: "flex-start", margin: 10 }}
         />
         <View style={styles.infoCard}>
           <Text style={styles.Text}>{text}</Text>
           <Text style={styles.Text}>{email}</Text>
         </View>
-        <View>
-          <Pressable style={{ alignSelf: "flex-end" }}>
-            <FontAwesome
-              name="trash"
-              size={24}
-              color={COLORS.primary}
-              style={{ margin: 10 }}
-              onPress={() => {
-                delUserById(id);
-              }}
-            />
-          </Pressable>
+        <View style = {{flexDirection: "row" , gap : 10 , alignSelf : "center" , margin : 10}}>
           <Pressable
+	    style = {styles.button}
             onPress={() => {
               router.push(ROUTES.DASHBOARD.EDIT_USER + id);
             }}
           >
-            <FontAwesome
-              name="pencil-square"
-              size={24}
-              color={COLORS.primary}
+            <FontAwesome5
+              name="pen"
+              size={15}
+              color={COLORS.secondary}
               style={{ margin: 10 }}
+            />
+          </Pressable>
+          <Pressable 
+	    style = {styles.button}>
+            <FontAwesome
+              name="trash"
+              size={20}
+              color={COLORS.secondary}
+              style={{ margin: 10 }}
+              onPress={() => {
+                delUserById(id);
+              }}
             />
           </Pressable>
         </View>
@@ -85,9 +87,9 @@ const ManageUsersScreen = () => {
     );
   };
 
-
   const onChangeText = async (text) => {
     try {
+	console.log("text",text);
       const nameUsers = await searchUsersByName(text);
       const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
@@ -107,74 +109,65 @@ const ManageUsersScreen = () => {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <View style={styles.buttonsArea}>
-	  <Pressable
-	    style={{ alignSelf: "center", margin: 10 , backgroundColor:COLORS.primary , borderRadius : 3}}
-	    onPress={() => {
-	      router.replace(ROUTES.DASHBOARD.ADD_NEW_USER);
-	    }}
-	  >
-	    <Text style={{ color: COLORS.white, fontSize: 20 ,margin : 3 }}>
-	      New{" "}
-	      <FontAwesome6
-		name="add"
-		size={24}
-		color={COLORS.white}
-	      />
-	    </Text>
-	  </Pressable>
-      <Pressable
-        style={{ alignSelf: "center",margin: 10 }}
-        onPress={() => {
-          router.replace(ROUTES.AUTH.SIGN_OUT);
-        }}
-      >
-        <Text style={{ color: COLORS.primary, fontSize: 20 }}>
-          <FontAwesome6
-            name="door-open"
-            size={24}
-            color={COLORS.primary}
-            style={{ margin: 10 }}
-          />
-          logout
-        </Text>
-      </Pressable>
+  <View style={styles.buttonsArea}>
+        <Pressable
+          style={{ alignSelf: "center", margin: 10, backgroundColor: COLORS.primary, borderRadius: 3 }}
+          onPress={() => {
+            router.replace(ROUTES.DASHBOARD.ADD_NEW_USER);
+          }}
+        >
+          <Text style={{ color: COLORS.white, fontSize: 18, margin: 3 , fontWeight : "700" }}>
+            New{" "}
+            <FontAwesome5
+              name="plus"
+              size={15}
+              color={COLORS.white}
+            />
+          </Text>
+        </Pressable>
+        <Pressable
+          style={{ alignSelf: "center", margin: 10 }}
+          onPress={() => {
+            router.replace(ROUTES.AUTH.SIGN_OUT);
+          }}
+        >
+          <Text style={{ color: COLORS.primary, fontSize: 20 }}>
+            <FontAwesome6
+              name="door-open"
+              size={24}
+              color={COLORS.primary}
+              style={{ margin: 10 }}
+            />
+            logout
+          </Text>
+        </Pressable>
       </View>
       <View
         style={{
-          flex: 1,
-          flexDirection: "row",
           backgroundcolor: COLORS.primary,
+          backgroundColor: COLORS.secondary,
+          width: "85%",
+          maxWidth: 450,
           height: 50,
+          borderRadius: 10,
+          alignSelf:"center"
         }}
-      >
+        >
         <TextInput
           style={{
-            backgroundColor: COLORS.secondary,
-            width: "90%",
-            height: 50,
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
+            height:50,
+            paddingHorizontal:10,
+            // borderRadius: 10,
           }}
           placeholder="Search by user email or username"
           placeholderTextColor={COLORS.primary}
           onChangeText={(text) => onChangeText(text)}
-        ></TextInput>
-        <Text
-          style={{
-            fontSize: 30,
-            backgroundColor: COLORS.secondary,
-            color: COLORS.primary,
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-            height: 50,
-          }}
-        >
-          🔍
-        </Text>
+        />
+        <FontAwesome name="search" size={24} color={COLORS.primary} style={{position:"absolute" , right:10 , top: 12 }} />
       </View>
       <FlatList
-        style={{ margin: 50 }}
+        style={{ flex: 1 , margin :30 }}
+	showsVerticalScrollIndicator={false}
         data={filteredUsers}
         renderItem={({ item }) => (
           <Item
@@ -197,18 +190,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: COLORS.white,
-  },
-  buttonsArea:{
-      flex :1 , 
-      flexDirection: "row",
-      maxHeight: "10%",
-      Width:"100%",
-      justifyContent: "space-between",
     },
+  buttonsArea: {
+    flex: 1,
+    flexDirection: "row",
+    maxHeight: "10%",
+    Width: "100%",
+    justifyContent: "space-between",
+  },
   text: {
     color: COLORS.primary,
     fontSize: 24, // Adjusted for more standard viewing
     fontWeight: "bold",
+    fontFamily: "Fira Sans",
+    fontWeight : "700",
   },
   userCard: {
     flex: 1,
@@ -218,15 +213,26 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     width: "85%",
-    maxWidth: 350,
+    maxWidth: 450,
     borderRadius: 10,
   },
   infoCard: {
     flex: 1,
     margin: 10,
+    justifyContent : "center",
+    fontWeight : "700",
   },
   Text: {
     color: COLORS.primary,
     fontFamily: "Fira Sans",
+    fontWeight : "700",
   },
+    button :{
+	width : 40 ,
+	height : 40 , 
+	backgroundColor: COLORS.primary,
+	borderRadius : 50, 
+	justifyContent : "center",
+	alignItems: "center"
+    },
 });
