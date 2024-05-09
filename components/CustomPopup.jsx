@@ -1,7 +1,8 @@
 import COLORS from '@/constants/colors';
-import {View , Text , StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import CustomButton from './CustomButton';
 
+const { width, height } = Dimensions.get('window');
 const CustomPopup = ({
   message,
   textButton1,
@@ -14,21 +15,21 @@ const CustomPopup = ({
   title,
 }) => {
   return (
-    <View style={{ ...styles.container , ...popupStyle}}>
+    <View style={{ ...styles.container, ...popupStyle }}>
       <View style={styles.popup}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.popupContent}>
           <Text style={styles.message}>{message}</Text>
           <View style={styles.buttons}>
             <CustomButton
-              buttonStyle={{ ...styles.button , ...styles.save , ...button2Style }}
-              functionality={button2Function? () => button2Function() : () => {}}
+              buttonStyle={{ ...styles.button, ...styles.save, ...button2Style }}
+              functionality={button2Function ? () => button2Function() : () => { }}
               textButton={textButton2}
               textButtonStyle={styles.textButton}
             />
             <CustomButton
-              buttonStyle={{ ...styles.button , ...styles.cancel , ...button1Style }}
-              functionality={button1Function? () => button1Function() : () => {}}
+              buttonStyle={{ ...styles.button, ...styles.cancel, ...button1Style }}
+              functionality={button1Function ? () => button1Function() : () => { }}
               textButton={textButton1}
               textButtonStyle={styles.textButton}
             />
@@ -41,15 +42,15 @@ const CustomPopup = ({
 
 export default CustomPopup;
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 1,
-    top: -400,
+    top: 0,
     left: 0,
     backgroundColor: 'rgba(0 , 0 , 0 , 0.5)',
-    width: '100%',
-    height: 800,
+    width: width,
+    height: height,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -78,7 +79,7 @@ const styles= StyleSheet.create({
     marginHorizontal: '5%',
     marginTop: '1%'
   },
-  buttons:{ 
+  buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: '5%'

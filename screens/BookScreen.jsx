@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     borderRadius: 14.61,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   circleButton: {
@@ -120,11 +120,12 @@ const styles = StyleSheet.create({
     width: 38.96,
     height: 38.96,
     borderRadius: 50,
+  
   },
   circleButtonText: {
     color: COLORS.secondary,
     fontWeight: '700',
-    fontSize: 25,
+    fontSize: 18,
     textAlign: 'center',
   },
   counter: {
