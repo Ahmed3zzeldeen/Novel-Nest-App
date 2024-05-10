@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
 import CustomButton from './CustomButton';
 
-const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
+const BookCard = ({ book }) =>{ 
   const [numOfBooks, setNumOfBooks] = useState(0);
   const [addToCart , setAddToCart] = useState(false);
   
@@ -25,26 +25,26 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
   }
 
   return (
-    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.ISBN))}>
       <ImageBackground 
         style={styles.container}
-        source={cover}
+        source={book.cover}
         imageStyle={{
           borderRadius: 13.8,    
         }}
       >
         <View style={styles.detailBackground}>
           <View>
-            <Text style={styles.details}>Category: <Text style={styles.content}>{category}</Text></Text>
-            <Text style={styles.details}>Price: <Text style={styles.content}>{price}EGP</Text></Text>
-            <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
+            <Text style={styles.details}>Category: <Text style={styles.content}>{book.category}</Text></Text>
+            <Text style={styles.details}>Price: <Text style={styles.content}>{book.price}EGP</Text></Text>
+            <Text style={styles.details}>Pages: <Text style={styles.content}>{book.numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
             <CustomButton
               buttonStyle={styles.circleButton}
               textButton={'-'}
               textButtonStyle={styles.symbol}
-              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}
+              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(numOfBooks - 1)}}
             />
             <View>
               <Text style={styles.bookCounter}>{numOfBooks}</Text>
@@ -53,7 +53,7 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
               buttonStyle={styles.circleButton}
               textButton={'+'}
               textButtonStyle={styles.symbol}
-              functionality={() => {setNumOfBooks(++numOfBooks)}}
+              functionality={() => {setNumOfBooks(numOfBooks + 1)}}
             />
           </View>
         </View>
