@@ -6,154 +6,61 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "../../constants/routes";
 import { FontAwesome5 } from "@expo/vector-icons";
-
-const Data = [
-  {
-    orderId: 1,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 2,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 3,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 4,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 5,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 4,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-  {
-    orderId: 6,
-    userId: "oZVhinkHdQPvbYIeDFzoTtsF17R2",
-    books: [
-      {
-        bookId: 1,
-        quantity: 1,
-      },
-      {
-        bookId: 2,
-        quantity: 1,
-      },
-    ],
-    numberOfBooks: 2,
-    totalPrice: 50,
-    orderDate: "2020-06-01",
-  },
-];
+import { deleteOrder, getOrders } from "@/firebase/apis/orders";
+import { formatData } from "@/utils";
+import { CustomPopup } from "@/components";
 
 const ListOfOrdersScreen = () => {
   const [searchText, setSearchText] = useState("");
-  const [filteredOrders, setFilteredOrders] = useState(Data);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [orderDeletedId, setOrderDeletedId] = useState(null);
+
+  const handlePressNoBtn = () => {
+    setDeletePopup(false);
+  };
+
+  const handlePressYesBtn = async () => {
+    if (orderDeletedId) {
+      const deleted = await deleteOrder(orderDeletedId);
+      setOrderDeletedId(null);
+      fetchOrdersFromApi();
+    }
+    setDeletePopup(false);
+  };
+
 
   const handleSearch = () => {
     const filtered = Data.filter(order => order.orderId.toString().includes(searchText));
     setFilteredOrders(filtered);
   };
 
-  const handleEdit = (orderId) => {
-    router.push(ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", orderId));
-  };
-
   const handleDelete = (orderId) => {
-    const updatedOrders = filteredOrders.filter(
-      (order) => order.orderId !== orderId
-    );
-    setFilteredOrders(updatedOrders);
+    setDeletePopup(true);
+    setOrderDeletedId(orderId);
   };
 
+  const handleEdit = async (orderId, idx) => {
+    router.push({
+      pathname: ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", orderId), params: { id: orderId, number: idx + 1 }
+    })
+  };
+
+  const fetchOrdersFromApi = async () => {
+    let orders = await getOrders();
+    orders = orders.map((item, idx) => {
+      return { ...item, idx }
+    })
+    setFilteredOrders([...orders]);
+  }
+  useLayoutEffect(() => {
+    fetchOrdersFromApi();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -198,11 +105,11 @@ const ListOfOrdersScreen = () => {
               <Text style={styles.totalPayment}>
                 Total Payment: ${item.totalPrice}
               </Text>
-              <Text style={styles.date}>Date: {item.orderDate}</Text>
+              <Text style={styles.date}>Date: {formatData(new Date(item.orderDate?.seconds * 1000))}</Text>
             </View>
             <View style={styles.iconContainer}>
               <Pressable
-                onPress={() => handleEdit(item.orderId)}
+                onPress={() => handleEdit(item.orderId, item.idx)}
                 style={styles.ContainerIcon}
               >
                 <FontAwesome5
@@ -226,8 +133,17 @@ const ListOfOrdersScreen = () => {
             </View>
           </Pressable>
         )}
-        keyExtractor={(item) => item.orderId}
       />
+      {deletePopup && <CustomPopup
+        title={'Delete Confirmation'}
+        message={'Are you sure you want to Delete this order?'}
+        button1Style={styles.button1}
+        button2Style={styles.button2}
+        textButton1={'No'}
+        textButton2={'Yes'}
+        button1Function={handlePressNoBtn}
+        button2Function={handlePressYesBtn}
+      />}
     </View>
   );
 };

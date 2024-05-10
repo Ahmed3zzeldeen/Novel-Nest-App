@@ -114,8 +114,10 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.DASHBOARD.ADD_NEW_ORDER}
         options={{
-          headerTitle: "Order Screen",
-          headerStyle: { backgroundColor: COLORS.primary},
+
+          headerTitle: "Edit Order",
+          headerTitleAlign: "left",
+          headerStyle: { backgroundColor: "#29648f" },
         }}
       />
       <Stack.Screen
@@ -123,8 +125,10 @@ const AppHeaders = () => {
         options={{
           headerTitle: "List Of Orders",
           headerStyle: { backgroundColor: COLORS.primary},
+
         }}
       />
+    
     </Stack>
   );
 };

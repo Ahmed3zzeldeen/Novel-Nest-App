@@ -3,9 +3,14 @@ import {View , Text, StyleSheet , Image} from 'react-native';
 import { CustomButton } from '@/components';
 import { useState } from "react";
 
-const BookScreen = ({ book }) => {
+const BookScreen = ({ book , addToCartClicked }) => {
 
   const [counter , setCounter] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
+
+  const cartButtonStyle = {
+    text: addToCart? 'Remove From Cart' : 'Add To Cart'
+  }
 
   return (
     <View style={styles.container}>
@@ -42,12 +47,14 @@ const BookScreen = ({ book }) => {
                 buttonStyle={styles.circleButton}
                 textButton={'+'}
                 textButtonStyle={styles.circleButtonText}
+                functionality={() => setCounter(counter + 1)}
               />
             </View>
             <CustomButton
               buttonStyle={styles.button}
-              textButton={'Add To Cart'}
+              textButton={cartButtonStyle.text}
               textButtonStyle={styles.textButton}
+              functionality={addToCart ?() => setAddToCart(false) : () => setAddToCart(true)}
             />
           </View>
         </View>
@@ -84,7 +91,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderTopLeftRadius: 13.8,
     borderTopRightRadius: 13.8,
-    // marginHorizontal: '1%',
     marginTop: '2%'
   },
   header: {
@@ -112,8 +118,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     borderRadius: 14.61,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10
   },
   circleButton: {
     backgroundColor: COLORS.primary,
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
   circleButtonText: {
     color: COLORS.secondary,
     fontWeight: '700',
-    fontSize: 25,
+    fontSize: 30,
     textAlign: 'center',
   },
   counter: {

@@ -6,6 +6,7 @@ import { BookCard , BestSellerCard , CustomLink } from "@/components";
 import ROUTES from "@/constants/routes";
 
 const HomeScreen = () => {
+
   const router = useRouter();
 
   const [BestSellerBooks , setBestSellerBooks] = useState([
@@ -24,7 +25,7 @@ const HomeScreen = () => {
         horizontal
         style={{maxHeight: 180 , margin: '3%'}}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BestSellerCard cover={item.cover}/>)}
+        renderItem={({item}) => (<BestSellerCard book={item}/>)}
         keyExtractor={(item) => item.ISBN}
         showsHorizontalScrollIndicator={false}
       />
@@ -39,7 +40,7 @@ const HomeScreen = () => {
       <FlatList
         style={styles.searchList}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BookCard cover={item.cover}/>)}
+        renderItem={({item}) => (<BookCard book={item}/>)}
         keyExtractor={(item) => item.ISBN}
         numColumns={2}
         showsVerticalScrollIndicator={false}
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 0
   },
   searchList: {
-    marginHorizontal: "auto",
+    marginHorizontal: "5%",
     height: '20%',
   },
 });
