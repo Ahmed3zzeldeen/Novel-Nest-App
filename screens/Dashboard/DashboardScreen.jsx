@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  FlatList,
-} from "react-native";
-import { React, useEffect} from "react";
+import { StyleSheet, View, Text, Pressable, FlatList } from "react-native";
+import { React, useEffect } from "react";
 import { useRouter } from "expo-router";
 import ROUTES from "../../constants/routes";
 import { FontAwesome5, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
@@ -38,7 +32,7 @@ const DashboardScreen = () => {
       FontAwesome: 5,
     },
   ];
-  
+
   const handleLogout = async () => {
     await logout();
     router.replace(ROUTES.AUTH.LOG_IN);
@@ -68,9 +62,8 @@ const DashboardScreen = () => {
   };
 
   useEffect(() => {
-console.log(buttons);
+    console.log(buttons);
   }, []);
-
 
   const router = useRouter();
 
@@ -86,7 +79,7 @@ console.log(buttons);
           {awesome === 5 ? (
             <FontAwesome5
               name={img}
-              size={85}
+              size={60}
               color="#29648F"
               style={{ margin: 30 }}
             />
@@ -106,21 +99,38 @@ console.log(buttons);
 
   return (
     <SafeAreaView style={styles.ScreenContainer}>
-      <Pressable
-        onPress={() => {
-          handlePress(5);
-        }}
-      >
-        <Text style={{ color: COLORS.primary, fontSize: 20, alignSelf: "flex-end" }}>
-          <FontAwesome6
-            name="door-open"
-            size={24}
-            color={COLORS.primary}
-            style={{ margin: 10 }}
-          />
-          logout
-        </Text>
-      </Pressable>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" , alignItems:"center" , padding:10}}>
+        <Pressable
+            onPress={()=> router.push(ROUTES.PUBLIC.HOME)}
+            style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center" ,gap:10}}
+          >
+          <FontAwesome5 name="home" size={24} color={COLORS.primary} />
+          <Text style={{color:COLORS.primary , fontSize:20}}>
+            Go to Home
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handlePress(5);
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.primary,
+              fontSize: 20,
+              alignSelf: "flex-end",
+            }}
+          >
+            <FontAwesome6
+              name="door-open"
+              size={24}
+              color={COLORS.primary}
+              style={{ margin: 10 }}
+            />
+            logout
+          </Text>
+        </Pressable>
+      </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={buttons}
@@ -145,24 +155,25 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "#f7f0e8",
+    backgroundColor: COLORS.white,
   },
   Button: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#eadecf",
+    backgroundColor: COLORS.secondary,
     margin: 20,
     borderRadius: 10,
     maxWidth: 350,
-    maxHeight:150,
+    maxHeight: 150,
   },
   Text: {
-    color: "#29648f",
+    color: COLORS.primary,
     fontSize: 50,
     fontWeight: "bold",
-    marginTop: 10,
+    textAlign: 'left',
+    marginRight: '2%'
   },
   ButtonsList: {
     flex: 1,

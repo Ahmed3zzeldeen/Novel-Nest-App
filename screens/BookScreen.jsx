@@ -3,7 +3,7 @@ import {View , Text, StyleSheet , Image} from 'react-native';
 import { CustomButton } from '@/components';
 import { useState } from "react";
 
-const BookScreen = ({ book }) => {
+const BookScreen = ({ book , addToCartClicked }) => {
 
   const [counter , setCounter] = useState(0);
   const [addToCart , setAddToCart] = useState(false);
@@ -47,6 +47,7 @@ const BookScreen = ({ book }) => {
                 buttonStyle={styles.circleButton}
                 textButton={'+'}
                 textButtonStyle={styles.circleButtonText}
+                functionality={() => setCounter(counter + 1)}
               />
             </View>
             <CustomButton
@@ -90,7 +91,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderTopLeftRadius: 13.8,
     borderTopRightRadius: 13.8,
-    // marginHorizontal: '1%',
     marginTop: '2%'
   },
   header: {
@@ -119,19 +119,19 @@ const styles = StyleSheet.create({
     borderRadius: 14.61,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 10
   },
   circleButton: {
     backgroundColor: COLORS.primary,
     width: 38.96,
     height: 38.96,
     borderRadius: 50,
-  
   },
   circleButtonText: {
     color: COLORS.secondary,
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 30,
     textAlign: 'center',
   },
   counter: {
