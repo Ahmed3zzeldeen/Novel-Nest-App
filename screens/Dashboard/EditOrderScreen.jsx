@@ -10,7 +10,6 @@ import { formatData } from '@/utils';
 const EditOrderScreen = ({ orderId }) => {
   const [orderData, setOrderData] = useState(null); 
   const [editMode, setEditMode] = useState(false);
-  const [quantity, setQuantity] = useState(1);
 
   const fetchOrderFromStore = async () => {
     const order = await findOrderById(orderId);
@@ -33,19 +32,30 @@ const EditOrderScreen = ({ orderId }) => {
     setEditMode(!editMode);
   }
 
-  const incrementQuantity = () => {
-    setQuantity(quantity + 1);
+  const incrementQuantity = (index) => {
+    setOrderData(prevOrderData => {
+      const updatedOrderData = [...prevOrderData.books];
+      updatedOrderData[index].quantity += 1;
+      return { ...prevOrderData, books: updatedOrderData };
+    });
   };
 
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+  const decrementQuantity = (index) => {
+    setOrderData(prevOrderData => {
+      const updatedOrderData = [...prevOrderData.books]; 
+      if (updatedOrderData[index].quantity > 1) {
+        updatedOrderData[index].quantity -= 1;
+      }
+      return { ...prevOrderData, books: updatedOrderData }; 
+    });
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <View style={styles.Center3}>
       <View style={styles.item}>
+        <View style={styles.ImageConatiner}>
+          <Image source={item.cover} style={styles.ImageWH} />
+        </View>
         <View style={styles.TextConatiner}>
           <Text style={styles.BookText}>Book Title : {item.bookTitle}</Text>
           <Text style={styles.BookText}>Price : {item.price} $</Text>
@@ -53,19 +63,16 @@ const EditOrderScreen = ({ orderId }) => {
           <View style={styles.DisItem}>
             {editMode && (
               <View style={styles.editButtons}>
-                <Pressable style={styles.editButton} onPress={incrementQuantity}>
+                <Pressable style={styles.editButton} onPress={() => incrementQuantity(index)}>
                   <Text style={styles.buttonText}>+</Text>
                 </Pressable>
-                <Text>{quantity}</Text>
-                <Pressable style={styles.editButton} onPress={decrementQuantity}>
+                <Text>{item.quantity}</Text>
+                <Pressable style={styles.editButton} onPress={() => decrementQuantity(index)}>
                   <Text style={styles.buttonText}>-</Text>
                 </Pressable>
               </View>
             )}
           </View>
-        </View>
-        <View style={styles.ImageConatiner}>
-          <Image source={item.cover} style={styles.ImageWH} />
         </View>
       </View>
     </View>
