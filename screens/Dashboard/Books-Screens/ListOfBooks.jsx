@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import ROUTES from "../../../constants/routes";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import BookCard from "@/components/BookCard";
+import AdminBookCard from '@/components/AdminBookCard';
 import { getBooks, searchBooksByBookTitle } from '@/firebase/apis/books';
 
 export default function ListOfBooks() {
@@ -60,7 +60,7 @@ export default function ListOfBooks() {
 			<FlatList
 				style={styles.searchList}
 				data={filteredBooks}
-				renderItem={({ item }) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages} />)}
+				renderItem={({ item }) => (<AdminBookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages} />)}
 				keyExtractor={(item) => item.ISBN}
 				numColumns={2}
 			/>

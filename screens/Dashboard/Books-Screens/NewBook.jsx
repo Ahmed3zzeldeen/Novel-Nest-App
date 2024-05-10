@@ -1,7 +1,9 @@
-import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList, ScrollView, Alert } from 'react-native'
-import { React, useState } from "react";
+import { TextInput, Pressable, StyleSheet, Image, Text, View, StatusBar, FlatList, ScrollView, Alert } from 'react-native'
+import { React, useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
+import * as ImagePicker from 'expo-image-picker';
+import myPicture from "../../../assets/images/icons/cover 2.png"
 import { createBook } from '@/firebase/apis/books';
 export default function ListOfBooks() {
     const [ISBN, setISBN] = useState('');
@@ -12,7 +14,7 @@ export default function ListOfBooks() {
     const [category, setCategory] = useState('');
     const [rate, setRate] = useState(4.5);
     const [cover, setCover] = useState('');
-
+    const [error, setError] = useState(null);
     function cancelHandler() {
         Alert.alert('Cleared successfully');
         clear();
@@ -44,6 +46,8 @@ export default function ListOfBooks() {
         if (switcher) {
             addBook();
             clear();
+            uploadImage(`books/${ISBN}`).ref;
+            addBook();
             Alert.alert('The item is added successfully');
         }
     }
@@ -58,11 +62,48 @@ export default function ListOfBooks() {
                 category,
                 rate,
                 cover,
+                bookID,
             );
         } catch (e) {
             Alert.alert(e.message);
         }
     }
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1,
+        });
+        console.log(result);
+        if (!result.canceled) {
+            setCover(result.assets[0].uri);
+        }
+    };
+    const uploadImage = async () => {
+        const response = await fetch(image);
+        const blob = await response.blob();
+        const ref = await uplouadFile(`avatar-${new Date()}`, blob);
+        return (await getLink(ref.ref));
+    };
+    const createUser = async () => {
+        try {
+            if (usernameInput && firstNameInput && lastNameInput && emailInput && passInput && role) {
+                let cred = await register(firstNameInput, lastNameInput, usernameInput, emailInput, passInput, role);
+                console.log(cred.user.uid);
+            }
+            else {
+                throw new Error('Enter complete data please');
+            }
+        }catch(e){
+            setError(e);
+        }
+    }
+    useEffect(() => {
+        if (error !== null) {
+            alert(`${error}`);
+        }
+    }, [error]);
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -78,7 +119,7 @@ export default function ListOfBooks() {
                 <View style={{ justifyContent: 'center', marginTop: 30 }}>
                     <Text style={{ color: COLORS.primary, fontWeight: '700', fontSize: 22 }}>Book Preview</Text>
                     <View style={[styles.containerOfBookDetails, { paddingTop: 40 }]}>
-                        <FontAwesome5 name='book' size={110} style={{ height: 147, width: 120 }} color={'#A0A0A1'}></FontAwesome5>
+                        <Image source={(cover) ? cover : myPicture} style={{ height: 180, width: 130, marginRight: 15, marginBottom: 20 }} color={'#A0A0A1'} />
                         <View style={styles.containerOfTextDetails}>
                             <View style={{ marginTop: -30 }}>
                                 <Text style={styles.textDetails}>Book title: {bookTitle}</Text>
@@ -86,7 +127,7 @@ export default function ListOfBooks() {
                                 <Text style={styles.textDetails}>Quantity: </Text>
                                 <Text style={styles.textDetails}>ISBN: {ISBN}</Text>
                             </View>
-                            <Pressable style={styles.coverButton}>
+                            <Pressable style={styles.coverButton} onPress={() => {pickImage();}}>
                                 <Text style={{ color: COLORS.secondary, fontWeight: '700', fontSize: 20 }}>Cover</Text>
                                 <FontAwesome5 name='cloud' color={COLORS.secondary} size={16}></FontAwesome5>
                             </Pressable>
