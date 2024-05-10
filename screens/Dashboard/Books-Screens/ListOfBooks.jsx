@@ -1,4 +1,4 @@
-import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList } from 'react-native'
+import { TextInput, Pressable, StyleSheet, Text, View, StatusBar, FlatList , Image} from 'react-native'
 import { React, useState, useLayoutEffect } from "react";
 import { router } from "expo-router";
 import ROUTES from "../../../constants/routes";
