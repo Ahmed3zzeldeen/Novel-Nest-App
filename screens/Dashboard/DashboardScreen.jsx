@@ -86,7 +86,7 @@ console.log(buttons);
           {awesome === 5 ? (
             <FontAwesome5
               name={img}
-              size={85}
+              size={60}
               color="#29648F"
               style={{ margin: 30 }}
             />
@@ -145,24 +145,26 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "#f7f0e8",
+    backgroundColor: COLORS.white,
   },
   Button: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#eadecf",
+    backgroundColor: COLORS.secondary,
     margin: 20,
     borderRadius: 10,
-    maxWidth: 350,
+    width: 400,
+    maxWidth: 450,
     maxHeight:150,
   },
   Text: {
-    color: "#29648f",
+    color: COLORS.primary,
     fontSize: 50,
     fontWeight: "bold",
-    marginTop: 10,
+    textAlign: 'left',
+    marginRight: '2%'
   },
   ButtonsList: {
     flex: 1,

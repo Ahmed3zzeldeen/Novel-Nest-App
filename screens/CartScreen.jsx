@@ -4,6 +4,7 @@ import {View , Text , StyleSheet , FlatList} from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
+import { ScrollView } from 'react-native-web';
 
 const CartScreen = () => {
 
@@ -54,7 +55,7 @@ const CartScreen = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <FlatList
           style={styles.cartList}
           data={cart}
@@ -76,7 +77,7 @@ const CartScreen = () => {
             functionality={() => setInvoicePopup(true)}
             />
         </View>
-      </View>
+      </ScrollView>
       {purchasePopup && <CustomPopup
         title={'Purchase'}
         message={'Purchase Done! do you want to go home page?'}

@@ -2,6 +2,7 @@ import {
   collection,
   deleteDoc,
   getDocs,
+  getDoc,
   doc,
   setDoc
 } from 'firebase/firestore';

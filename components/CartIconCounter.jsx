@@ -15,7 +15,8 @@ const CartIconCounter = ({counterBoxStyle , counterTextStyle , cartBoxStyle}) =>
   const router = useRouter();
 
   const fetchCurrentUserId = async () => {
-    const user = await AsyncStorage.getItem('user');
+    const data = await AsyncStorage.getItem('user');
+    const user = JSON.parse(data);
     console.log('user' , user);
     if (user) {
       setUid(user.uid);

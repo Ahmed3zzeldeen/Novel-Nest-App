@@ -3,15 +3,15 @@ import {StyleSheet, ImageBackground, Pressable} from 'react-native';
 import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
 
-const BestSellerCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
+const BestSellerCard = ({ book }) =>{ 
   
   const router = useRouter();
 
   return (
-    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.ISBN))}>
       <ImageBackground 
         style={styles.container}
-        source={cover}
+        source={book.cover}
         imageStyle={{
           borderRadius: 13.8,
         }}
