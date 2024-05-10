@@ -1,4 +1,4 @@
-import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList, ScrollView} from 'react-native';
+import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useLayoutEffect, useState } from 'react';
 import COLORS from '@/constants/colors';
@@ -12,6 +12,7 @@ import { getLink, uplouadFile } from '@/firebase/apis/storage';
 const ProfileScreen = () => {
   
   const [user , setUser] = useState({
+    uid: '',
     firstName: '',
     username: '',
     lastName: '',
@@ -42,7 +43,7 @@ const ProfileScreen = () => {
     const userObj = await findUserByField('uid' , userData.uid);
     if (userObj) {
       setUser(userObj);
-      setUid(userObj.id);
+      setUid(userObj.uid);
       setImage(userObj.avatar);
     }
   }
@@ -55,7 +56,6 @@ const ProfileScreen = () => {
       quality: 1,
   
     });
-
     if (!result.canceled) {
       let image =  result.assets[0].uri;
       const response = await fetch(image);
@@ -78,7 +78,7 @@ const ProfileScreen = () => {
   } , [])
 
   return (
-    <ScrollView showsVerticalScrollIndicator = {false} style={styles.container}>
+    <View showsVerticalScrollIndicator = {false} style={styles.container}>
       <StatusBar barStyle='light-content' />
       <View style={styles.profileHeader}>
         <View style={styles.uploadBox}>
@@ -119,7 +119,7 @@ const ProfileScreen = () => {
         showsVerticalScrollIndicator={false}
       />
       {visible && <BottomSheet modalVisibility={setVisible}/>}
-    </ScrollView>
+    </View>
   );
 };
 

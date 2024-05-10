@@ -1,9 +1,13 @@
-import {View , Text , StyleSheet , Pressable} from 'react-native';4
+import {View , Text , StyleSheet , Pressable , Dimensions} from 'react-native';4
 import { useState } from 'react';
 import COLORS from '@/constants/colors';
 import {CustomTextInput , CustomPopup, CustomButton} from '@/components/index';
 
+const { width, height } = Dimensions.get('window');
+
 const BottomSheet = ({ modalVisibility }) => {
+
+
   const [firstName , setFirstName] = useState('');
   const [lastName , setLastName] = useState('');
   const [username , setUsername] = useState('');
@@ -106,11 +110,11 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 1,
-    top: -280,
+    top: 0,
     left: 0,
     backgroundColor: 'rgba(0 , 0 , 0 , 0.5)',
-    width: '100%',
-    height: '100%',
+    width: width,
+    height: height,
     justifyContent: 'flex-end',
   },
   bottomSheet: {

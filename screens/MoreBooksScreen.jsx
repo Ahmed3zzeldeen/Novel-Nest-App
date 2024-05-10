@@ -21,12 +21,12 @@ const MoreBooksScreen = () => {
   ]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.subHeader}>List of Recently Books:</Text>
       <FlatList
         style={styles.searchList}
         data={books}
-        renderItem={({item}) => (<BookCard cover={item.cover}/>)}
+        renderItem={({item}) => (<BookCard book={item}/>)}
         keyExtractor={(item) => item.ISBN}
         numColumns={2}
         showsVerticalScrollIndicator={false}
@@ -39,7 +39,7 @@ export default MoreBooksScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: '5%'
+    marginHorizontal: '5%',
   },
   subHeader: {
     color: COLORS.primary,
