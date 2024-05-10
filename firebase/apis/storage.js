@@ -12,13 +12,5 @@ async function getLink(ref) {
     return mataData;
 }
 
-const uploadImage = async (path , blob) => {
-    const storageRef = ref(storage , path);
-    const uploadTask = await uploadBytesResumable(storageRef , blob);
-    const downloadURL = await getDownloadURL(uploadTask.ref);
-    createImage({src: downloadURL});
-    return downloadURL;
-}
-
-export {uplouadFile, getLink , uploadImage};
+export {uplouadFile, getLink };
 
