@@ -6,7 +6,7 @@ import { BottomSheet , CustomButton, OrderCard } from '@/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import { findUserByField, updateUser } from '../firebase/apis/users';
-import { getLink, uploadImage, uplouadFile } from '@/firebase/apis/storage';
+import { getLink, uplouadFile } from '@/firebase/apis/storage';
 
 
 const ProfileScreen = () => {

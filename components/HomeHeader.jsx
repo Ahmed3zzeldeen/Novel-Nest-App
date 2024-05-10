@@ -1,20 +1,43 @@
 import { ImageBackground, StyleSheet, Text, View , Image , TextInput, StatusBar, Pressable} from "react-native";
-import React, { useState } from "react";
+import React, { useState , useLayoutEffect } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "@/constants/routes";
 import { FontAwesome , FontAwesome5 } from '@expo/vector-icons';
 import { logout } from "@/firebase/apis/auth";
 import CartIconCounter from "./CartIconCounter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { findUserByField } from "@/firebase/apis/users";
+
 const HomeHeader = () => {
 
     const [search , setSearch] = useState('');
     const [counter , setCounter] = useState(0);
 
+    const [user , setUser] = useState({
+        username: '',
+        avatar: '',
+    });
+    
     const handleLogout = () => {
         logout();
         router.navigate(ROUTES.AUTH.LOG_IN);
     }
+
+    const fetchCurrentUser = async () => {
+        const data = await AsyncStorage.getItem('user');
+        const userData = JSON.parse(data);
+        const userObj = await findUserByField('uid' , userData.uid);
+        if (userObj) {
+            setUser(userObj);
+            console.log(userObj);
+        }
+    }
+
+    useLayoutEffect(() => {
+    fetchCurrentUser();
+    } , [])
+
 
     return (
         <View style={styles.container}>
@@ -34,13 +57,13 @@ const HomeHeader = () => {
                         <CartIconCounter/>
                         <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                             <Image 
-                                source={require('../assets/images/icons/profile.png')}
+                                source={user.avatar? {uri: user.avatar} : require('../assets/images/icons/profile.png')}
                                 style={{width: 40 , height: 40}}
                             />
                         </Pressable>
                     </View>
                 </View>
-                <Text style={styles.usernameText}>Hey! USERNAME</Text>
+                <Text style={styles.usernameText}>Hey! {user.username}</Text>
                 <View style={styles.searchBox}>
                     <TextInput
                         style={styles.searchBar}
