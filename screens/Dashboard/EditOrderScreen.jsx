@@ -63,14 +63,29 @@ const EditOrderScreen = ({ orderId }) => {
           <View style={styles.DisItem}>
             {editMode && (
               <View style={styles.editButtons}>
+                <View style={styles.Press1}>
                 <Pressable style={styles.editButton} onPress={() => incrementQuantity(index)}>
                   <Text style={styles.buttonText}>+</Text>
                 </Pressable>
-                <Text>{item.quantity}</Text>
+                <Text style={styles.Count}>{item.quantity}</Text>
                 <Pressable style={styles.editButton} onPress={() => decrementQuantity(index)}>
                   <Text style={styles.buttonText}>-</Text>
                 </Pressable>
+                </View>
+                <View style={styles.Press2}>
+                <Pressable style={styles.ContainerIcon1}>
+                
+                <FontAwesome5
+                  name="trash-alt"
+                  size={12}
+                  color="#fff"
+                  style={styles.icon}
+                />
+              </Pressable>
               </View>
+               
+              </View>
+            
             )}
           </View>
         </View>
@@ -261,7 +276,7 @@ const styles = StyleSheet.create({
   editButtons: {
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
     flex: 1,
   },
   editButton: {
@@ -276,15 +291,43 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    justifyContent:'center',
+    alignItems:'center',
+    alignSelf:'center'
   },
   DisItem: {
-    backgroundColor: 'red',
     marginTop: 10,
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  Press1:{
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center'
+
+  },
+  Press2:{
+    backgroundColor:COLORS.secondary
+  },
+  ContainerIcon1:{
+    width: 30,
+    height: 30,
+    backgroundColor: COLORS.primary,
+    borderRadius: 100,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight:29,
+
+  },
+  Count:{
+    color:COLORS.primary,
+    fontSize:20,
+    fontWeight:'bold'
   }
+  
 });
 
 export default EditOrderScreen;
