@@ -137,4 +137,5 @@ export {
   findUserByField,
   searchUsersByName,
   searchUsersByEmail,
+  updateUserImage,
 };

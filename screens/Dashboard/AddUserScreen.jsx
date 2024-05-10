@@ -18,6 +18,7 @@ import COLORS from "@/constants/colors";
 import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
 import { CustomTextInput , CustomButton } from "@/components";
 import { register , logout} from "../../firebase/apis/auth";
+import {updateUserImage} from "../../firebase/apis/users";
 
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState("");
@@ -54,10 +55,22 @@ const AddUserScreen = () => {
   };
   const createUser = async () => {
       try {
-	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role ){
+	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role !== "" ){
 	    let cred = await register(firstNameInput , lastNameInput , usernameInput , emailInput , passInput , role);
-	    console.log(cred.user.uid);
-	    // a dead end ;;
+	    if (cred){ 
+		let uid = cred.user.uid
+		if (image){
+		    const response = await fetch(image);
+		    const blob = await response.blob();
+		    const ref = await uplouadFile(`users/${uid}`, blob);
+		    const url =  (await getLink(ref.ref));
+		    updateUserImage (uid , url);
+		}
+		else {
+		    updateUserImage (uid, "https://www.gravatar.com/avatar/");
+		}
+	       router.navigate(ROUTES.PUBLIC.HOME);
+	    }
 	} 
 	else {
 	    throw new Error('Enter complete data please');
