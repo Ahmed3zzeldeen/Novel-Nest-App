@@ -113,6 +113,13 @@ async function searchUsersByName(userName) {
   console.log("searched ", filteredUsers);
   return filteredUsers;
 }
+async function updateUserImage(uid , image) {
+  const user = await findUserByField("uid", uid);
+  user.avatar = image; 
+  updateUser(uid, user);
+
+  return user;
+}
 // using the findUserByField function example
 // const userByEmail = await findUserByField("email", "example@example.com");
 // const userByUsername = await findUserByField("username", "example_username");
@@ -130,4 +137,5 @@ export {
   findUserByField,
   searchUsersByName,
   searchUsersByEmail,
+  updateUserImage,
 };
