@@ -1,5 +1,5 @@
 import React from 'react'
-import { DashboardScreen } from '../../screens';
+import { DashboardScreen } from '@/screens';
 
 const DashboardHomePage = () => {
   return (

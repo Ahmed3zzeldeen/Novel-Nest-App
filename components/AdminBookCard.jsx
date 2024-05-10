@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
 import CustomButton from './CustomButton';
+import { addToCart } from '@/firebase/apis/cart';
 
 const AdminBookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category }) => {
     let [numOfBooks, setNumOfBooks] = useState(0);
