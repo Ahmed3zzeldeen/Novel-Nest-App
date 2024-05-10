@@ -16,7 +16,7 @@ const ROUTES = {
     FORGOT_PASSWORD: 'auth/forgot-password',
   },
   DASHBOARD: {
-    HOME: 'dashboard/home',
+    HOME: 'dashboard',
     MY_PROFILE: 'dashboard/my-profile',
     LIST_OF_BOOKS: 'dashboard/list-of-books',
     EDIT_BOOK: 'dashboard/edit-book/:id', // Dynamic route parameter for book ID

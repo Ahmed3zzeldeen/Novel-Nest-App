@@ -1,11 +1,11 @@
-import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList} from 'react-native';
+import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useLayoutEffect, useState } from 'react';
 import COLORS from '@/constants/colors';
 import { BottomSheet , CustomButton, OrderCard } from '@/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
-import { findUserByField, updateUser } from '../firebase/apis/users';
+import { findUserByField, updateUserImage } from '../firebase/apis/users';
 import { getLink, uplouadFile } from '@/firebase/apis/storage';
 
 
@@ -33,6 +33,8 @@ const ProfileScreen = () => {
     {id: 10 , totalPayment: 100 , date: '15/4/2024'}
   ]);
   const [visible , setVisible] = useState(false);
+  const [uid , setUid] = useState();
+  const [image , setImage] = useState();
 
   const fetchCurrentUser = async () => {
     const data = await AsyncStorage.getItem('user');
@@ -40,22 +42,34 @@ const ProfileScreen = () => {
     const userObj = await findUserByField('uid' , userData.uid);
     if (userObj) {
       setUser(userObj);
+      setUid(userObj.id);
+      setImage(userObj.avatar);
     }
   }
 
   const pickImage = async () => {
-    const result = await launchImageLibraryAsync({
-      allowsEditing: true,
+    let result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
-      aspec: [4 , 3],
-      quality: 1
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+  
     });
-    if (!result.canceled) { 
-        const promise = await fetch(result.assets[0].uri);
-        const blob  = promise.blob();
-        const downloadURL = await uploadImage(`users/${user.uid}` , blob);
-        user.avatar = downloadURL;
-        updateUser(user.uid , {avatar: downloadURL});
+
+    if (!result.canceled) {
+      let image =  result.assets[0].uri;
+      const response = await fetch(image);
+      const blob = await response.blob();
+      console.log(blob.type);
+      const ref = await uplouadFile(`users/${uid}`, blob);
+      return (await getLink(ref.ref));
+    }
+  }
+  const updateImage = async () => {
+    let imageUrl = await pickImage();
+    if (imageUrl){
+      updateUserImage(uid , imageUrl);
+      setImage(imageUrl);
     }
   }
 
@@ -64,12 +78,12 @@ const ProfileScreen = () => {
   } , [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator = {false} style={styles.container}>
       <StatusBar barStyle='light-content' />
       <View style={styles.profileHeader}>
         <View style={styles.uploadBox}>
           <Image 
-            source={user.avatar === '' ? require('../assets/images/icons/profile.png') : {uri: user.avatar}}
+            source={user.avatar === '' ? "" : {uri: image}}
             style={{width: 50 , height: 50 , borderRadius: 50}}  
           />
           <CustomButton
@@ -80,7 +94,7 @@ const ProfileScreen = () => {
             iconName={'cloud-upload'}
             iconSize={25}
             iconColor={COLORS.secondary}
-            functionality={() => pickImage()}
+            functionality={() => {console.log(updateImage());}}
           />
         </View>
         <Pressable style={styles.editButton} onPress={() => setVisible(true)}>
@@ -105,7 +119,7 @@ const ProfileScreen = () => {
         showsVerticalScrollIndicator={false}
       />
       {visible && <BottomSheet modalVisibility={setVisible}/>}
-    </View>
+    </ScrollView>
   );
 };
 
