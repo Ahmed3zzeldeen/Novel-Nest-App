@@ -13,11 +13,10 @@ const ROUTES = {
   AUTH: {
     SIGN_UP: 'auth/signup',
     LOG_IN: 'auth/login',
-    SIGN_OUT: 'auth/signout',
     FORGOT_PASSWORD: 'auth/forgot-password',
   },
   DASHBOARD: {
-    HOME: 'dashboard/home',
+    HOME: 'dashboard',
     MY_PROFILE: 'dashboard/my-profile',
     LIST_OF_BOOKS: 'dashboard/list-of-books',
     EDIT_BOOK: 'dashboard/edit-book/:id', // Dynamic route parameter for book ID
@@ -28,10 +27,6 @@ const ROUTES = {
     LIST_OF_ORDERS: 'dashboard/list-of-orders',
     EDIT_ORDER: 'dashboard/edit-order/:id', // Dynamic route parameter for order ID
     ADD_NEW_ORDER: 'dashboard/add-new-order',
-    PROFILE: 'dashboard/admin-profile/:id',
-    MANAGE_USERS: 'dashboard/manage-users',
-    MANAGE_BOOKS: 'dashboard/manage-books',
-    MANAGE_ORDERS: 'dashboard/manage-orders',
   },
 };
 

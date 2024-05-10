@@ -1,13 +1,17 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {StyleSheet, ImageBackground, Pressable} from 'react-native';
+import { useRouter } from 'expo-router';
+import ROUTES from '@/constants/routes';
 
-const BestSellerCard = ({ image }) =>{ 
+const BestSellerCard = ({ book }) =>{ 
   
+  const router = useRouter();
+
   return (
-    <Pressable>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.ISBN))}>
       <ImageBackground 
         style={styles.container}
-        source={image}
+        source={book.cover}
         imageStyle={{
           borderRadius: 13.8,
         }}

@@ -1,43 +1,65 @@
 import COLORS from '@/constants/colors';
-import {View , Text, StyleSheet, ImageBackground, Pressable , Image} from 'react-native';
+import {View , Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import ROUTES from '@/constants/routes';
+import CustomButton from './CustomButton';
 
-const BookCard = ({ image }) =>{ 
+const BookCard = ({ book }) =>{ 
+  const [numOfBooks, setNumOfBooks] = useState(0);
+  const [addToCart , setAddToCart] = useState(false);
   
+  const router = useRouter();
+
+  const cartButtonStyle = {
+    backgroundColor: (addToCart) ? COLORS.danger : COLORS.primary,
+    textButton: (addToCart)? 'Remove From Cart' : 'Add To Cart'
+  }
+
+  const handleAddToCart = () => {
+    setAddToCart(true)
+  }
+
+  const handleRemoveFromCart = () => {
+    setAddToCart(false);
+  }
+
   return (
-    <Pressable>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.ISBN))}>
       <ImageBackground 
         style={styles.container}
-        source={image}
+        source={book.cover}
         imageStyle={{
           borderRadius: 13.8,    
         }}
       >
         <View style={styles.detailBackground}>
           <View>
-            <Text style={styles.details}>Category: <Text style={styles.content}>Drama</Text></Text>
-            <Text style={styles.details}>Price: <Text style={styles.content}>100EGP</Text></Text>
-            <Text style={styles.details}>Pages: <Text style={styles.content}>140</Text></Text>
+            <Text style={styles.details}>Category: <Text style={styles.content}>{book.category}</Text></Text>
+            <Text style={styles.details}>Price: <Text style={styles.content}>{book.price}EGP</Text></Text>
+            <Text style={styles.details}>Pages: <Text style={styles.content}>{book.numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
-            <Pressable style={styles.circleButton}>
-              <Text style={styles.symbol}>-</Text>
-            </Pressable>
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'-'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(numOfBooks - 1)}}
+            />
             <View>
-              <Text style={styles.bookCounter}>10</Text>
+              <Text style={styles.bookCounter}>{numOfBooks}</Text>
             </View>
-            <Pressable style={styles.circleButton}>
-              <Text style={styles.symbol}>+</Text>
-            </Pressable>
+            <CustomButton
+              buttonStyle={styles.circleButton}
+              textButton={'+'}
+              textButtonStyle={styles.symbol}
+              functionality={() => {setNumOfBooks(numOfBooks + 1)}}
+            />
           </View>
         </View>
-        <Pressable style={styles.cartButton}>
-          <View style={styles.addToCartBox}>
-            <Text style={styles.cartText}>Add To Cart</Text>
-            {/* <View>
-              <Image 
-                source={require('../assets/images/icons/cart-btn.png')}
-              />
-            </View> */}
+        <Pressable style={styles.cartButton} onPress={addToCart ? () => handleRemoveFromCart() : () => handleAddToCart()}>
+          <View style={{ ...styles.addToCartBox , backgroundColor: cartButtonStyle.backgroundColor}}>
+            <Text style={styles.cartText}>{cartButtonStyle.textButton}</Text>
           </View>
         </Pressable>
       </ImageBackground>
@@ -52,7 +74,7 @@ const styles = StyleSheet.create({
     width: 167,
     height: 250,
     borderRadius: 13.8,
-    marginRight: 10,
+    marginHorizontal: '1.71%',
     marginBottom: 10,
     justifyContent: 'flex-end'
   },
@@ -101,12 +123,13 @@ const styles = StyleSheet.create({
   },
   symbol: {
     color: COLORS.secondary,
-    fontWeight: '800',
-    fontSize: 15
+    fontWeight: '700',
+    fontSize: 18,
+    textAlign: 'center'
   },
   bookCounter: {
     color: COLORS.primary,
     fontWeight: '700',
     fontSize: 15
-  }
+  },
 });
