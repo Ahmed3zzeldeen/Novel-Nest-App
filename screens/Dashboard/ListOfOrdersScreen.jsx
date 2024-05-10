@@ -5,13 +5,18 @@ import {
   FlatList,
   TextInput,
   Pressable,
+  Image,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
 import ROUTES from "../../constants/routes";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { deleteOrder, getOrders } from "@/firebase/apis/orders";
+import {
+  deleteOrder,
+  getOrders,
+  searchOrdersByUserName,
+} from "@/firebase/apis/orders";
 import { formatData } from "@/utils";
 import { CustomPopup } from "@/components";
 
@@ -34,9 +39,8 @@ const ListOfOrdersScreen = () => {
     setDeletePopup(false);
   };
 
-
-  const handleSearch = () => {
-    const filtered = Data.filter(order => order.orderId.toString().includes(searchText));
+  const handleSearch = async () => {
+    const filtered = await searchOrdersByUserName(searchText);
     setFilteredOrders(filtered);
   };
 
@@ -47,17 +51,18 @@ const ListOfOrdersScreen = () => {
 
   const handleEdit = async (orderId, idx) => {
     router.push({
-      pathname: ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", orderId), params: { id: orderId, number: idx + 1 }
-    })
+      pathname: ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", orderId),
+      params: { id: orderId, number: idx + 1 },
+    });
   };
 
   const fetchOrdersFromApi = async () => {
     let orders = await getOrders();
     orders = orders.map((item, idx) => {
-      return { ...item, idx }
-    })
+      return { ...item, idx };
+    });
     setFilteredOrders([...orders]);
-  }
+  };
   useLayoutEffect(() => {
     fetchOrdersFromApi();
   }, []);
@@ -82,17 +87,22 @@ const ListOfOrdersScreen = () => {
         </Pressable>
       </View>
       <View style={styles.searchInputContainer}>
-        <FontAwesome5
-          name="search"
-          size={18}
-          color="#2f6892"
-          style={styles.searchIcon}
-        />
+        <Pressable onPress={handleSearch} style={styles.searchIcon}>
+          <FontAwesome5
+            name="search"
+            size={18}
+            color="#2f6892"
+            style={styles.searchIcon}
+          />
+        </Pressable>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search Order"
+          placeholder="Search Order by user..."
           value={searchText}
-          onChangeText={(text) => setSearchText(text)}
+          onChangeText={(text) => {
+            setSearchText(text);
+            handleSearch();
+          }}
           onSubmitEditing={handleSearch}
         />
       </View>
@@ -100,51 +110,83 @@ const ListOfOrdersScreen = () => {
         showsVerticalScrollIndicator={false}
         data={filteredOrders}
         renderItem={({ item }) => (
-          <Pressable style={styles.item} onPress={() => router.push(ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", item.orderId))}>
-            <View style={styles.ContainerTestData}>
-              <Text style={styles.totalPayment}>
-                Total Payment: ${item.totalPrice}
-              </Text>
-              <Text style={styles.date}>Date: {formatData(new Date(item.orderDate?.seconds * 1000))}</Text>
-            </View>
-            <View style={styles.iconContainer}>
-              <Pressable
-                onPress={() => handleEdit(item.orderId, item.idx)}
-                style={styles.ContainerIcon}
-              >
-                <FontAwesome5
-                  name="pen"
-                  size={16}
-                  color="#fff"
-                  style={styles.icon}
-                />
-              </Pressable>
-              <Pressable
-                onPress={() => handleDelete(item.orderId)}
-                style={styles.ContainerIcon}
-              >
-                <FontAwesome5
-                  name="trash-alt"
-                  size={16}
-                  color="#fff"
-                  style={styles.icon}
-                />
-              </Pressable>
-            </View>
-          </Pressable>
+          <RenderOrder
+            item={item}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         )}
       />
-      {deletePopup && <CustomPopup
-        title={'Delete Confirmation'}
-        message={'Are you sure you want to Delete this order?'}
-        button1Style={styles.button1}
-        button2Style={styles.button2}
-        textButton1={'No'}
-        textButton2={'Yes'}
-        button1Function={handlePressNoBtn}
-        button2Function={handlePressYesBtn}
-      />}
+      {deletePopup && (
+        <CustomPopup
+          title={"Delete Confirmation"}
+          message={"Are you sure you want to Delete this order?"}
+          button1Style={styles.button1}
+          button2Style={styles.button2}
+          textButton1={"No"}
+          textButton2={"Yes"}
+          button1Function={handlePressNoBtn}
+          button2Function={handlePressYesBtn}
+        />
+      )}
     </View>
+  );
+};
+
+const RenderOrder = ({ item, handleDelete, handleEdit }) => {
+  return (
+    <Pressable
+      style={styles.item}
+      onPress={() =>
+        router.push(ROUTES.DASHBOARD.EDIT_ORDER.replace(":id", item.orderId))
+      }
+    >
+      <View style={styles.ContainerTestData}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
+          <Image
+            source={item.userAvatar === "" ? "" : { uri: item.userAvatar }}
+            style={{ width: 50, height: 50, borderRadius: 100 }}
+          />
+          <View>
+            <Text style={styles.totalPayment}>{item.userName}</Text>
+            <Text style={styles.subTitle}>{item.userEmail}</Text>
+          </View>
+        </View>
+        <Text style={styles.totalPayment}>Order Number: {item.idx + 1}</Text>
+        <Text style={styles.totalPayment}>
+          Total Payment: {item.totalPrice} EGP
+        </Text>
+        <Text style={styles.date}>
+          Date: {formatData(new Date(item.orderDate?.seconds * 1000))}
+        </Text>
+      </View>
+      <View style={styles.iconContainer}>
+        <Pressable
+          style={styles.ContainerIcon}
+          onPress={() => handleEdit(item.orderId, item.idx)}
+        >
+          <FontAwesome5 name="pen" size={16} color="#fff" style={styles.icon} />
+        </Pressable>
+        <Pressable
+          style={styles.ContainerIcon}
+          onPress={() => handleDelete(item.orderId)}
+        >
+          <FontAwesome5
+            name="trash-alt"
+            size={16}
+            color="#fff"
+            style={styles.icon}
+          />
+        </Pressable>
+      </View>
+    </Pressable>
   );
 };
 
@@ -199,7 +241,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginRight: 5,
   },
-  icon: {},
   searchIcon: {
     paddingHorizontal: 10,
   },
@@ -216,5 +257,9 @@ const styles = StyleSheet.create({
   ContainerTestData: {
     maxWidth: "75%",
     minWidth: "75%",
+  },
+  subTitle: {
+    color: COLORS.primary_70,
+    fontSize: 13,
   },
 });
