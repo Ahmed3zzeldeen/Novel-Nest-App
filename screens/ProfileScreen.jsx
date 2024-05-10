@@ -43,7 +43,7 @@ const ProfileScreen = () => {
     if (userObj) {
       setUser(userObj);
       setUid(userObj.id);
-      setImage(userData.avatar);
+      setImage(userObj.avatar);
     }
   }
 
@@ -85,7 +85,7 @@ const ProfileScreen = () => {
       <View style={styles.profileHeader}>
         <View style={styles.uploadBox}>
           <Image 
-            source={user.avatar === '' ? require('../assets/images/icons/profile.png') : {uri: image}}
+            source={user.avatar === '' ? "" : {uri: image}}
             style={{width: 50 , height: 50 , borderRadius: 50}}  
           />
           <CustomButton
