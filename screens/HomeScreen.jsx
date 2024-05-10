@@ -25,7 +25,7 @@ const HomeScreen = () => {
         horizontal
         style={{maxHeight: 180 , margin: '3%'}}
         data={BestSellerBooks}
-        renderItem={({item}) => (<BestSellerCard cover={item.cover}/>)}
+        renderItem={({item}) => (<BestSellerCard book={item}/>)}
         keyExtractor={(item) => item.ISBN}
         showsHorizontalScrollIndicator={false}
       />

@@ -45,20 +45,21 @@ export default CustomPopup;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    flex: 1,
     top: 0,
     left: 0,
     backgroundColor: 'rgba(0 , 0 , 0 , 0.5)',
     width: width,
     height: height,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'red'
   },
   popup: {
     backgroundColor: COLORS.white,
     width: 350,
     height: 175,
-    borderRadius: 15
+    borderRadius: 15,
   },
   popupContent: {
     flex: 1,
