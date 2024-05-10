@@ -122,7 +122,7 @@
 
 - Philopater Wahead:
   - [X] Profile Screen:
-    - [ ] Implement Management of Books Screens.
+    - [X] Implement Management of Books Screens.
     - [X] Retrieve User Information.
   - [X] ListOfUsers Screen:
     - [X] Retrieve All Users.
@@ -130,10 +130,13 @@
     - [X] Implement User Deletion.
   - [X] EditUser Screen:
     - [X] Implement User Update Functionality.
-  - [ ] AddUser Screen:
-    - [ ] Implement User Addition Functionality.
+  - [X] AddUser Screen:
+    - [X] Implement User Addition Functionality.
   - off tasks jobs 
-    - helped in profile screen with Mustafa Ahmed 
+    - helped in profile screen with Mustafa Ahmed
+    - helped in books search and list with Zeyad Ayman
+    - gathered real books data from the internet
+    - made a grenrate code to modify the data 
 
 - Mustafa Hany:
   - [ ] Invoice Screen:
