@@ -1,11 +1,25 @@
-import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList} from 'react-native';
+import {View , Text, StyleSheet , Image, Pressable, StatusBar , FlatList, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import COLORS from '@/constants/colors';
 import { BottomSheet , CustomButton, OrderCard } from '@/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
+import { findUserByField, updateUser } from '../firebase/apis/users';
+import { getLink,  uplouadFile } from '@/firebase/apis/storage';
+
 
 const ProfileScreen = () => {
   
+  const [user , setUser] = useState({
+    firstName: '',
+    username: '',
+    lastName: '',
+    email: '',
+    avatar: '',
+    fullname: '',
+    role: ''
+  });
   const [orders , setOrders] = useState([
     {id: 1 , totalPayment: 100 , date: '15/4/2024'},
     {id: 2 , totalPayment: 100 , date: '15/4/2024'},
@@ -19,15 +33,60 @@ const ProfileScreen = () => {
     {id: 10 , totalPayment: 100 , date: '15/4/2024'}
   ]);
   const [visible , setVisible] = useState(false);
+  const [uid , setUid] = useState();
+  const [image , setImage] = useState();
+
+  const fetchCurrentUser = async () => {
+    const data = await AsyncStorage.getItem('user');
+    const userData = JSON.parse(data);
+    const userObj = await findUserByField('uid' , userData.uid);
+    if (userObj) {
+      setUser(userObj);
+      setUid(userObj.id);
+      setImage(userObj.avatar);
+    }
+  }
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+  
+    });
+
+    if (!result.canceled) {
+	let image =  result.assets[0].uri;
+	const response = await fetch(image);
+	const blob = await response.blob();
+	console.log(blob.type);
+	const ref = await uplouadFile(`users/${uid}`, blob);
+	return (await getLink(ref.ref));
+    }
+  }
+  const updateImage = async () => {
+      let imageUrl = await pickImage();
+      if (imageUrl){
+	    user.avatar = imageUrl; 
+	    updateUser(uid, user);
+	    setImage(imageUrl);
+      }
+
+  }
+
+  useLayoutEffect(() => {
+    fetchCurrentUser();
+  } , [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator = {false} style={styles.container}>
       <StatusBar barStyle='light-content' />
       <View style={styles.profileHeader}>
         <View style={styles.uploadBox}>
           <Image 
-            source={require('../assets/images/icons/profile.png')}
-            style={{width: 50 , height: 50}}  
+            source={user.avatar === '' ? "" : {uri: image}}
+            style={{width: 50 , height: 50 , borderRadius: 50}}  
           />
           <CustomButton
             buttonStyle={styles.uploadButton}
@@ -37,6 +96,7 @@ const ProfileScreen = () => {
             iconName={'cloud-upload'}
             iconSize={25}
             iconColor={COLORS.secondary}
+            functionality={() => {console.log(updateImage());}}
           />
         </View>
         <Pressable style={styles.editButton} onPress={() => setVisible(true)}>
@@ -48,10 +108,10 @@ const ProfileScreen = () => {
         </Pressable>
       </View>
       <View style={styles.profileDetails}>
-        <Text style={styles.detailText}>Username: RobertMartin123</Text>
-        <Text style={styles.detailText}>First Name: Robert</Text>
-        <Text style={styles.detailText}>Last Name: Martin</Text>
-        <Text style={styles.detailText}>Email: example@something.com</Text>
+        <Text style={styles.detailText}>Username: {user.username}</Text>
+        <Text style={styles.detailText}>First Name: {user.firstName}</Text>
+        <Text style={styles.detailText}>Last Name: {user.lastName}</Text>
+        <Text style={styles.detailText}>Email: {user.email}</Text>
       </View>
       <Text style={styles.ordersText}>My Orders:</Text>
       <FlatList 
@@ -61,7 +121,7 @@ const ProfileScreen = () => {
         showsVerticalScrollIndicator={false}
       />
       {visible && <BottomSheet modalVisibility={setVisible}/>}
-    </View>
+    </ScrollView>
   );
 };
 

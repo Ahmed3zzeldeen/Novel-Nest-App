@@ -1,5 +1,5 @@
 import { storage } from "../Config";
-import {ref, uploadBytes , getDownloadURL } from "firebase/storage";
+import {ref, uploadBytes , getDownloadURL , uploadBytesResumable } from "firebase/storage";
 
 async function uplouadFile(fileName,file) {
     const storageRef = ref(storage, fileName);
@@ -8,9 +8,9 @@ async function uplouadFile(fileName,file) {
 }
 async function getLink(ref) {
     const mataData = await getDownloadURL(ref);
-    console.log("mataData", mataData);
+    console.log("metaData", mataData);
     return mataData;
 }
 
-export {uplouadFile, getLink};
+export {uplouadFile, getLink };
 
