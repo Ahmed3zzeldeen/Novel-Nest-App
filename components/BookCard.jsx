@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
 import CustomButton from './CustomButton';
 
-const BookCard = ({ book }) =>{ 
-  const [numOfBooks, setNumOfBooks] = useState(0);
+const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
+  let [numOfBooks, setNumOfBooks] = useState(0);
   const [addToCart , setAddToCart] = useState(false);
   
   const router = useRouter();
