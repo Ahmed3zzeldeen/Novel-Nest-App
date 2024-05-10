@@ -34,6 +34,7 @@ const ProfileScreen = () => {
   ]);
   const [visible , setVisible] = useState(false);
   const [uid , setUid] = useState();
+  const [image , setImage] = useState();
 
   const fetchCurrentUser = async () => {
     const data = await AsyncStorage.getItem('user');
@@ -41,7 +42,8 @@ const ProfileScreen = () => {
     const userObj = await findUserByField('uid' , userData.uid);
     if (userObj) {
       setUser(userObj);
-      setUid(userObj.id)
+      setUid(userObj.id);
+      setImage(userData.avatar);
     }
   }
 
@@ -63,6 +65,15 @@ const ProfileScreen = () => {
 	return (await getLink(ref.ref));
     }
   }
+  const updateImage = async () => {
+      let imageUrl = await pickImage();
+      if (imageUrl){
+	    user.avatar = imageUrl; 
+	    updateUser(uid, user);
+	    setImage(imageUrl);
+      }
+
+  }
 
   useLayoutEffect(() => {
     fetchCurrentUser();
@@ -74,7 +85,7 @@ const ProfileScreen = () => {
       <View style={styles.profileHeader}>
         <View style={styles.uploadBox}>
           <Image 
-            source={user.avatar === '' ? require('../assets/images/icons/profile.png') : {uri: user.avatar}}
+            source={user.avatar === '' ? require('../assets/images/icons/profile.png') : {uri: image}}
             style={{width: 50 , height: 50 , borderRadius: 50}}  
           />
           <CustomButton
@@ -85,7 +96,7 @@ const ProfileScreen = () => {
             iconName={'cloud-upload'}
             iconSize={25}
             iconColor={COLORS.secondary}
-            functionality={() => {console.log(pickImage());}}
+            functionality={() => {console.log(updateImage());}}
           />
         </View>
         <Pressable style={styles.editButton} onPress={() => setVisible(true)}>
