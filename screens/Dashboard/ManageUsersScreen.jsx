@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { React, useEffect, useState } from "react";
-import { FontAwesome, FontAwesome6 , FontAwesome5} from "@expo/vector-icons";
+import { FontAwesome, FontAwesome6, FontAwesome5 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
 import {
@@ -36,31 +36,23 @@ const ManageUsersScreen = () => {
     }
   };
 
-  const delUserById = async (id) => {
-    try {
-      const response = await deleteUser(id);
-      await reqUsers();
-      console.log("deleted user", response);
-    } catch (e) {
-      console.error("couldn't get users", e);
-    }
-  };
+
   const Item = ({ text, img, id, email }) => {
     return (
       <View style={styles.userCard}>
         <Image
           source={{ uri: img }}
-          style={{ width: 50, height: 50,borderRadius: 25, alignSelf: "flex-start", margin: 10 }}
+          style={{ width: 50, height: 50, borderRadius: 25, alignSelf: "flex-start", margin: 10 }}
         />
         <View style={styles.infoCard}>
           <Text style={styles.Text}>{text}</Text>
           <Text style={styles.Text}>{email}</Text>
         </View>
-        <View style = {{flexDirection: "row" , gap : 10 , alignSelf : "center" , margin : 10}}>
+        <View style={{ flexDirection: "row", gap: 10, alignSelf: "center", margin: 10 }}>
           <Pressable
-	    style = {styles.button}
+            style={styles.button}
             onPress={() => {
-              router.push(ROUTES.DASHBOARD.EDIT_USER + id);
+              router.push(ROUTES.DASHBOARD.EDIT_USER.replace(":id", id));
             }}
           >
             <FontAwesome5
@@ -77,7 +69,7 @@ const ManageUsersScreen = () => {
 
   const onChangeText = async (text) => {
     try {
-	console.log("text",text);
+      console.log("text", text);
       const nameUsers = await searchUsersByName(text);
       const emailUsers = await searchUsersByEmail(text);
       const map = new Map(nameUsers.map((item) => [item.id, item]));
@@ -97,14 +89,14 @@ const ManageUsersScreen = () => {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-  <View style={styles.buttonsArea}>
+      <View style={styles.buttonsArea}>
         <Pressable
           style={{ alignSelf: "center", margin: 10, backgroundColor: COLORS.primary, borderRadius: 3 }}
           onPress={() => {
             router.replace(ROUTES.DASHBOARD.ADD_NEW_USER);
           }}
         >
-          <Text style={{ color: COLORS.white, fontSize: 18, margin: 3 , fontWeight : "700" }}>
+          <Text style={{ color: COLORS.white, fontSize: 18, margin: 3, fontWeight: "700" }}>
             New{" "}
             <FontAwesome5
               name="plus"
@@ -138,24 +130,24 @@ const ManageUsersScreen = () => {
           maxWidth: 450,
           height: 50,
           borderRadius: 10,
-          alignSelf:"center"
+          alignSelf: "center"
         }}
-        >
+      >
         <TextInput
           style={{
-            height:50,
-            paddingHorizontal:10,
+            height: 50,
+            paddingHorizontal: 10,
             // borderRadius: 10,
           }}
           placeholder="Search by user email or username"
           placeholderTextColor={COLORS.primary}
           onChangeText={(text) => onChangeText(text)}
         />
-        <FontAwesome name="search" size={24} color={COLORS.primary} style={{position:"absolute" , right:10 , top: 12 }} />
+        <FontAwesome name="search" size={24} color={COLORS.primary} style={{ position: "absolute", right: 10, top: 12 }} />
       </View>
       <FlatList
-        style={{ flex: 1 , margin :30 }}
-	showsVerticalScrollIndicator={false}
+        style={{ flex: 1, margin: 30 }}
+        showsVerticalScrollIndicator={false}
         data={filteredUsers}
         renderItem={({ item }) => (
           <Item
@@ -178,7 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: COLORS.white,
-    },
+  },
   buttonsArea: {
     flex: 1,
     flexDirection: "row",
@@ -191,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 24, // Adjusted for more standard viewing
     fontWeight: "bold",
     fontFamily: "Fira Sans",
-    fontWeight : "700",
+    fontWeight: "700",
   },
   userCard: {
     flex: 1,
@@ -207,20 +199,20 @@ const styles = StyleSheet.create({
   infoCard: {
     flex: 1,
     margin: 10,
-    justifyContent : "center",
-    fontWeight : "700",
+    justifyContent: "center",
+    fontWeight: "700",
   },
   Text: {
     color: COLORS.primary,
     fontFamily: "Fira Sans",
-    fontWeight : "700",
+    fontWeight: "700",
   },
-    button :{
-	width : 40 ,
-	height : 40 , 
-	backgroundColor: COLORS.primary,
-	borderRadius : 50, 
-	justifyContent : "center",
-	alignItems: "center"
-    },
+  button: {
+    width: 40,
+    height: 40,
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center"
+  },
 });

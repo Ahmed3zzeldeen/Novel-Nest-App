@@ -63,10 +63,10 @@ const AddUserScreen = () => {
 		    const blob = await response.blob();
 		    const ref = await uplouadFile(`users/${uid}`, blob);
 		    const url =  (await getLink(ref.ref));
-		    updateUserImage (uid , url);
+		    await updateUserImage (uid , url);
 		}
 		else {
-		    updateUserImage (uid, "https://www.gravatar.com/avatar/");
+		    await updateUserImage (uid, "https://www.gravatar.com/avatar/");
 		}
 	       router.navigate(ROUTES.PUBLIC.HOME);
 	    }
