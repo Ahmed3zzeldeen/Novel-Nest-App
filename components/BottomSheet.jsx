@@ -1,7 +1,7 @@
 import {View , Text , StyleSheet , Pressable} from 'react-native';4
 import { useState } from 'react';
 import COLORS from '@/constants/colors';
-import {CustomTextInput , CustomPopup, CustomButton} from '@/components';
+import {CustomTextInput , CustomPopup, CustomButton} from '@/components/index';
 
 const BottomSheet = ({ modalVisibility }) => {
   const [firstName , setFirstName] = useState('');
@@ -74,6 +74,7 @@ const BottomSheet = ({ modalVisibility }) => {
             textButtonStyle={styles.textButton}
           />
         </View>
+      </View>
       {cancelPopup && <CustomPopup
         title={'Cancel Confirmation'}
         message={'Are you sure you want to Cancel?'}
@@ -93,8 +94,8 @@ const BottomSheet = ({ modalVisibility }) => {
         textButton2={'Yes'}
         button1Function={handlePressSaveButton1}
         button2Function={handlePressSaveButton2}
+        popupStyle={{height: '100%'}}
       />}
-      </View>
     </View>
   );
 }

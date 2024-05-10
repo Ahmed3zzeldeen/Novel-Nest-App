@@ -70,18 +70,6 @@ const ManageUsersScreen = () => {
               style={{ margin: 10 }}
             />
           </Pressable>
-          <Pressable 
-	    style = {styles.button}>
-            <FontAwesome
-              name="trash"
-              size={20}
-              color={COLORS.secondary}
-              style={{ margin: 10 }}
-              onPress={() => {
-                delUserById(id);
-              }}
-            />
-          </Pressable>
         </View>
       </View>
     );
