@@ -1,9 +1,10 @@
 import { StyleSheet, View, Text, FlatList} from "react-native";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";
 import { BookCard , BestSellerCard , CustomLink } from "@/components";
 import ROUTES from "@/constants/routes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
 

@@ -5,7 +5,7 @@ import COLORS from '@/constants/colors';
 import { BottomSheet , CustomButton, OrderCard } from '@/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
-import { findUserByField, updateUser , updateUserImage} from '../firebase/apis/users';
+import { findUserByField, updateUserImage} from '../firebase/apis/users';
 import { getLink,  uplouadFile } from '@/firebase/apis/storage';
 
 
@@ -66,12 +66,11 @@ const ProfileScreen = () => {
     }
   }
   const updateImage = async () => {
-      let imageUrl = await pickImage();
-      if (imageUrl){
-	    updateUserImage(uid , imageUrl);
-	    setImage(imageUrl);
-      }
-
+    let imageUrl = await pickImage();
+    if (imageUrl){
+      updateUserImage(uid , imageUrl);
+      setImage(imageUrl);
+    }
   }
 
   useLayoutEffect(() => {
