@@ -25,19 +25,19 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
   }
 
   return (
-    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.ISBN))}>
+    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
       <ImageBackground 
         style={styles.container}
-        source={book.cover}
+        source={cover}
         imageStyle={{
           borderRadius: 13.8,    
         }}
       >
         <View style={styles.detailBackground}>
           <View>
-            <Text style={styles.details}>Category: <Text style={styles.content}>{book.category}</Text></Text>
-            <Text style={styles.details}>Price: <Text style={styles.content}>{book.price}EGP</Text></Text>
-            <Text style={styles.details}>Pages: <Text style={styles.content}>{book.numOfPages}</Text></Text>
+            <Text style={styles.details}>Category: <Text style={styles.content}>{category}</Text></Text>
+            <Text style={styles.details}>Price: <Text style={styles.content}>{price}EGP</Text></Text>
+            <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
           </View>
           <View style={styles.buttonBox}>
             <CustomButton
