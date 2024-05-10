@@ -121,17 +121,19 @@
     - [ ] Implement Book Addition Functionality.
 
 - Philopater Wahead:
-  - [ ] Profile Screen:
+  - [X] Profile Screen:
     - [ ] Implement Management of Books Screens.
-    - [ ] Retrieve User Information.
-  - [ ] ListOfUsers Screen:
+    - [X] Retrieve User Information.
+  - [X] ListOfUsers Screen:
     - [X] Retrieve All Users.
     - [X] Implement Search and Filter Functionality for Users.
     - [X] Implement User Deletion.
-  - [ ] EditUser Screen:
-    - [ ] Implement User Update Functionality.
+  - [X] EditUser Screen:
+    - [X] Implement User Update Functionality.
   - [ ] AddUser Screen:
     - [ ] Implement User Addition Functionality.
+  - off tasks jobs 
+    - helped in profile screen with Mustafa Ahmed 
 
 - Mustafa Hany:
   - [ ] Invoice Screen:
