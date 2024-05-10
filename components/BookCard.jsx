@@ -6,7 +6,7 @@ import ROUTES from '@/constants/routes';
 import CustomButton from './CustomButton';
 
 const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
-  const [numOfBooks, setNumOfBooks] = useState(0);
+  let [numOfBooks, setNumOfBooks] = useState(0);
   const [addToCart , setAddToCart] = useState(false);
   
   const router = useRouter();
@@ -44,7 +44,7 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
               buttonStyle={styles.circleButton}
               textButton={'-'}
               textButtonStyle={styles.symbol}
-              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(--numOfBooks)}}
+              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(numOfBooks - 1)}}
             />
             <View>
               <Text style={styles.bookCounter}>{numOfBooks}</Text>
@@ -53,7 +53,7 @@ const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, cat
               buttonStyle={styles.circleButton}
               textButton={'+'}
               textButtonStyle={styles.symbol}
-              functionality={() => {setNumOfBooks(++numOfBooks)}}
+              functionality={() => {setNumOfBooks(numOfBooks + 1)}}
             />
           </View>
         </View>
