@@ -121,7 +121,7 @@ export default CartScreen;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     marginHorizontal: '5%',
   },
   cartList: {
