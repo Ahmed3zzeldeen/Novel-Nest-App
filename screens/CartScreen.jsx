@@ -55,7 +55,7 @@ const CartScreen = () => {
 
   return (
     <>
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <FlatList
           style={styles.cartList}
           data={cart}
@@ -77,7 +77,7 @@ const CartScreen = () => {
             functionality={() => setInvoicePopup(true)}
             />
         </View>
-      </ScrollView>
+      </View>
       {purchasePopup && <CustomPopup
         title={'Purchase'}
         message={'Purchase Done! do you want to go home page?'}
@@ -121,7 +121,7 @@ export default CartScreen;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
     marginHorizontal: '5%',
   },
   cartList: {
