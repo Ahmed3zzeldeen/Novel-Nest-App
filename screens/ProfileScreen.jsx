@@ -4,9 +4,9 @@ import { useLayoutEffect, useState } from 'react';
 import COLORS from '@/constants/colors';
 import { BottomSheet , CustomButton, OrderCard } from '@/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
-import { findUserByField, updateUserImage} from '../firebase/apis/users';
-import { getLink,  uplouadFile } from '@/firebase/apis/storage';
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
+import { findUserByField, updateUserImage } from '../firebase/apis/users';
+import { getLink, uplouadFile } from '@/firebase/apis/storage';
 
 
 const ProfileScreen = () => {
@@ -49,20 +49,19 @@ const ProfileScreen = () => {
   }
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    let result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-  
     });
     if (!result.canceled) {
-	let image =  result.assets[0].uri;
-	const response = await fetch(image);
-	const blob = await response.blob();
-	console.log(blob.type);
-	const ref = await uplouadFile(`users/${uid}`, blob);
-	return (await getLink(ref.ref));
+      let image =  result.assets[0].uri;
+      const response = await fetch(image);
+      const blob = await response.blob();
+      console.log(blob.type);
+      const ref = await uplouadFile(`users/${uid}`, blob);
+      return (await getLink(ref.ref));
     }
   }
   const updateImage = async () => {

@@ -17,7 +17,6 @@ import { logout } from "@/firebase/apis/auth";
 import CartIconCounter from "./CartIconCounter";
 import USER_ROLES from "@/constants/userRoles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { findUserByField } from "@/firebase/apis/users";
 
 const HomeHeader = () => {
     const [search, setSearch] = useState("");
@@ -45,71 +44,71 @@ const HomeHeader = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
-            <ImageBackground
-                source={{
-                uri: "https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__",
-                }}
-                style={{ height: 200 }}
-                imageStyle={{
-                borderBottomLeftRadius: 50,
-                borderBottomRightRadius: 50,
-                opacity: 0.87,
-                }}
-            >
-                <View style={styles.darkCover}></View>
-                <View style={styles.header}>
-                <Text style={styles.homeText}>Home</Text>
-                <View style={styles.headerIcons}>
-                    {user && user.role === USER_ROLES.ADMIN ? (
-                    <Pressable
-                        onPress={() => router.push(ROUTES.DASHBOARD.HOME)}
-                        style={{
-                        marginHorizontal: 5
-                        }}
-                    >
-                        <MaterialIcons name="dashboard"size={30} color={COLORS.white} />
-                    </Pressable>
-                    ) : null}
-                    <Pressable onPress={handleLogout}>
-                    <FontAwesome5
-                        name="door-open"
-                        size={30}
-                        color={COLORS.secondary}
-                    />
-                    </Pressable>
-                    <CartIconCounter />
-                    <Pressable
-                    onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}
-                    >
-                    <Image
-                        source={require("../assets/images/icons/profile.png")}
-                        style={{ width: 40, height: 40 }}
-                    />
-                    </Pressable>
-                </View>
-                </View>
-                <Text style={styles.usernameText}>Hey! {user.username}</Text>
-                <View style={styles.searchBox}>
-                <TextInput
-                    style={styles.searchBar}
-                    placeholder="Search Book..."
-                    value={search}
-                    onChangeText={(value) => setSearch(value)}
-                    placeholderTextColor={COLORS.primary}
+        <StatusBar barStyle="light-content" />
+        <ImageBackground
+            source={{
+            uri: "https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__",
+            }}
+            style={{ height: 200 }}
+            imageStyle={{
+            borderBottomLeftRadius: 50,
+            borderBottomRightRadius: 50,
+            opacity: 0.87,
+            }}
+        >
+            <View style={styles.darkCover}></View>
+            <View style={styles.header}>
+            <Text style={styles.homeText}>Home</Text>
+            <View style={styles.headerIcons}>
+                {user && user.role === USER_ROLES.ADMIN ? (
+                <Pressable
+                    onPress={() => router.push(ROUTES.DASHBOARD.HOME)}
+                    style={{
+                    marginHorizontal: 5
+                    }}
+                >
+                    <MaterialIcons name="dashboard"size={30} color={COLORS.white} />
+                </Pressable>
+                ) : null}
+                <Pressable onPress={handleLogout}>
+                <FontAwesome5
+                    name="door-open"
+                    size={30}
+                    color={COLORS.secondary}
                 />
-                <View style={[styles.searchIconBox]}>
-                    <FontAwesome
-                    name="search"
-                    size={15}
-                    style={{ marginRight: "2.5%" }}
-                    color={COLORS.primary}
-                    />
-                </View>
-                </View>
-            </ImageBackground>
+                </Pressable>
+                <CartIconCounter />
+                <Pressable
+                onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}
+                >
+                <Image
+                    source={require("../assets/images/icons/profile.png")}
+                    style={{ width: 40, height: 40 }}
+                />
+                </Pressable>
+            </View>
+            </View>
+            <Text style={styles.usernameText}>Hey! USERNAME</Text>
+            <View style={styles.searchBox}>
+            <TextInput
+                style={styles.searchBar}
+                placeholder="Search Book..."
+                value={search}
+                onChangeText={(value) => setSearch(value)}
+                placeholderTextColor={COLORS.primary}
+            />
+            <View style={[styles.searchIconBox]}>
+                <FontAwesome
+                name="search"
+                size={15}
+                style={{ marginRight: "2.5%" }}
+                color={COLORS.primary}
+                />
+            </View>
+            </View>
+        </ImageBackground>
         </View>
-    );
+  );
 };
 
 export default HomeHeader;
