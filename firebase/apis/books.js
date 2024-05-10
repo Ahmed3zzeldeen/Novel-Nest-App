@@ -77,7 +77,7 @@ async function updateBook(bookId, bookData) {
     throw new Error("Book not found");
   }
   const bookDocRef = doc(db, "books", bookId);
-  await updateDoc(bookDocRef, bookData);
+  await updateDoc(bookDocRef, {...bookData});
 }
 
 // Accept the following fieldName = [bookId , ISBN , author , bookTitle , price , numOfPages , category , rate , cover ]

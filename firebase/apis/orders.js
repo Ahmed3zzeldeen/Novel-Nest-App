@@ -11,6 +11,7 @@ import {
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { findUserById } from "./users";
 const ordersCollectionRef = collection(db, "orders");
 
 async function getOrders() {
@@ -26,8 +27,14 @@ async function createOrder(userId, books = []) {
     const bookItem = books[i];
     totalPrice += +bookItem.price * +bookItem.quantity;
   }
+  // find user by userId
+  const user = await findUserById(userId);
+  
   const orderData = {
     userId,
+    userName: user.firstName + " " + user.lastName,
+    userEmail: user.email,
+    userAvatar: user.avatar,
     books,
     numberOfBooks,
     totalPrice,
@@ -66,7 +73,7 @@ async function updateOrder(orderId, orderData) {
     throw new Error("Order not found");
   }
   const orderDocRef = doc(db, "orders", orderId);
-  const orderAfterUpdate = await updateDoc(orderDocRef, orderData);
+  const orderAfterUpdate = await updateDoc(orderDocRef, {...orderData});
   return orderAfterUpdate;
 }
 
@@ -81,6 +88,13 @@ async function findOrdersByField(fieldName, value) {
   return orders.length > 0 ? orders : null;
 }
 
+async function searchOrdersByUserName(userName) {
+  const orders = await getOrders();
+  const filteredOrders = orders.filter((item) => { return (item.userName.includes(userName)) });
+  console.log("searched ", filteredOrders);
+  return filteredOrders;
+}
+
 export {
   getOrders,
   createOrder,
@@ -88,4 +102,5 @@ export {
   deleteOrder,
   findOrderById,
   findOrdersByField,
+  searchOrdersByUserName
 };
