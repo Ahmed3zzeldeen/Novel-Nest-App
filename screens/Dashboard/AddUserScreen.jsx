@@ -11,14 +11,14 @@ import { React, useEffect, useState } from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
 import ROUTES from "../../constants/routes";
 import { router } from "expo-router";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { ScrollView } from "react-native";
 import { uplouadFile, getLink } from "../../firebase/apis/storage";
 import COLORS from "@/constants/colors";
-import profilePic from "../../assets/images/icons/iconPlaceHolder.png"
-import { CustomTextInput , CustomButton } from "@/components";
-import { register , logout} from "../../firebase/apis/auth";
-import {updateUserImage} from "../../firebase/apis/users";
+import profilePic from "../../assets/images/icons/iconPlaceHolder.png";
+import { CustomTextInput, CustomButton } from "@/components";
+import { register, logout } from "../../firebase/apis/auth";
+import { updateUserImage } from "../../firebase/apis/users";
 
 const AddUserScreen = () => {
   const [usernameInput, setUsernameInput] = useState("");
@@ -37,7 +37,6 @@ const AddUserScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1,
-  
     });
 
     console.log(result);
@@ -46,46 +45,56 @@ const AddUserScreen = () => {
       setImage(result.assets[0].uri);
     }
   };
-  const uploadImage = async () => {
-    const response = await fetch(image);
-    const blob = await response.blob();
-    const ref = await uplouadFile(`avatar-${new Date()}`, blob);
-    return (await getLink(ref.ref));
-  };
+
   const createUser = async () => {
-      try {
-	if (usernameInput &&  firstNameInput && lastNameInput  && emailInput && passInput && role !== "" ){
-	    let cred = await register(firstNameInput , lastNameInput , usernameInput , emailInput , passInput , role);
-	    if (cred){ 
-		let uid = cred.user.uid
-		if (image){
-		    const response = await fetch(image);
-		    const blob = await response.blob();
-		    const ref = await uplouadFile(`users/${uid}`, blob);
-		    const url =  (await getLink(ref.ref));
-		    await updateUserImage (uid , url);
-		}
-		else {
-		    await updateUserImage (uid, "https://www.gravatar.com/avatar/");
-		}
-	       router.navigate(ROUTES.PUBLIC.HOME);
-	    }
-	} 
-	else {
-	    throw new Error('Enter complete data please');
-	}
-      }catch(e){
-	setError(e);
+    try {
+      if (
+        usernameInput &&
+        firstNameInput &&
+        lastNameInput &&
+        emailInput &&
+        passInput &&
+        role !== ""
+      ) {
+        let cred = await register(
+          firstNameInput,
+          lastNameInput,
+          usernameInput,
+          emailInput,
+          passInput,
+          role
+        );
+        if (cred) {
+          let uid = cred.user.uid;
+          if (image) {
+            const response = await fetch(image);
+            const blob = await response.blob();
+            const ref = await uplouadFile(`users/${uid}`, blob);
+            const url = await getLink(ref.ref);
+            await updateUserImage(uid, url);
+          } else {
+            await updateUserImage(uid, "https://www.gravatar.com/avatar/");
+          }
+          router.navigate(ROUTES.PUBLIC.HOME);
+        }
+      } else {
+        throw new Error("Enter complete data please");
       }
-  }
+    } catch (e) {
+      setError(e);
+    }
+  };
 
   useEffect(() => {
-      if (error !== null){
-	  alert(`${error}`);
-      }
+    if (error !== null) {
+      alert(`${error}`);
+    }
   }, [error]);
   return (
-    <ScrollView showsVerticalScrollIndicator = {false} style={styles.screenContainer}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={styles.screenContainer}
+    >
       <View style={styles.buttonsArea}>
         <Pressable
           style={{ alignSelf: "flex-end", margin: 10 }}
@@ -105,49 +114,105 @@ const AddUserScreen = () => {
         </Pressable>
       </View>
       <View>
-	  <Text style={styles.text}>User Preview</Text>
-	  <View style={styles.AvatarArea}>
-	    <Image source={(image) ? { uri: image } : profilePic} style={{ width: 50, height: 50, borderRadius: 100 }} />
-	    <Pressable style={styles.avatarButton} onPress={() => { pickImage(); }}>
-	      <Text style={{ color: COLORS.secondary, fontSize: 18, fontFamily: "Fira Sans", fontWeight: "700", alignSelf: "center" }}>
-		Avatar
-	      </Text>
-	      <FontAwesome6
-		name="cloud-arrow-up"
-		size={18}
-		color={COLORS.secondary}
-		style={{ alignSelf: "center" }}
-	      />
-	    </Pressable>
-	  </View>
-	  <Text style={styles.Text}>Username: {usernameInput} </Text>
-	  <Text style={styles.Text}>First Name: {firstNameInput} </Text>
-	  <Text style={styles.Text}>Last Name: {lastNameInput} </Text>
-	  <Text style={styles.Text}>Email: {emailInput} </Text>
+        <Text style={styles.text}>User Preview</Text>
+        <View style={styles.AvatarArea}>
+          <Image
+            source={image ? { uri: image } : profilePic}
+            style={{ width: 50, height: 50, borderRadius: 100 }}
+          />
+          <Pressable
+            style={styles.avatarButton}
+            onPress={() => {
+              pickImage();
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.secondary,
+                fontSize: 18,
+                fontFamily: "Fira Sans",
+                fontWeight: "700",
+                alignSelf: "center",
+              }}
+            >
+              Avatar
+            </Text>
+            <FontAwesome6
+              name="cloud-arrow-up"
+              size={18}
+              color={COLORS.secondary}
+              style={{ alignSelf: "center" }}
+            />
+          </Pressable>
+        </View>
+        <Text style={styles.Text}>Username: {usernameInput} </Text>
+        <Text style={styles.Text}>First Name: {firstNameInput} </Text>
+        <Text style={styles.Text}>Last Name: {lastNameInput} </Text>
+        <Text style={styles.Text}>Email: {emailInput} </Text>
       </View>
       <View style={styles.inputsArea}>
         <View style={styles.firstRow}>
-          <CustomTextInput label="First Name:" placeholder="Robert" value={firstNameInput} onChangeText={(e) => setFirstNameInput(e)} />
-          <CustomTextInput label="Last Name:" placeholder="martin" value={lastNameInput} onChangeText={(e) => setLastNameInput(e)} />
+          <CustomTextInput
+            label="First Name:"
+            placeholder="Robert"
+            value={firstNameInput}
+            onChangeText={(e) => setFirstNameInput(e)}
+          />
+          <CustomTextInput
+            label="Last Name:"
+            placeholder="martin"
+            value={lastNameInput}
+            onChangeText={(e) => setLastNameInput(e)}
+          />
         </View>
-        <CustomTextInput label="Username:" placeholder="RobertMartin123" value={usernameInput} onChangeText={(e) => setUsernameInput(e)} />
-        <CustomTextInput label="Email:" placeholder="example@something.com" value={emailInput} onChangeText={(e) => setEmailInput(e)} />
-        <CustomTextInput secureTextEntry={true} label="Password" placeholder="Password here!" value={passInput} onChangeText={(e) => setPassInput(e)} />
-        <CustomTextInput.Select secureTextEntry={true} label="Role" placeholder="Role" value={""} items = {[{label : "Admin" , value : "ADMIN" },{label : "User" , value : "USER" }]} onValueChange={(e) => (e)? setRole(e) : null}  />
-      </View >
-      <View style = {styles.optionButtons}>
-            <CustomButton
-              buttonStyle={{backgroundColor: COLORS.danger}}
-              textButton={'Cancel'}
-	      functionality = {()=>{router.back();}}
-              textButtonStyle={{color  : COLORS.white}}
-            />
-            <CustomButton
-              buttonStyle={{backgroundColor: COLORS.success }}
-              textButton={'Create'}
-	      functionality = {()=>{createUser();}}
-              textButtonStyle={{color  : COLORS.white}}
-            />
+        <CustomTextInput
+          label="Username:"
+          placeholder="RobertMartin123"
+          value={usernameInput}
+          onChangeText={(e) => setUsernameInput(e)}
+        />
+        <CustomTextInput
+          label="Email:"
+          placeholder="example@something.com"
+          value={emailInput}
+          onChangeText={(e) => setEmailInput(e)}
+        />
+        <CustomTextInput
+          secureTextEntry={true}
+          label="Password"
+          placeholder="Password here!"
+          value={passInput}
+          onChangeText={(e) => setPassInput(e)}
+        />
+        <CustomTextInput.Select
+          secureTextEntry={true}
+          label="Role"
+          placeholder="Role"
+          value={""}
+          items={[
+            { label: "Admin", value: "ADMIN" },
+            { label: "User", value: "USER" },
+          ]}
+          onValueChange={(e) => (e ? setRole(e) : null)}
+        />
+      </View>
+      <View style={styles.optionButtons}>
+        <CustomButton
+          buttonStyle={{ backgroundColor: COLORS.danger }}
+          textButton={"Cancel"}
+          functionality={() => {
+            router.back();
+          }}
+          textButtonStyle={{ color: COLORS.white }}
+        />
+        <CustomButton
+          buttonStyle={{ backgroundColor: COLORS.success }}
+          textButton={"Create"}
+          functionality={() => {
+            createUser();
+          }}
+          textButtonStyle={{ color: COLORS.white }}
+        />
       </View>
     </ScrollView>
   );
@@ -171,7 +236,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     gap: 3,
     flexDirection: "row",
-
   },
   AvatarArea: {
     flex: 1,
@@ -185,12 +249,12 @@ const styles = StyleSheet.create({
   firstRow: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: 'space-between',
-    minHeight : 67,
-    gap: 10
+    justifyContent: "space-between",
+    minHeight: 67,
+    gap: 10,
   },
   inputsArea: {
-    marginTop : 30  ,
+    marginTop: 30,
     gap: 10,
   },
   text: {
@@ -220,13 +284,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 10,
   },
-    optionButtons: {
-	flex : 1 , 
-	flexDirection : "row" , 
-	justifyContent : "space-between",
-	marginVertical: 30 ,
-	alignItems: "center"
-
-    }
-
+  optionButtons: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 30,
+    alignItems: "center",
+  },
 });
