@@ -17,7 +17,7 @@ const HomeScreen = () => {
   useLayoutEffect(() => {
     fetchLatestBooks();
   }, []);
-  
+      
   return (
     <View style={styles.ScreenContainer}>
       <Text style={styles.headLine}>Latest Books: </Text>

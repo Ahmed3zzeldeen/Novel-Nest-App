@@ -17,7 +17,6 @@ import ROUTES from "@/constants/routes";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { logout } from "@/firebase/apis/auth";
 import CartIconCounter from "./CartIconCounter";
-import USER_ROLES from "@/constants/userRoles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { findUserByField } from "@/firebase/apis/users";
 import { auth } from "@/firebase/apis/auth";
@@ -93,20 +92,6 @@ const storeUser = async (value) => {
             {inMoreBook ? "List of Books" : "Home"}
           </Text>
           <View style={styles.headerIcons}>
-            {user && user.role === USER_ROLES.ADMIN ? (
-              <Pressable
-                onPress={() => router.push(ROUTES.DASHBOARD.HOME)}
-                style={{
-                  marginHorizontal: 5,
-                }}
-              >
-                <MaterialIcons
-                  name="dashboard"
-                  size={30}
-                  color={COLORS.white}
-                />
-              </Pressable>
-            ) : null}
             <Pressable onPress={handleLogout}>
               <FontAwesome5
                 name="door-open"
@@ -119,7 +104,7 @@ const storeUser = async (value) => {
               onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}
             >
               <Image
-                source={user ? {uri: user.avatar} : ("../assets/images/icons/profile.png")}
+                source={("../assets/images/icons/profile.png")}
                 style={{ width: 40, height: 40, borderRadius: 50 }}
               />
             </Pressable>

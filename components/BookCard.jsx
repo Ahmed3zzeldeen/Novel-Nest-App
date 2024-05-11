@@ -12,6 +12,7 @@ const BookCard = ({ book }) =>{
   const [addToCartClicked , setAddToCartClicked] = useState(false);
   const [uid , setUid] = useState('');
   const [itemId , setItemId] = useState('');
+  const [cart , setCart] = useState([]);
 
   const router = useRouter();
 

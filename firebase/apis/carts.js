@@ -45,6 +45,12 @@ const addToCart = async (book , uid , counter) => {
   return itemRef.id;
 };
 
+const inCart = async (uid, bookId) => {
+  const cartItemsColRef = collection(db , 'carts' , uid , 'items');
+  const q = query(cartItemsColRef , where('bookId' , '==' , bookId) , limit(1));
+  const promise = await getDocs(q);
+  return promise;
+};
 const removeFromCart = async (uid , itemId ) => {
   let cart = await getCart(uid);
   if (!cart) {
@@ -80,4 +86,5 @@ export {
   addToCart,
   removeFromCart,
   getCartItems,
+  inCart
 };

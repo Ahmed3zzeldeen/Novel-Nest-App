@@ -8,7 +8,9 @@ import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import { findUserByField, updateUserImage } from '../firebase/apis/users';
 import { findOrdersByField} from '../firebase/apis/orders';
 import { getLink, uplouadFile } from '@/firebase/apis/storage';
-
+import USER_ROLES from "@/constants/userRoles";
+import { router } from "expo-router";
+import ROUTES from "@/constants/routes";
 
 const ProfileScreen = () => {
   
@@ -91,6 +93,20 @@ const ProfileScreen = () => {
             functionality={() => {console.log(updateImage());}}
           />
         </View>
+            {user && user.role === USER_ROLES.ADMIN ? (
+              <Pressable
+                onPress={() => router.push(ROUTES.DASHBOARD.HOME)}
+                style={{
+                  marginHorizontal: 5,
+                }}
+              >
+                <MaterialIcons
+                  name="dashboard"
+                  size={30}
+                  color={COLORS.primary}
+                />
+              </Pressable>
+            ) : null}
         <Pressable style={styles.editButton} onPress={() => setVisible(true)}>
           <MaterialIcons 
             name='edit'
