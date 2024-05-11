@@ -26,5 +26,5 @@ export default function _layout() {
     checkAuthentication();
   }, []);
 
-  return <Slot />;
+  return <Slot/>;
 }

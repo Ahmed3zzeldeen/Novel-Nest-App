@@ -1,63 +1,66 @@
 import COLORS from '@/constants/colors';
 import {View , Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import ROUTES from '@/constants/routes';
-import CustomButton from './CustomButton';
+import { CustomButton , CounterButtons } from '@/components';
+import { addToCart , removeFromCart , getCart } from '@/firebase/apis/carts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { findUserByField } from '@/firebase/apis/users';
 
-const BookCard = ({ cover, numOfPages, price, ISBN, author, bookTitle, rate, category  }) =>{ 
-  let [numOfBooks, setNumOfBooks] = useState(0);
-  const [addToCart , setAddToCart] = useState(false);
-  
+const BookCard = ({ book }) =>{ 
+  const [addToCartClicked , setAddToCartClicked] = useState(false);
+  const [uid , setUid] = useState('');
+  const [itemId , setItemId] = useState('');
+
   const router = useRouter();
 
   const cartButtonStyle = {
-    backgroundColor: (addToCart) ? COLORS.danger : COLORS.primary,
-    textButton: (addToCart)? 'Remove From Cart' : 'Add To Cart'
+    backgroundColor: (addToCartClicked) ? COLORS.danger : COLORS.primary,
+    textButton: (addToCartClicked)? 'Remove From Cart' : 'Add To Cart'
   }
 
-  const handleAddToCart = () => {
-    setAddToCart(true)
+  const handleAddToCart = async () => {
+    setItemId(await addToCart(book , uid , 1)); 
+    setAddToCartClicked(true);
   }
 
-  const handleRemoveFromCart = () => {
-    setAddToCart(false);
+  const handleRemoveFromCart = async () => {
+    await removeFromCart(uid , itemId );
+    setAddToCartClicked(false);
   }
+
+  const fetchCurrentUser = async () => {
+    const data = await AsyncStorage.getItem("user");
+    const userData = JSON.parse(data);
+    const userObj = await findUserByField("uid", userData.uid);
+    if (userObj) {
+      setUid(userObj.uid);
+    }
+  };
+
+  useLayoutEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   return (
-    <Pressable onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , ISBN))}>
+    <Pressable
+      onPress={() =>  router.navigate(ROUTES.PUBLIC.BOOK_DETAILS.replace(':id' , book.bookId))}>
       <ImageBackground 
         style={styles.container}
-        source={cover}
+        source={{uri: book.cover}}
         imageStyle={{
-          borderRadius: 13.8,    
+          borderRadius: 14,    
         }}
       >
         <View style={styles.detailBackground}>
           <View>
-            <Text style={styles.details}>Category: <Text style={styles.content}>{category}</Text></Text>
-            <Text style={styles.details}>Price: <Text style={styles.content}>{price}EGP</Text></Text>
-            <Text style={styles.details}>Pages: <Text style={styles.content}>{numOfPages}</Text></Text>
-          </View>
-          <View style={styles.buttonBox}>
-            <CustomButton
-              buttonStyle={styles.circleButton}
-              textButton={'-'}
-              textButtonStyle={styles.symbol}
-              functionality={() => {numOfBooks === 0 ? setNumOfBooks(0): setNumOfBooks(numOfBooks - 1)}}
-            />
-            <View>
-              <Text style={styles.bookCounter}>{numOfBooks}</Text>
-            </View>
-            <CustomButton
-              buttonStyle={styles.circleButton}
-              textButton={'+'}
-              textButtonStyle={styles.symbol}
-              functionality={() => {setNumOfBooks(numOfBooks + 1)}}
-            />
+            <Text style={styles.details}>Category: <Text style={styles.content}>{book.category}</Text></Text>
+            <Text style={styles.details}>Price: <Text style={styles.content}>{book.price}EGP</Text></Text>
+            <Text style={styles.details}>Pages: <Text style={styles.content}>{book.numOfPages}</Text></Text>
           </View>
         </View>
-        <Pressable style={styles.cartButton} onPress={addToCart ? () => handleRemoveFromCart() : () => handleAddToCart()}>
+        <Pressable style={styles.cartButton} onPress={addToCartClicked ? () => handleRemoveFromCart() : () => handleAddToCart()}>
           <View style={{ ...styles.addToCartBox , backgroundColor: cartButtonStyle.backgroundColor}}>
             <Text style={styles.cartText}>{cartButtonStyle.textButton}</Text>
           </View>
@@ -73,10 +76,10 @@ const styles = StyleSheet.create({
   container: {
     width: 167,
     height: 250,
-    borderRadius: 13.8,
-    marginHorizontal: '1.71%',
+    borderRadius: 14,
     marginBottom: 10,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    marginHorizontal: '1%'
   },
   addToCartBox: {
     height: 40,
@@ -84,8 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomLeftRadius: 13.8,
-    borderBottomRightRadius: 13.8
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14
   },
   cartText: {
     fontSize: 15,

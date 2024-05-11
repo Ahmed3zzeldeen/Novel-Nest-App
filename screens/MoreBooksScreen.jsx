@@ -1,25 +1,23 @@
 import { BookCard } from '@/components';
 import COLORS from '@/constants/colors';
 import {View , Text , StyleSheet, FlatList} from 'react-native';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import { getBooks } from '@/firebase/apis/books';
 
 const MoreBooksScreen = () => {
+  
+  const [books , setBooks] = useState([]);
 
-  const [books , setBooks] = useState([
-    {ISBN:1 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:2 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:3 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:4 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:5 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:6 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:7 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:8 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:9 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:10 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:11 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:12 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'}
-  ]);
+  const fetchBestSellerBooks = async () => {
+    // Fetch best seller books from the database
+    const books = await getBooks();
+    setBooks(books);
+  }
 
+  useLayoutEffect(() => {
+    fetchBestSellerBooks();
+  }, []);
+  
   return (
     <View style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.subHeader}>List of Recently Books:</Text>
@@ -39,7 +37,8 @@ export default MoreBooksScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: '5%',
+    height: '98%',
+    alignItems: 'center'
   },
   subHeader: {
     color: COLORS.primary,
@@ -47,4 +46,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginVertical: '5%'
   },
+  searchList: {
+  }
 });

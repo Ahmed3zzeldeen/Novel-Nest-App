@@ -1,17 +1,21 @@
 import COLORS from '@/constants/colors'; 
 import {View , Text , StyleSheet , Image} from 'react-native';
 import CustomButton from './CustomButton';
-import { useState } from 'react';
+import { removeFromCart } from '@/firebase/apis/carts';
 
-const ShoppingBookCard = ({ book }) => {
+const ShoppingBookCard = ({ book , itemId , userId , rerenderCarts}) => {
+  // TODO: Add remove book from cart functionality 
+  const handleRemoveBook = async () => {
+    console.log('Delete');
+    const deletes = await removeFromCart(userId , itemId);
+    await rerenderCarts();
+  }
 
-  const [counter , setCounter] = useState(0);
-  
   return (
     <View style={styles.container}>
       <View style={styles.imageBox}>
         <Image 
-          source={book.cover}
+          source={{uri: book.cover}}
           style={{width: 92 , height: 147}}
         />
       </View>
@@ -19,7 +23,7 @@ const ShoppingBookCard = ({ book }) => {
         <View>
           <Text style={styles.text}>Book Title: {book.bookTitle}</Text>
           <Text style={styles.text}>Price: {book.price}EGP</Text>
-          <Text style={styles.text}>Quantity: 2</Text>
+          <Text style={styles.text}>Quantity: {book.quantity}</Text>
           <Text style={styles.text}>ISBN: {book.ISBN}</Text>
         </View>
         <View style={styles.buttons}>
@@ -29,22 +33,8 @@ const ShoppingBookCard = ({ book }) => {
             iconName={'trash'}
             iconColor={COLORS.secondary}
             iconSize={20}
+            functionality={handleRemoveBook}
           />
-          <View style={styles.counterButtons}>
-            <CustomButton
-              buttonStyle={styles.circleButton}
-              textButton={'-'}
-              textButtonStyle={styles.textCircleButton}
-              functionality={counter === 0 ? () => setCounter(0) : () => setCounter(counter - 1)}
-            />
-            <Text style={styles.counter}>{counter}</Text>
-            <CustomButton
-              buttonStyle={styles.circleButton}
-              textButton={'+'}
-              textButtonStyle={styles.textCircleButton}
-              functionality={() => setCounter(counter + 1)}
-            />
-          </View>
         </View>
       </View>
     </View>

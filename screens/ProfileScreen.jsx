@@ -6,6 +6,7 @@ import { BottomSheet , CustomButton, OrderCard } from '@/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import { findUserByField, updateUserImage } from '../firebase/apis/users';
+import { findOrdersByField} from '../firebase/apis/orders';
 import { getLink, uplouadFile } from '@/firebase/apis/storage';
 
 
@@ -21,23 +22,12 @@ const ProfileScreen = () => {
     fullname: '',
     role: ''
   });
-  const [orders , setOrders] = useState([
-    {id: 1 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 2 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 3 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 4 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 5 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 6 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 7 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 8 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 9 , totalPayment: 100 , date: '15/4/2024'},
-    {id: 10 , totalPayment: 100 , date: '15/4/2024'}
-  ]);
   const [visible , setVisible] = useState(false);
   const [uid , setUid] = useState();
   const [image , setImage] = useState();
+  const [orders , setOrders] = useState([]);
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUserData = async () => {
     const data = await AsyncStorage.getItem('user');
     const userData = JSON.parse(data);
     const userObj = await findUserByField('uid' , userData.uid);
@@ -45,6 +35,8 @@ const ProfileScreen = () => {
       setUser(userObj);
       setUid(userObj.uid);
       setImage(userObj.avatar);
+      const orders = await findOrdersByField('userId' , userObj.uid);
+      setOrders(orders);
     }
   }
 
@@ -73,8 +65,11 @@ const ProfileScreen = () => {
   }
 
   useLayoutEffect(() => {
-    fetchCurrentUser();
+    fetchCurrentUserData();
   } , [])
+  useLayoutEffect(() => {
+    console.log("orders" , orders);
+  } , [orders])
 
   return (
     <View showsVerticalScrollIndicator = {false} style={styles.container}>
@@ -114,7 +109,7 @@ const ProfileScreen = () => {
       <FlatList 
         data={orders}
         renderItem={({item}) => (<OrderCard order={item}/>)}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.orderId}
         showsVerticalScrollIndicator={false}
       />
       {visible && <BottomSheet modalVisibility={setVisible}/>}
@@ -126,6 +121,7 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1, 
     backgroundColor: COLORS.white
   },
   uploadButton: {

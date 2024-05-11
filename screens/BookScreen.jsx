@@ -1,60 +1,86 @@
 import COLORS from '@/constants/colors';
 import {View , Text, StyleSheet , Image} from 'react-native';
-import { CustomButton } from '@/components';
-import { useState } from "react";
+import { CustomButton , CounterButtons } from '@/components';
+import { useState , useLayoutEffect } from "react";
+import { addToCart } from '@/firebase/apis/carts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { findBookById } from '@/firebase/apis/books';
 
-const BookScreen = ({ book , addToCartClicked }) => {
 
-  const [counter , setCounter] = useState(0);
-  const [addToCart , setAddToCart] = useState(false);
+const BookScreen = ({ id }) => {
 
+  const [addToCartClicked , setAddToCartClicked] = useState(false);
+  const [uid , setUid] = useState('');
+  const [book , setBook] = useState({
+    ISBN: '',
+    author: '',
+    bookId: '',
+    bookTitle: '',
+    category: '',
+    cover: '',
+    numOfPages: '',
+    price: '',
+    rate: ''
+  });
+  
   const cartButtonStyle = {
-    text: addToCart? 'Remove From Cart' : 'Add To Cart'
+    text: addToCartClicked? 'Remove From Cart' : 'Add To Cart'
   }
+
+  const fetchCurrentUser = async () => {
+    const userData = await AsyncStorage.getItem('user');
+    const userObj = JSON.parse(userData);
+    setUid(userObj.uid);
+  }
+
+  const handleRemoveFromCart = async () => {
+    setAddToCartClicked(false);
+  }
+
+  const handleAddToCart = async () => {
+    await addToCart(book , uid , 1);
+    setAddToCartClicked(true);
+  }
+
+  const fetchBook = async () => {
+    console.log("id " ,  id);
+    const bookData = await findBookById(id);
+    setBook(bookData);
+  }
+
+  useLayoutEffect(() => {
+    fetchCurrentUser();
+    fetchBook();
+  } , []);
 
   return (
     <View style={styles.container}>
       <View style={styles.imageBox}>
         <Image
-          source={require('../assets/images/icons/cover 1.png')}
+          source={book.cover ? {uri: book.cover} : ''}
           style={{
             width: 200 , 
             height: 311.11 , 
-            borderRadius: 13.8 , 
+            borderRadius: 14 , 
           }}
         />
       </View>
       <View style={styles.contentBox}>
         <View style={styles.details}>
           <View style={styles.dataBox}>
-            <Text style={styles.data}><Text style={styles.header}>Book Title:</Text> book title</Text>
-            <Text style={styles.data}><Text style={styles.header}>Author:</Text> Islam Shaker</Text>
-            <Text style={styles.data}><Text style={styles.header}>Category:</Text> Drama</Text>
-            <Text style={styles.data}><Text style={styles.header}>Pages:</Text> 140</Text>
-            <Text style={styles.data}><Text style={styles.header}>Price:</Text> 100$</Text>
-            <Text style={styles.data}><Text style={styles.header}>ISBN:</Text> 48375893284</Text>
+            <Text style={styles.data}><Text style={styles.header}>Book Title:</Text> {book.bookTitle}</Text>
+            <Text style={styles.data}><Text style={styles.header}>Author:</Text> {book.author}</Text>
+            <Text style={styles.data}><Text style={styles.header}>Category:</Text> {book.category}</Text>
+            <Text style={styles.data}><Text style={styles.header}>Pages:</Text> {book.numOfPages}</Text>
+            <Text style={styles.data}><Text style={styles.header}>Price:</Text> {book.price} EGP</Text>
+            <Text style={styles.data}><Text style={styles.header}>ISBN:</Text> {book.ISBN}</Text>
           </View>
           <View style={styles.buttonsBox}>
-            <View style={styles.counterButtons}>
-              <CustomButton
-                buttonStyle={styles.circleButton}
-                textButton={'-'}
-                textButtonStyle={styles.circleButtonText}
-                functionality={counter === 0? () => setCounter(0) : () => setCounter(counter - 1)}
-              />
-              <Text style={styles.counter}>{counter}</Text>
-              <CustomButton
-                buttonStyle={styles.circleButton}
-                textButton={'+'}
-                textButtonStyle={styles.circleButtonText}
-                functionality={() => setCounter(counter + 1)}
-              />
-            </View>
             <CustomButton
               buttonStyle={styles.button}
               textButton={cartButtonStyle.text}
               textButtonStyle={styles.textButton}
-              functionality={addToCart ?() => setAddToCart(false) : () => setAddToCart(true)}
+              functionality={addToCartClicked ? () => handleRemoveFromCart() : () => handleAddToCart()}
             />
           </View>
         </View>
@@ -74,7 +100,7 @@ const styles = StyleSheet.create({
     marginTop: '2%'
   },
   imageBox: {
-    borderRadius: 13.8 ,
+    borderRadius: 14 ,
     borderBottomWidth: 5,
     borderColor: 'rgba(0 , 0 , 0 , 0.25)',
     marginVertical: '6%'
@@ -83,14 +109,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     width: '100%',
     height: 400,
-    borderTopLeftRadius: 13.8,
-    borderTopRightRadius: 13.8,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
   },
   details: {
     height: '100%',
     width: '100%',
-    borderTopLeftRadius: 13.8,
-    borderTopRightRadius: 13.8,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
     marginTop: '2%'
   },
   header: {
@@ -111,33 +137,6 @@ const styles = StyleSheet.create({
   },
   textButtonStyle: {
     color: COLORS.primary
-  },
-  counterButtons: {
-    width: 152,
-    height: 50,
-    backgroundColor: COLORS.secondary,
-    borderRadius: 14.61,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10
-  },
-  circleButton: {
-    backgroundColor: COLORS.primary,
-    width: 38.96,
-    height: 38.96,
-    borderRadius: 50,
-  },
-  circleButtonText: {
-    color: COLORS.secondary,
-    fontWeight: '700',
-    fontSize: 30,
-    textAlign: 'center',
-  },
-  counter: {
-    color: COLORS.primary,
-    fontWeight: '700',
-    fontSize: 30
   },
   buttonsBox: {
     flexDirection: 'row',

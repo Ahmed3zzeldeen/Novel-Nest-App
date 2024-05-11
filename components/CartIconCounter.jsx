@@ -6,11 +6,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import ROUTES from '@/constants/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const CartIconCounter = ({ cartBoxStyle}) => {
 
-
-const CartIconCounter = ({counterBoxStyle , counterTextStyle , cartBoxStyle}) => {
-
-  const [counter , setCounter] = useState(0);  
   const [uid , setUid] = useState(null);
   const router = useRouter();
 
@@ -22,7 +19,7 @@ const CartIconCounter = ({counterBoxStyle , counterTextStyle , cartBoxStyle}) =>
       setUid(user.uid);
     }
   }
-
+  
   useLayoutEffect(() => {
     fetchCurrentUserId();
   } , []);
@@ -41,9 +38,6 @@ const CartIconCounter = ({counterBoxStyle , counterTextStyle , cartBoxStyle}) =>
             size={30}
             color={COLORS.secondary}
           />
-          <View style={{ ...styles.counter , ...counterBoxStyle }}>
-              <Text style={{ ...styles.counterText , ...counterTextStyle }}>{counter}</Text>
-          </View>
       </View>
     </Pressable>
   )

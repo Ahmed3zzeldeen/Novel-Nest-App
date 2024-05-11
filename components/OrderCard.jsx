@@ -1,11 +1,12 @@
 import COLORS from '@/constants/colors';
+import { formatData } from '@/utils';
 import {Pressable , Text , StyleSheet} from 'react-native';
 
 const OrderCard = ({order}) => {
   return (
     <Pressable style={styles.container}>
-      <Text style={[styles.payment , styles.text]}>Total Payment: {order.totalPayment}$</Text>
-      <Text style={[styles.date , styles.text]}>Date: {order.date}</Text>
+      <Text style={[styles.payment , styles.text]}>Total Payment: {order.totalPrice}$</Text>
+      <Text style={[styles.date , styles.text]}>Date: {formatData(new Date(order.orderDate?.seconds * 1000)) }</Text>
     </Pressable>
   )
 };

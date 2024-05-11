@@ -3,7 +3,7 @@ import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import COLORS from "@/constants/colors";
-import { HomeHeader, MoreBooksHeader } from '@/components';
+import { HomeHeader } from '@/components';
 
 const AppHeaders = () => {
 
@@ -82,7 +82,7 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.BOOKS}
         options={{
-          header: () => (<MoreBooksHeader />)
+          header: () => (<HomeHeader inMoreBook={true} />)
         }}
       />
       <Stack.Screen

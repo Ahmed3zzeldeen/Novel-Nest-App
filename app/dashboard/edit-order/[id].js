@@ -12,7 +12,6 @@ import {
 import EditOrderScreen from "@/screens/Dashboard/EditOrderScreen";
 
 export default function Page() {
-  const router = useRouter();
   const { id, number } = useLocalSearchParams();
   return (
     <>

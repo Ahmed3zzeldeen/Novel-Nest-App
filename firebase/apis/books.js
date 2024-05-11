@@ -17,6 +17,13 @@ async function getBooks() {
   const Books = await getDocs(booksCollectionRef);
   return Books.docs.map((book) => ({ ...book.data(), bookId: book.id }));
 }
+async function setBookCover(id , image) {
+  const book = await findBookByField("bookId", id);
+  book.cover = image; 
+  updateBook(id,book);
+
+  return user;
+}
 
 async function createBook(
   ISBN,
@@ -29,16 +36,7 @@ async function createBook(
   cover = "https://vitaldigital.us/wp-content/uploads/2017/11/book-placeholder-small.png",
 ) {
 
-  if (!author || !bookTitle || !category || !numOfPages || !price || !ISBN) {
-    throw new Error('There are missed fields.');
-  }
-  if (isNaN(+price) || isNaN(+ISBN) || isNaN(+numOfPages)) {
-    throw new Error('Invalid number!');
-  }
-  if (ISBN.length != 13) {
-    throw new Error('ISBN Should be 13 digits.');
-  }
-
+  
   const bookData = {
     ISBN,
     author,
@@ -48,20 +46,41 @@ async function createBook(
     category,
     rate,
     cover,
+  };
+  console.log(bookData);
+  if (!isNaN(ISBN)) {
+    let search = await findBookByField("ISBN", ISBN);
+    if (!search) {
+      const book = await addDoc(booksCollectionRef, bookData);
+      const updatedBook = await updateBook(book.id, {
+        ...bookData,
+        bookId: book.id,
+      });
+      return updatedBook;
+    }
   }
-
-  const book = await addDoc(booksCollectionRef, bookData);
-  const updatedBook = await updateBook(book.id, { ...bookData, bookId: book.id });
-  return updatedBook;
 }
 
+async function addBook(book) {
+  if (book && !isNaN(book.ISBN)) {
+    let search = await findBookByField("ISBN", book.ISBN);
+    if (search) {
+      const book = await addDoc(booksCollectionRef, book);
+      console.log("book", book);
+      const updatedBook = await updateBook(book.id, {
+        ...bookData,
+        bookId: book.id,
+      });
+      return updatedBook;
+    }
+  }
+}
 async function deleteBook(bookId) {
   const bookDocRef = doc(db, "books", bookId);
-  let book = (await getDoc(bookDocRef));
+  let book = await getDoc(bookDocRef);
   const res = await deleteDoc(bookDocRef);
   return res;
 }
-
 
 async function findBookById(bookId) {
   const bookDocRef = doc(db, "books", bookId);
@@ -77,7 +96,7 @@ async function updateBook(bookId, bookData) {
     throw new Error("Book not found");
   }
   const bookDocRef = doc(db, "books", bookId);
-  await updateDoc(bookDocRef, {...bookData});
+  await updateDoc(bookDocRef, { ...bookData });
 }
 
 // Accept the following fieldName = [bookId , ISBN , author , bookTitle , price , numOfPages , category , rate , cover ]
@@ -93,7 +112,9 @@ async function findBookByField(fieldName, value) {
 
 async function searchBooksByBookTitle(title) {
   const books = await getBooks();
-  const filteredBooks = books.filter((item) => { return (item.bookTitle.includes(title)) });
+  const filteredBooks = books.filter((item) => {
+    return item.bookTitle.includes(title);
+  });
   console.log("searched ", filteredBooks);
   return filteredBooks;
 }
@@ -105,5 +126,7 @@ export {
   deleteBook,
   findBookById,
   findBookByField,
-  searchBooksByBookTitle
+  searchBooksByBookTitle,
+  addBook,
+  setBookCover,
 };

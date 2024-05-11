@@ -1,33 +1,32 @@
 import { StyleSheet, View, Text, FlatList} from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { useRouter } from "expo-router";
 import COLORS from "@/constants/colors";
-import { BookCard , BestSellerCard , CustomLink } from "@/components";
+import { BookCard , LatestBookCard , CustomLink } from "@/components";
 import ROUTES from "@/constants/routes";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getBooks } from "@/firebase/apis/books";
 
 const HomeScreen = () => {
 
-  const router = useRouter();
+  const [latestBooks , setLatestBooks] = useState([]);
 
-  const [BestSellerBooks , setBestSellerBooks] = useState([
-    {ISBN:1 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:2 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:3 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:4 , cover: require('../assets/images/icons/cover 1.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:5 , cover: require('../assets/images/icons/cover 2.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'},
-    {ISBN:6 , cover: require('../assets/images/icons/cover 3.png') , numOfPages: 120, price: 100, author: 'ahmed', bookTitle: 'journey to the earth', rate: 4.5, category: 'drama'}
-  ]);
+  const fetchLatestBooks = async () => {
+    const books = await getBooks();
+    setLatestBooks(books);
+  }
 
+  useLayoutEffect(() => {
+    fetchLatestBooks();
+  }, []);
+  
   return (
     <View style={styles.ScreenContainer}>
-      <Text style={styles.headLine}>Best Seller Books:</Text>
+      <Text style={styles.headLine}>Latest Books: </Text>
       <FlatList
         horizontal
         style={{maxHeight: 180 , margin: '3%'}}
-        data={BestSellerBooks}
-        renderItem={({item}) => (<BestSellerCard book={item}/>)}
-        keyExtractor={(item) => item.ISBN}
+        data={latestBooks}
+        renderItem={({item}) => (<LatestBookCard book={item}/>)}
+        keyExtractor={(item) => item.bookId}
         showsHorizontalScrollIndicator={false}
       />
       <View style={styles.moreBooks}>
@@ -40,9 +39,9 @@ const HomeScreen = () => {
       </View>
       <FlatList
         style={styles.searchList}
-        data={BestSellerBooks}
-        renderItem={({item}) => (<BookCard cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
-        keyExtractor={(item) => item.id}
+        data={latestBooks}
+        renderItem={({item}) => (<BookCard book={item} cover={item.cover} price={item.price} category={item.category} numOfPages={item.numOfPages}/>)}
+        keyExtractor={(item) => item.bookId}
         numColumns={2}
         showsVerticalScrollIndicator={false}
       />
@@ -61,8 +60,8 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: "700",
     fontSize: 20,
-    marginHorizontal: '3%',
-    marginTop: '5%'
+    marginTop: '5%',
+    paddingLeft: '5%'
   },
   moreBooks: {
     flexDirection: 'row',
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 0
   },
   searchList: {
-    marginHorizontal: "5%",
+    alignSelf: 'center',
     height: '20%',
   },
 });

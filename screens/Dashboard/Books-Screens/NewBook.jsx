@@ -17,6 +17,8 @@ import * as ImagePicker from "expo-image-picker";
 import myPicture from "../../../assets/images/icons/cover 2.png";
 import { createBook, updateBook } from "@/firebase/apis/books";
 import { getLink, uplouadFile } from "@/firebase/apis/storage";
+import { setBooks } from "@/firebase/seeds/seedData";
+
 export default function ListOfBooks() {
   const [ISBN, setISBN] = useState("");
   const [author, setAuthor] = useState("");
@@ -52,10 +54,6 @@ export default function ListOfBooks() {
       switcher = false;
       Alert.alert("Invalid number!");
     }
-    if (ISBN.length != 13) {
-      switcher = false;
-      Alert.alert("ISBN Should be 13 digits.");
-    }
     if (switcher) {
       addBook();
       clear();
@@ -82,8 +80,12 @@ export default function ListOfBooks() {
         const url = await getLink(ref.ref);
         await updateBook(uid, { cover: url });
       }
+      else {
+        await updateBook(uid, { cover: "https://imgs.search.brave.com/qSWvF9CER9_ERNV1A-abWrT5l3nucV7W1BjQwuAazCM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTM4/MDE1NjA5L3Bob3Rv/L2JsYWNrLWhhcmRi/YWNrLWNhc2Vib3Vu/ZC1ib29rLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz10djE2/R2RuTnhOMGhUbFkw/SXRtUWtkR0hVdEVx/MGt5RnlWQ1dubllt/dU9nPQ" });
+      }
     } catch (e) {
-      Alert.alert(e.message);
+      // Alert.alert(e.message);
+      console.log(e.message);
     }
   };
   const pickImage = async () => {
@@ -104,6 +106,17 @@ export default function ListOfBooks() {
     const ref = await uplouadFile(`${ISBN}-${new Date()}`, blob);
     return await getLink(ref.ref);
   };
+
+
+  const handelSeedBooks = async () => {
+    console.log("seedBooks");
+    try {
+      await setBooks();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     if (error !== null) {
       alert(`${error}`);
@@ -347,6 +360,18 @@ export default function ListOfBooks() {
                 Create
               </Text>
             </Pressable>
+            <Pressable style={styles.createButton}>
+              <Text
+                style={{
+                  color: COLORS.secondary,
+                  fontSize: 18,
+                  fontWeight: "700",
+                }}
+                onPress={() => handelSeedBooks()}
+              >
+                populate
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
@@ -496,11 +521,13 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
   cancelAndCreateButtonsContainer: {
+    flex : 1 , 
+    flexDirection: "raw",
+    gap : 10 ,
     marginTop: 30,
     marginBottom: 60,
-    width: 350,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    width: "100%",
+    justifyContent: "space-around",
   },
   cancelButton: {
     backgroundColor: COLORS.danger,

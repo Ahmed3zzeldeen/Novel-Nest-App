@@ -69,7 +69,7 @@ const DashboardScreen = () => {
 
   const Item = ({ text, img, id, awesome }) => {
     return (
-      <View style={{ alignSelf: "center" }}>
+      <View style={{ alignSelf: "center" ,width:"100%"}}>
         <Pressable
           style={styles.Button}
           onPress={() => {
@@ -98,11 +98,11 @@ const DashboardScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.ScreenContainer}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" , alignItems:"center" , padding:10}}>
+    <View style={styles.ScreenContainer}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" , alignItems:"center" , padding:10 }}>
         <Pressable
             onPress={()=> router.push(ROUTES.PUBLIC.HOME)}
-            style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center" ,gap:10}}
+            style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center" , gap:10}}
           >
           <FontAwesome5 name="home" size={24} color={COLORS.primary} />
           <Text style={{color:COLORS.primary , fontSize:20}}>
@@ -132,6 +132,7 @@ const DashboardScreen = () => {
         </Pressable>
       </View>
       <FlatList
+        style={styles.ButtonsList}
         showsVerticalScrollIndicator={false}
         data={buttons}
         renderItem={({ item }) => (
@@ -145,7 +146,7 @@ const DashboardScreen = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -154,7 +155,6 @@ export default DashboardScreen;
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    justifyContent: "space-between",
     backgroundColor: COLORS.white,
   },
   Button: {
@@ -175,10 +175,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginRight: '2%'
   },
-  ButtonsList: {
+  ButtonsList: {    
+    width: "100%",
     flex: 1,
-    width: "85%",
-    alignSelf: "center",
-    flexWrap: "wrap",
   },
 });

@@ -83,42 +83,47 @@
   - [X] [Design flowchart Diagrams for Application Flow.](https://www.figma.com/file/LBntlgNbTLGxfNMjZC4IVW/Novel-Nest-Diagrams?type=whiteboard&t=lcHt87tUpqvh5Fjx-1)
   - [X] [Design UI/UX with 'Mustafa Ahmed' on Figma.](https://www.figma.com/file/Kn5VCosRwoBgf5tNgy2USl/Novel-Nest-App-UI%2FUX?type=design&t=lcHt87tUpqvh5Fjx-6)
   - [X] Create the repo, setup the environment & folder structure
-  - [ ] Splash Screen:
-    - [ ] Implement Session Management.
-    - [ ] Determine User Admin Status.
+  - [X] Splash Screen:
+    - [X] Implement Session Management.
+    - [X] Determine User Admin Status.
   - [X] Signup Screen:
     - [X] Implement User Registration.
   - [X] Signin Screen:
     - [X] Implement User Login.
   - [X] Forgot Password Screen:
     - [X] Implement Password Reset Functionality.
+  - off tasks jobs 
+    - helped in Home screen with Mustafa Ahmed
+    - helped in Cart Screen with Mustafa Ahmed
+    - helped in books search and list with Zeyad Ayman
+    - helped in orders Screens and list with Mustafa Hany
 
 - Mustafa Ahmed:
   - [X] [Design UI/UX with 'Ahmed Mohamed' on Figma.](https://www.figma.com/file/Kn5VCosRwoBgf5tNgy2USl/Novel-Nest-App-UI%2FUX?type=design&t=lcHt87tUpqvh5Fjx-6)
-  - [ ] Home Screen:
-    - [ ] Display Best Seller Books.
-    - [ ] Implement Search and Filter Functionality for Books.
-  - [ ] Book Screen:
-    - [ ] Retrieve Book Information.
-  - [ ] Cart Screen:
-    - [ ] Implement Add To Cart and Remove From Cart Functionality.
-    - [ ] Display List of Books in Cart.
-  - [ ] Profile Screen:
-    - [ ] Retrieve User Information.
+  - [X] Home Screen:
+    - [x] Display Best Seller Books.
+    - [x] Implement Search and Filter Functionality for Books.
+  - [x] Book Screen:
+    - [x] Retrieve Book Information.
+  - [x] Cart Screen:
+    - [x] Implement Add To Cart and Remove From Cart Functionality.
+    - [x] Display List of Books in Cart.
+  - [x] Profile Screen:
+    - [x] Retrieve User Information.
 
 - Zeyad Ayman:
   - [X] [Design DB Diagrams for Application.](https://www.figma.com/file/DHfRaDdCNeR1YnW3qtRsdz/Novel-Nest-DB-Diagrams?type=whiteboard&t=lcHt87tUpqvh5Fjx-1)
-  - [ ] Dashboard Screen:
-    - [ ] Implement Management of Books Screens.
-  - [ ] ListOfBooks Screen:
-    - [ ] Retrieve All Books.
-    - [ ] Implement Search and Filter Functionality for Books.
-    - [ ] Retrieve Book Details.
-    - [ ] Implement Book Deletion.
-  - [ ] EditBook Screen:
-    - [ ] Implement Book Update Functionality.
-  - [ ] AddBook Screen:
-    - [ ] Implement Book Addition Functionality.
+  - [x] Dashboard Screen:
+    - [x] Implement Management of Books Screens.
+  - [x] ListOfBooks Screen:
+    - [x] Retrieve All Books.
+    - [x] Implement Search and Filter Functionality for Books.
+    - [x] Retrieve Book Details.
+    - [x] Implement Book Deletion.
+  - [x] EditBook Screen:
+    - [x] Implement Book Update Functionality.
+  - [x] AddBook Screen:
+    - [x] Implement Book Addition Functionality.
 
 - Philopater Wahead:
   - [X] Profile Screen:
@@ -132,23 +137,26 @@
     - [X] Implement User Update Functionality.
   - [X] AddUser Screen:
     - [X] Implement User Addition Functionality.
+  - [X] Handling any PickImage Situation
   - off tasks jobs 
     - helped in profile screen with Mustafa Ahmed
     - helped in books search and list with Zeyad Ayman
     - gathered real books data from the internet
     - made a grenrate code to modify the data 
+    - made a pupolation method to send books to database 
+    - helped in EditBook Screen
 
 - Mustafa Hany:
-  - [ ] Invoice Screen:
-    - [ ] Implement Book Purchase Functionality.
-    - [ ] Start Payment Process.
-    - [ ] Implement Payment Cancellation.
-    - [ ] Retrieve User Orders.
-  - [ ] ListOfOrders Screen:
-    - [ ] Retrieve All Orders.
-    - [ ] Implement Search and Filter Functionality for Orders.
-    - [ ] Implement Order Deletion.
-  - [ ] EditOrder Screen:
-    - [ ] Implement Order Update Functionality.
-  - [ ] AddOrder Screen:
-    - [ ] Implement Order Addition Functionality.
+  - [x] Invoice Screen:
+    - [x] Implement Book Purchase Functionality.
+    - [x] Start Payment Process.
+    - [x] Implement Payment Cancellation.
+    - [x] Retrieve User Orders.
+  - [x] ListOfOrders Screen:
+    - [x] Retrieve All Orders.
+    - [x] Implement Search and Filter Functionality for Orders.
+    - [x] Implement Order Deletion.
+  - [x] EditOrder Screen:
+    - [x] Implement Order Update Functionality.
+  - [x] AddOrder Screen:
+    - [x] Implement Order Addition Functionality.

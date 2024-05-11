@@ -11,8 +11,6 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import {deleteUserAuth} from "./auth";
-import { createCart } from "./cart";
 const usersCollectionRef = collection(db, "users");
 
 // tested ✓

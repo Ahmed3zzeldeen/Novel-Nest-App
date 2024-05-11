@@ -1,14 +1,33 @@
 import ROUTES from "@/constants/routes";
 import { BookScreen } from "@/screens";
-import { Stack , useRouter } from "expo-router";
-import { View , StyleSheet , ImageBackground , Image , Pressable , Text} from "react-native";
+import { Stack , useRouter , useLocalSearchParams} from "expo-router";
+import { View , StyleSheet , Image , Pressable } from "react-native";
 import COLORS from "@/constants/colors";
 import { CartIconCounter } from "@/components";
+import { useState , useLayoutEffect } from "react";
+import { findBookById } from "@/firebase/apis/books";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Page() {
 
+  const [user , setUser] = useState({
+    avatar: '',
+  });
+
   const router = useRouter();
+  const { id } = useLocalSearchParams();
+  
+
+  const fetchCurrentUser = async () => {
+    const userData = await AsyncStorage.getItem('user');
+    const userObj = JSON.parse(userData);
+    setUser(userObj);
+  }
+
+  useLayoutEffect(() => {
+    fetchCurrentUser();
+  } , [])
 
   return (
     <>
@@ -24,15 +43,15 @@ export default function Page() {
               />
               <Pressable onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}>
                   <Image 
-                      source={require('../../assets/images/icons/profile.png')}
-                      style={{width: 40 , height: 40}}
+                      source={user.avatar ? {uri: user.avatar} : require('../../assets/images/icons/profile.png')}
+                      style={{width: 40 , height: 40 , borderRadius: 50}}
                   />
               </Pressable>
             </View>
           )
         }}
       />
-      <BookScreen/>
+      <BookScreen id={id}/>
     </>
   );
 };
