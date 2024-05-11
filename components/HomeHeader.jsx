@@ -20,30 +20,47 @@ import CartIconCounter from "./CartIconCounter";
 import USER_ROLES from "@/constants/userRoles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { findUserByField } from "@/firebase/apis/users";
+import { auth } from "@/firebase/apis/auth";
 
 const HomeHeader = ({ inMoreBook }) => {
-  const [user, setUser] = useState({
-    avatar: ''
-  });
+  const [user, setUser] = useState(null);
+  const [userAdmin, setUserAdmin] = useState(false);
 
   const handleLogout = () => {
     logout();
     router.navigate(ROUTES.AUTH.LOG_IN);
   };
-
+const storeUser = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('user', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
   const fetchCurrentUser = async () => {
     const data = await AsyncStorage.getItem("user");
     const userData = JSON.parse(data);
     const userObj = await findUserByField("uid", userData.uid);
     if (userObj) {
       setUser(userObj);
+      console.log(userObj);
     }
   };
 
   useLayoutEffect(() => {
     fetchCurrentUser();
+    if (!user){
+	console.log("not a user");
+    }
   }, []);
 
+  useState(() => {
+      console.log(user);
+      if (!user){
+	fetchCurrentUser();
+      }
+  }, [user]);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -102,7 +119,7 @@ const HomeHeader = ({ inMoreBook }) => {
               onPress={() => router.navigate(ROUTES.PUBLIC.EDIT_PROFILE)}
             >
               <Image
-                source={user.avatar ? {uri: user.avatar} : ("../assets/images/icons/profile.png")}
+                source={user ? {uri: user.avatar} : ("../assets/images/icons/profile.png")}
                 style={{ width: 40, height: 40, borderRadius: 50 }}
               />
             </Pressable>
