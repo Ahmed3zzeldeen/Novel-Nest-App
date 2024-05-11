@@ -10,8 +10,8 @@ import { useLayoutEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import ROUTES from "@/constants/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getCartItems } from "@/firebase/apis/carts";
-import { createOrder } from "@/firebase/apis/orders";
+import { getCartItems , deleteCart} from "@/firebase/apis/carts";
+import { initOrder } from "@/firebase/apis/orders";
 
 const CartScreen = () => {
   const router = useRouter();
@@ -37,7 +37,13 @@ const CartScreen = () => {
 
   const handlePressPurchaseButton2 = async () => {
     setPurchasePopup(false);
-    const createOrder = await createOrder(user.uid, cart);
+    let temp = []
+    cart.forEach(element => {
+	temp.push(element);
+    	console.log ("cart" , element);
+    });
+    await deleteCart(user.uid);
+    const createOrder = await initOrder (user.uid, temp);
   };
 
   const handlePressInvoiceButton1 = () => {

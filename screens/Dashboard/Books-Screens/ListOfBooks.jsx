@@ -28,7 +28,6 @@ export default function ListOfBooks() {
       let filteredData = await searchBooksByBookTitle(text);
       setFilteredBooks(filteredData);
     }
-    setSearchText(text);
   };
 
   const handleNewBookPress = async () => {
@@ -85,7 +84,6 @@ export default function ListOfBooks() {
           placeholderTextColor={COLORS.primary}
           onChangeText={onChangeText}
           style={styles.search}
-          value={searchText}
         />
         <FontAwesome5
           name="search"

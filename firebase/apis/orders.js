@@ -19,7 +19,7 @@ async function getOrders() {
   return Orders.docs.map((order) => ({ ...order.data(), orderId: order.id }));
 }
 
-async function createOrder(userId, books = []) {
+async function initOrder(userId, books = []) {
   const numberOfBooks = books.length;
   let totalPrice = 0;
   // Calc TotalPrice
@@ -97,7 +97,7 @@ async function searchOrdersByUserName(userName) {
 
 export {
   getOrders,
-  createOrder,
+    initOrder,
   updateOrder,
   deleteOrder,
   findOrderById,

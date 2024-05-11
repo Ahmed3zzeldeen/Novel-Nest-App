@@ -108,7 +108,7 @@ const ManageUsersScreen = () => {
         <Pressable
           style={{ alignSelf: "center", margin: 10 }}
           onPress={() => {
-            router.replace(ROUTES.AUTH.SIGN_OUT);
+	      logout();
           }}
         >
           <Text style={{ color: COLORS.primary, fontSize: 20 }}>

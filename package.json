@@ -17,6 +17,7 @@
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.0.2",
     "dotenv": "^16.4.5",
+    "eas-cli": "^9.0.3",
     "expo": "~50.0.14",
     "expo-constants": "~15.4.5",
     "expo-font": "~11.10.3",

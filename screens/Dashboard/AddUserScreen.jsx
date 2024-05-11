@@ -97,7 +97,7 @@ const AddUserScreen = () => {
         <Pressable
           style={{ alignSelf: "flex-end", margin: 10 }}
           onPress={() => {
-            router.replace(ROUTES.AUTH.SIGN_OUT);
+	      logout();
           }}
         >
           <Text style={{ color: COLORS.primary, fontSize: 20 }}>
