@@ -16,12 +16,12 @@ import {
 // Your web app's Firebase configuration
 console.log("api" , FIREBASE_API_KEY);
 const firebaseConfig = {
-  apiKey: FIREBASE_API_KEY,
-  authDomain: FIREBASE_AUTH_DOMAIN,
-  projectId: FIREBASE_PROJECT_ID,
-  storageBucket: FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-  appId: FIREBASE_APP_ID,
+  apiKey: "AIzaSyCU4DoAhm4osI0lJ5_KdC1-Q4flrDY5dOk",
+  authDomain: "novel-nest-app.firebaseapp.com",
+  projectId: "novel-nest-app",
+  storageBucket: "novel-nest-app.appspot.com",
+  messagingSenderId:"653810419701" ,
+  appId: "1:653810419701:web:1654f1b53ab22b1e58c2bc",
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

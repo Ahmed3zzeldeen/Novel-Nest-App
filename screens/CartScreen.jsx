@@ -21,6 +21,7 @@ const CartScreen = () => {
   const [invoicePopup, setInvoicePopup] = useState(false);
   const [purchasePopup, setPurchasePopup] = useState(false);
   const [numberOfBooks, setNumberOfBooks] = useState(0);
+  const [price, setPrice] = useState(0);
 
   const handlePressCancelButton1 = () => {
     setCancelPopup(false);
@@ -38,10 +39,13 @@ const CartScreen = () => {
   const handlePressPurchaseButton2 = async () => {
     setPurchasePopup(false);
     let temp = []
+      let sum =0 ; 
     cart.forEach(element => {
 	temp.push(element);
-    	console.log ("cart" , element);
+	sum = sum + element.price;
+    	console.log ("cart" , element.price);
     });
+    setPrice(sum);
     await deleteCart(user.uid);
     const createOrder = await initOrder (user.uid, temp);
   };
@@ -52,6 +56,12 @@ const CartScreen = () => {
 
   const handlePressInvoiceButton2 = () => {
     setInvoicePopup(false);
+    let sum =0 ; 
+    cart.forEach(element => {
+	sum = sum + element.price;
+    	console.log ("cart" , element.price);
+    });
+    setPrice(sum);
     setPurchasePopup(true);
   };
 
@@ -140,7 +150,7 @@ const CartScreen = () => {
           message={
             "Number Of Books: " +
             numberOfBooks +
-            " Books\nDate: 15/4/2024\nTotal: 1000$"
+            ` Books\nDate: 15/4/2024\nTotal: ${price}`
           }
           button1Style={styles.cancel}
           button2Style={{ ...styles.invoice, width: 91 }}
