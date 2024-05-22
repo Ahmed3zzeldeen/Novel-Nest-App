@@ -69,7 +69,7 @@ const DashboardScreen = () => {
 
   const Item = ({ text, img, id, awesome }) => {
     return (
-      <View style={{ alignSelf: "center" ,width:"100%"}}>
+      <View style={{ width: 400 }}>
         <Pressable
           style={styles.Button}
           onPress={() => {
@@ -99,13 +99,25 @@ const DashboardScreen = () => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" , alignItems:"center" , padding:10 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: 10,
+        }}
+      >
         <Pressable
-            onPress={()=> router.push(ROUTES.PUBLIC.HOME)}
-            style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center" , gap:10}}
-          >
+          onPress={() => router.push(ROUTES.PUBLIC.HOME)}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
           <FontAwesome5 name="home" size={24} color={COLORS.primary} />
-          <Text style={{color:COLORS.primary , fontSize:20}}>
+          <Text style={{ color: COLORS.primary, fontSize: 20 }}>
             Go to Home
           </Text>
         </Pressable>
@@ -145,6 +157,7 @@ const DashboardScreen = () => {
           ></Item>
         )}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ alignItems: "center" }}
       />
     </View>
   );
@@ -172,11 +185,10 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontSize: 50,
     fontWeight: "bold",
-    textAlign: 'left',
-    marginRight: '2%'
+    textAlign: "left",
+    marginRight: "2%",
   },
-  ButtonsList: {    
+  ButtonsList: {
     width: "100%",
-    flex: 1,
   },
 });

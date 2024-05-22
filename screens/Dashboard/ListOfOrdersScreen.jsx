@@ -19,6 +19,7 @@ import {
 } from "@/firebase/apis/orders";
 import { formatData } from "@/utils";
 import { CustomPopup } from "@/components";
+import CustomSearch from "@/components/CustomSearch";
 
 const ListOfOrdersScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -86,26 +87,12 @@ const ListOfOrdersScreen = () => {
           </Text>
         </Pressable>
       </View>
-      <View style={styles.searchInputContainer}>
-        <Pressable onPress={handleSearch} style={styles.searchIcon}>
-          <FontAwesome5
-            name="search"
-            size={18}
-            color="#2f6892"
-            style={styles.searchIcon}
-          />
-        </Pressable>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Order by user..."
-          value={searchText}
-          onChangeText={(text) => {
-            setSearchText(text);
-            handleSearch();
-          }}
-          onSubmitEditing={handleSearch}
-        />
-      </View>
+      <CustomSearch
+        handleSearch={handleSearch}
+        searchText={searchText}
+        setSearchText={setSearchText}
+        placeholderText="Search Order by user..."
+      />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={filteredOrders}
@@ -213,21 +200,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
-  searchInputContainer: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    marginBottom: 10,
-    backgroundColor: COLORS.secondary,
-    borderRadius: 5,
-    height: 40,
-  },
-  searchInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    color: COLORS.placeholderText,
-    fontSize: 16,
-    height: "100%",
-  },
   totalPayment: {
     color: COLORS.primary,
     fontWeight: "bold",
@@ -240,9 +212,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     marginRight: 5,
-  },
-  searchIcon: {
-    paddingHorizontal: 10,
   },
   ContainerIcon: {
     width: 29,

@@ -5,12 +5,12 @@ import {
   CounterButtons,
 } from "@/components";
 import COLORS from "@/constants/colors";
-import { View, StyleSheet, FlatList, Text } from "react-native";
+import { View, StyleSheet, FlatList, Text, ScrollView } from "react-native";
 import { useLayoutEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import ROUTES from "@/constants/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getCartItems , deleteCart} from "@/firebase/apis/carts";
+import { getCartItems, deleteCart } from "@/firebase/apis/carts";
 import { initOrder } from "@/firebase/apis/orders";
 
 const CartScreen = () => {
@@ -38,16 +38,16 @@ const CartScreen = () => {
 
   const handlePressPurchaseButton2 = async () => {
     setPurchasePopup(false);
-    let temp = []
-      let sum =0 ; 
-    cart.forEach(element => {
-	temp.push(element);
-	sum = sum + element.price;
-    	console.log ("cart" , element.price);
+    let temp = [];
+    let sum = 0;
+    cart.forEach((element) => {
+      temp.push(element);
+      sum = sum + element.price;
+      console.log("cart", element.price);
     });
     setPrice(sum);
     await deleteCart(user.uid);
-    const createOrder = await initOrder (user.uid, temp);
+    const createOrder = await initOrder(user.uid, temp);
   };
 
   const handlePressInvoiceButton1 = () => {
@@ -56,10 +56,10 @@ const CartScreen = () => {
 
   const handlePressInvoiceButton2 = () => {
     setInvoicePopup(false);
-    let sum =0 ; 
-    cart.forEach(element => {
-	sum = sum + element.price;
-    	console.log ("cart" , element.price);
+    let sum = 0;
+    cart.forEach((element) => {
+      sum = sum + element.price;
+      console.log("cart", element.price);
     });
     setPrice(sum);
     setPurchasePopup(true);
@@ -80,7 +80,11 @@ const CartScreen = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
+      >
         {cart.length === 0 ? (
           <View
             style={{
@@ -96,7 +100,14 @@ const CartScreen = () => {
           <FlatList
             style={styles.cartList}
             data={cart}
-            renderItem={({ item }) => <ShoppingBookCard book={item} itemId={item.itemId} userId={user.uid} rerenderCarts={fetchCurrentUser} />}
+            renderItem={({ item }) => (
+              <ShoppingBookCard
+                book={item}
+                itemId={item.itemId}
+                userId={user.uid}
+                rerenderCarts={fetchCurrentUser}
+              />
+            )}
             keyExtractor={(item) => item.bookId}
             showsVerticalScrollIndicator={false}
           />
@@ -117,7 +128,7 @@ const CartScreen = () => {
             />
           </View>
         ) : null}
-      </View>
+      </ScrollView>
       {purchasePopup && (
         <CustomPopup
           title={"Purchase"}
@@ -170,7 +181,6 @@ export default CartScreen;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    justifyContent: "space-between",
     marginHorizontal: "5%",
   },
   cartList: {
