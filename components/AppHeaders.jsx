@@ -3,7 +3,6 @@ import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 import ROUTES from "../constants/routes";
 import COLORS from "@/constants/colors";
-import { HomeHeader } from '@/components';
 
 const AppHeaders = () => {
 
@@ -54,12 +53,7 @@ const AppHeaders = () => {
           ),
         }}
       />
-      <Stack.Screen
-        name={ROUTES.PUBLIC.HOME}
-        options={{
-          header: () => (<HomeHeader />)
-        }}
-      />
+      
       <Stack.Screen
         name={ROUTES.DASHBOARD.HOME}
         options={{
@@ -78,12 +72,6 @@ const AppHeaders = () => {
       <Stack.Screen
         name={ROUTES.PUBLIC.CART}
         options={{ headerTitle: "Cart", presentation: "modal" }}
-      />
-      <Stack.Screen
-        name={ROUTES.PUBLIC.BOOKS}
-        options={{
-          header: () => (<HomeHeader inMoreBook={true} />)
-        }}
       />
       <Stack.Screen
         name={ROUTES.AUTH.SIGN_UP}
