@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { findUserByField } from "@/firebase/apis/users";
 import { auth } from "@/firebase/apis/auth";
 
-const HomeHeader = ({ inMoreBook }) => {
+const HomeHeader = ({ inMoreBook , children }) => {
   const [user, setUser] = useState(null);
   const [userAdmin, setUserAdmin] = useState(false);
 
@@ -64,13 +64,13 @@ const storeUser = async (value) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <ImageBackground
-        source={{
-          uri: "https://s3-alpha-sig.figma.com/img/a8d4/ce20/9979d5c6741421e4f3b2ad4ecf0dbd2f?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BhXWQU-hLVpQOg5GAlVU~v0WrtY-d82I~9sLuyOO8nbTDs22vdn49zugBNaZGqyxr~Z-EfJ-yuaNVXZGI0-y73yAPLDftHx7~WhLrFa0iRJx2-VH1ku-TlsX~X0tGdnlODY311VoFZ4Q1Ye5J6PVCVL~cP~Jw5L1laQUdYA7342zPym2D1RbVeHj~qHpes6yNmwd-f4RQB6CR9niBYgPdFY1TncdoNaYK7HX9oQLiW-cP2m41fyh0aP8giaBDEk-Jynaj8DgV8G0TiTHknq9Q9Djl6Td2LzgQY3kbYzTzpVkQsnld1uapTd4b600PpGg-3zCAZFALydI90cINq8-pg__",
-        }}
+        source={("../assets/images/Screen_Header_Image.png")}
         style={{
           height: 200,
           width: "100%",
           gap: 10,
+          borderBottomLeftRadius: 50,
+          borderBottomRightRadius: 50,
         }}
         imageStyle={{
           borderBottomLeftRadius: 50,
@@ -113,6 +113,7 @@ const storeUser = async (value) => {
         <Text style={styles.usernameText}>
           Hey! {user ? `${user.username}`.toLocaleUpperCase() : "USERNAME"}
         </Text>
+        {children}
       </ImageBackground>
     </SafeAreaView>
   );F
@@ -122,7 +123,7 @@ export default HomeHeader;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
   darkCover: {
     position: "absolute",
